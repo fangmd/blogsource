@@ -1,0 +1,142 @@
+---
+title: 设计模式之蝉 - 工厂方法模式
+date: 2016-05-01 21:38:14
+tags: 设计模式
+categories: 读书笔记
+
+---
+
+
+# 引子 女娲造人
+
+![factory0]()
+
+关键代码
+
+```java
+
+// 人种代码
+public class YellowHuman implements Human{
+    public void getColor(){
+        System.out.println("黄色人种的皮肤是黄色的")
+    }
+    public void talk(){
+        System.out.println("黄色人种会说话")
+    }
+}
+
+
+// 八卦炉代码
+public abstract class AbstractHumanfactory{
+    public abstract <T extends human> T createHuman(Class<T> c);
+}
+
+public class HumanFactory extends AbstractHumanFactory{
+    public <T extends Human> T createHuman(Class<T> c){
+        Human human = null;
+        try{
+                human = (T)Class.forName(c.getName()).newInstance();
+            } catch (Exception e){
+                System.out.println("人种错误")
+            }
+    }
+}
+
+// 使用
+
+public static void main(String[] args){
+    AbstractHumanFactory YinYangLu = new HumanFactory();
+    Human yellowHuman = YinYangLu.createHuman(YellowHuman.class);
+}
+```
+
+<!--more-->
+
+# 定义
+
+Define an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.(定义一个用于创建对象的接口，让子类决定实例化哪个类。工厂方法使一个类的实例化延迟到其子类)
+
+![工厂模式通用类图 factory1]()
+
+# 工厂方法模式的扩张
+
+## 缩小为简单的工厂模式
+
+一个模块仅需要一个工厂类，没有必要把它产生出来，使用静态的方法就可以了。
+
+```java
+public class HumanFactory{
+    public static <T extends Human> T createHuman(Class<T> c){
+        Human human = null;
+        try{
+            human = (Human)Class.forName(c.getName()).newInstance();
+        } catch (Exception e){
+            Ssytem.out.println("人种生成错误!");
+        }
+        return (T) human;
+    }
+}
+```
+
+HumanFactory 类有两个地方变化：去掉继承抽象类，并在 createHuman 前增加 static 关键字。
+
+这种模式称为：简单工厂模式，静态工厂模式
+
+## 升级为多个工厂类
+
+如果把所有的产品类都放到一个工厂方法中进行初始化会使代码结构不清晰。
+
+可以为每个产品定义一个创造者，由调用者自己选择与哪个工厂方法关联
+
+```
+public abstract class AbstractHumanFactory{
+    public abstract Human createHuman();
+}
+```
+
+抽象方法中已经不需要传递相关参数了，因为每一个具体的工厂都明确了自己的职责：创建自己负责的产品类对象。
+
+黑人创建工厂实现：
+
+```
+public class BlackHumanFactory extends AbstractHumanFactory{
+    public Human createHuman(){
+        return new BlackHuman();
+    }
+}
+```
+
+使用工厂类：
+
+```
+Human blackHuman = (new BlackHumanFactory()).createHuman();
+```
+
+每个产品类都对应了一个创建类，好处是创建类的职责清晰，结构简单，但是扩展性和可维护性变差了。
+
+每次增加一个产品类，就需要创建一个相应的工厂类，工厂类和产品类数量相同，维护需要考虑两个对象之间的关系。
+
+在应用中通常会采用多个工厂方法，然后增加一个协调类，避免调用者与各个子工厂交流，协调类的作用是封装子工厂类，对高层模块提供统一的访问接口
+
+## 替代单例模式
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

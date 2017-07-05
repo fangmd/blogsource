@@ -1,0 +1,450 @@
+---
+title: Redis learn
+date: 2016-01-18 13:18:12
+tags: [Database, Redis]
+category: Database
+
+---
+
+# 介绍
+
+它使用内存提供主存储支持，而仅使用硬盘做持久性的存储；它的数据模型非常独特，用的是单线程。另一个大区别在于，你可以在开发环境中使用Redis的功能，但却不需要转到Redis。
+
+Redis 以内存作为主存储支持，所以数据集不会超过系统可用内存，不适合大数据应用。
+
+Redis 可以用于数据库处理起来缓慢的任务
+
+## 应用场景例子
+
+### 显示最新的项目列表
+
+使用 Redis 存储最新的一些数据，这样用户在返回最近信息的时候就不需要去查询硬盘中的数据库
+
+```
+LTRIM latest.comments 0 5000 
+```
+
+### 删除与过滤
+
+使用LREM来删除评论
+
+### 排行榜相关
+
+```
+ZADD leaderboard  <score>  <username> 
+
+得到前100名高分用户很简单：ZREVRANGE leaderboard 0 99
+
+用户的全球排名也相似，只需要：ZRANK leaderboard <username>
+```
+
+### 计数
+
+```
+INCR user:<id>
+```
+
+### 实时分析正在发生的情况，用于数据统计与防止垃圾邮件等
+
+
+### 队列 
+
+消息队列（Messaging）
+
+### 缓存
+
+
+# 安装
+
+```
+make
+```
+
+```
+cd src
+
+./redis-server
+
+./redis-cli
+```
+
+## install on mac
+
+```
+brew install redis
+```
+
+### 配置
+
+配置文件建议放在：`/usr/local/etc/redis.conf`
+
+使用配置文件启动 redis：
+
+```
+redis-server /usr/local/etc/redis.conf
+```
+
+命令中获取配置信息：
+```
+CONGIF GET *
+
+CONFIG GET [config name]
+```
+
+# 连接 Redis
+
+## 命令行连接
+
+```
+redis-cli
+```
+
+基本命令：
+```
+AUTH [password] 验证密码是否正确
+
+ECHO [message] 打印字符串
+
+PING 查看服务是否运行
+
+QUIT 关闭当前连接
+
+SELECT index 切换到指定的数据库
+```
+
+# Redis 服务器
+
+查看服务器的统计信息
+```
+redis 127.0.0.1:6379> INFO
+```
+
+# Redis 数据库
+
+Redis 有多个数据库，在配置文件中可以查看数据库的数量。
+
+```
+cat redis.conf
+# 默认是 16 个数据库
+databases 16
+```
+
+## 数据库相关操作
+
+切换数据库：
+```
+SELECT [databases-number]
+
+序号超出回报错：ERR invalid DB index
+```
+
+移动 key 到其他数据库：
+```
+MOVE [key-name] [databases-number]
+```
+
+# expire 设置有效期
+
+
+### 设置有效时间
+
+expire 秒 为单位
+```
+EXPIRE [key] [time]
+```
+
+pttl，pexpire：使用毫秒为单位
+
+### 查询有效时间
+
+查看剩余时间
+```
+TTL [key]
+```
+如果返回 -2 表示 value 不存在了
+返回 -1 表示永久有效
+返回其他值表示剩余有效时间
+
+### 设置永久有效
+
+persist
+```
+PERSIST [key]
+```
+
+
+
+
+# 数据存储操作
+
+## key 的操作
+
+查看所有 key：
+```
+keys *
+```
+
+随机获取一个 key
+```
+randomkey
+```
+
+判断 key 是否存在
+```
+exists key [keyname]
+(integer) 1 表示存在
+(integer) 0 表示不存在
+```
+
+删除 key
+```
+DEL [key1] [key2...]
+```
+
+改变 key name:
+```
+RENAME [old-key-name] [new-key-name]
+
+old key 不存在时报错： (error) ERR no such key
+new key 已经存在：会覆盖原来的 key 和 value
+```
+
+安全替换 key：
+```
+RENAMENX [old-key-name] [new-keyname]
+
+修改成功返回 1，修改失败返回 0 
+```
+
+## set server name
+
+```
+set server:name "fido"
+
+get server:name
+```
+
+## 基本数据类型 增删改查
+
+SET 插入 SETNX 只有在不存在 key 的时候才插入
+```
+SET [key] [value]
+```
+
+APPEND 追加内容
+```
+APPEND [key] [append-value]
+```
+
+
+DEL 删除键值对：
+```
+DEL [key1 key2 ....]
+```
+
+
+### 数值增减
+
+INCR key 对应的值加 1
+```
+INCR [key]
+```
+
+DECR 减 1:
+```
+DECR [key]
+```
+
+> INCR 出现的原因：避免多个用户同时操作数据库的时候，如果 先查询值，做增加操作，最后插入值 容易造成并发问题
+
+
+增减指定的数：
+```
+INCRBY [key] [number]
+
+INCRBYFLOAT [key] [float]
+```
+
+
+
+
+## 集合数据的操作 list 链表
+
+存入 value:
+```
+RPUSH [key] [value]
+```
+
+在最前面插入一个 value:
+```
+LPUSH [key] [value]
+```
+
+获取子集合
+```
+LRANGE [key] [start index] [end index]
+```
+
+end index: -1 表示到最后
+
+查看集合的 size：
+```
+LLEN [list key]
+```
+
+获取并且删除第一个元素
+```
+LPOP [list key]
+```
+
+获取并且删除最后一个元素：
+```
+RPOP [list key]
+```
+
+### sort
+
+```
+SORT [list-key]
+```
+
+倒序 desc：
+```
+SORT [list-key] desc
+```
+
+## set 数据操作
+
+无序，不重复
+
+SISMEMBER, SMEMBERS and SUNION.
+
+插入 value：
+```
+SADD [key] [value]
+```
+
+删除 value:
+```
+SREM [key] [value]
+```
+
+判断 value 在 set 中是否已经存在：1 表示存在， 0 表示不存在
+```
+SISMEMBER [set-key] [value]
+```
+
+获取所有 value:
+```
+SMEMBERS [key]
+```
+
+将两个 set 中的值合并后输出：
+```
+SUNION [set-key] [set-key2]
+```
+
+### 有序 set
+
+```
+ZADD [key] [sort-int] [value]
+```
+
+```
+ZRANGE [key] [start-index] [end-index]
+```
+
+## Hash 
+key 中存储 key-value
+
+save, 可以同时设置多个
+```
+HSET [key] [field-key] [field-value]
+```
+
+get all
+```
+HGETALL [key]
+```
+
+get field
+```
+HGET [key] [field-key]
+```
+
+数字类型数据的增删改：
+
+增加
+```
+HINCRBY [key] [field-key] [add-num]
+```
+
+删除
+```
+HDEL [key] [field-key]
+```
+
+# 发布订阅
+
+Redis 消息通信模式： (pub/sub) 发布订阅
+
+创建一个 sub：
+```
+SUBSCRIBE redisChat
+```
+
+向 sub 发布一个消息：
+```
+PUBLISH redisChat "one message"
+```
+
+常用命令：
+
+- PSUBSCRIBE pattern [pattern ...] 订阅一个或多个符合给定模式的频道。
+- PUBSUB subcommand [argument [argument ...]] 查看订阅与发布系统状态。
+- PUBLISH channel message 将信息发送到指定的频道。
+- PUNSUBSCRIBE [pattern [pattern ...]] 退订所有给定模式的频道。
+- SUBSCRIBE channel [channel ...] 订阅给定的一个或多个频道的信息。
+- UNSUBSCRIBE [channel [channel ...]]  指退订给定的频道。
+
+# Redis 事务
+
+一次执行过个命令，并且可以保证：
+
+- 事务是一个单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。
+- 事务是一个原子操作：事务中的命令要么全部被执行，要么全部都不执行。
+
+事务流程：
+
+- 开始事务
+- 命令入队
+- 执行事务
+
+事务的命令：
+
+- DISCARD
+- EXEC
+- MULTI
+- UNWATCH
+- WATCH key [key ...]
+
+
+
+# 使用 Python 处理 Redis
+
+## 安装 redis 支持库
+
+```
+sudo pip3 install redis
+```
+
+## redis 模块使用 
+
+
+
+
+
+
+参考：
+
+- [http://blog.csdn.net/hguisu/article/details/8836819](http://blog.csdn.net/hguisu/article/details/8836819)

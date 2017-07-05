@@ -1,0 +1,53 @@
+---
+title: 设计模式之蝉 - 迪米特法则
+date: 2017-04-30 21:38:14
+tags: 设计模式
+categories: 读书笔记
+
+---
+
+
+# 定义
+
+迪米特法则：Law of Demeter LoD ，也称为知识原则 （Least Knowledge Principle LKP）
+
+
+# 知道的越少越好
+
+1. 只和朋友交流
+
+    Only talk to your immediate friends
+
+    直接朋友：直接有耦合关系的对象
+
+    例子：老师类 命令 队长 清点 所有队员
+
+    老师类应该只和队长类有耦合关系，不需要知道队员，所以队员的 list 在队长类内部。
+
+
+2. 朋友间也是有距离的
+    
+    例子：安装软件： InstallSoftware.class, Wizard.class (包含了安装步骤)
+
+    正确的设计是 Wizard.class 要高内聚，对 InstallSoftware.class 中公开一个 install 方法，而不是内部的 first,second,third 安装步骤。
+
+3. 是自己的就是自己的
+
+    如果一个方法放在本类中可以，放在其他类中也可以，该如何权衡？
+
+    如果一个方法放在本类中，既不增加类间关系，也对本类不产生负面影响，那就放置在本类中。
+
+4. 谨慎使用 Serializable 
+
+
+<!--more-->
+
+    
+# 最佳实践
+
+迪米特法则的核心观念就是类间解耦，弱耦合，只有弱耦合后类的复用率才可以提高。
+
+
+
+
+

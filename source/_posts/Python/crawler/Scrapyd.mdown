@@ -1,0 +1,230 @@
+---
+title: Scrapyd
+date: 2016-12-23 13:18:12
+tags: [Crawler, Scrapyd]
+category: Python
+
+---
+
+
+scrapyd是一个用于部署和运行scrapy爬虫的程序，它允许你通过JSON API来部署爬虫项目和控制爬虫运行
+
+# Install
+
+```
+pip install scrapyd
+```
+
+requirements:
+
+- Python 2.6 or above ***注意***python3 不支持，所以建议在 virtualenv 环境下工作
+- Twisted 8.0 or above
+- Scrapy 0.17 or above
+
+安装 scrapyd 的时候如果上面的程序没有安装，也会被一起安装
+
+
+# Usage
+
+
+## 运行
+
+```
+scrapyd
+```
+
+打开网址 `http://127.0.0.1:6800` 查看是否运行成功
+
+## 检查可用 scrapy 项目
+
+
+
+# 项目部署工具安装
+![scrapyd-client](https://github.com/scrapy/scrapyd-client)
+
+```
+pip install scrapyd-client
+```
+
+## scrapyd-client 使用方式
+
+打包项目，然后调用scrapyd的addversion.json接口部署项目
+
+### 配置服务器信息
+
+下面以部署 豆瓣电影 爬虫为例
+
+```
+[deploy:server-douban]
+url = http://localhost:6800/
+```
+
+- `server-douban`: 服务器名称
+- `url`: 运行 scrapyd 的服务器
+
+检查配置，列出当前可用的服务器：
+```
+scrapyd-deploy -l
+server-douban        http://localhost:6800/
+```
+
+#### 查看服务器上的项目
+
+```
+$ scrapyd-deploy -L server-douban
+default
+```
+
+打开 `http://localhost:6800/` , 可以看到 Available projects: default
+
+### 部署项目
+
+在爬虫项目根目录下执行下面的命令, 其中target为上一步配置的服务器名称，project为项目名称，可以根据实际情况自己指定。
+
+```
+scrapyd-deploy <target> -p <project>
+```
+
+```
+$ scrapyd-deploy server-douban -p douban-movies
+Packing version 1446102534
+Deploying to project "douban-movies" in http://localhost:6800/addversion.json
+Server response (200):
+{"status": "ok", "project": "douban-movies", "version": "1446102534", "spiders": 1, "node_name": "sky"}
+```
+
+检查部署结果：
+
+```
+$ scrapyd-deploy -L server-douban
+default
+douban-movies
+```
+
+
+也可以把项目信息写入到配置文件中，部署时就不用指定项目信息，编辑scrapy.cfg文件，添加项目信息:
+
+```
+[deploy:server-douban]
+url = http://localhost:6800/
+project = douban-movies
+```
+
+下次部署可以直接执行:
+
+```
+$ scrapyd-deploy
+```
+
+如果配置了多个服务器的话，可以将项目直接部署到多台服务器:
+
+```
+$ scrapyd-deploy -a -p <project>
+```
+
+### 指定版本号
+
+默认情况下, scrapyd-deploy使用当前的时间戳作为版本号，我们可以使用--version来指定版本号:
+
+```
+默认情况下, scrapyd-deploy使用当前的时间戳作为版本号，我们可以使用--version来指定版本号
+```
+
+版本号的格式必须满足 [LooseVersion](http://epydoc.sourceforge.net/stdlib/distutils.version.LooseVersion-class.html)
+
+
+### 服务器添加认证信息
+
+在scrapyd前面加一层反向代理来实现用户认证。以nginx为例, 配置nginx:
+
+```
+server {
+       listen 6801;
+       location / {
+            proxy_pass            http://127.0.0.1:6800/;
+            auth_basic            "Restricted";
+            auth_basic_user_file  /etc/nginx/htpasswd/user.htpasswd;
+        }
+}
+```
+
+
+`/etc/nginx/htpasswd/user.htpasswd` 设置用户名和密码：
+
+```
+...
+[deploy:server-douban]
+url = http://localhost:6801/
+project = douban-movies
+version = GIT
+username = test
+password = test
+```
+
+提醒: 记得修改服务器上scrapyd的配置bind_address字段为127.0.0.1，以免可以从外面绕过nginx, 直接访问6800端口。 关于配置可以参看本文后面的配置文件设置.
+
+## API
+
+### 调度爬虫
+
+```
+$ curl http://localhost:6800/schedule.json -d project=myproject -d spider=somespider
+# 带上参数
+$ curl http://localhost:6800/schedule.json -d project=myproject -d spider=somespider -d setting=DOWNLOAD_DELAY=2 -d arg1=val1
+```
+
+### 取消
+
+```
+$ curl http://localhost:6800/cancel.json -d project=myproject -d job=6487ec79947edab326d6db28a2d86511e8247444
+```
+
+### 列出项目
+
+```
+$ curl http://localhost:6800/listprojects.json
+```
+### 列出版本
+
+```
+$ curl http://localhost:6800/listversions.json?project=myproject
+```
+### 列出爬虫
+
+```
+$ curl http://localhost:6800/listspiders.json?project=myproject
+```
+### 列出job
+
+```
+$ curl http://localhost:6800/listjobs.json?project=myproject
+```
+### 删除版本
+
+```
+$ curl http://localhost:6800/delversion.json -d project=myproject -d 
+version=r99
+```
+### 删除项目
+
+```
+$ curl http://localhost:6800/delproject.json -d project=myproject
+```
+
+## 配置文件
+
+scrapyd启动的时候会自动搜索配置文件，配置文件的加载顺序为：
+
+- /etc/scrapyd/scrapyd.conf
+- /etc/scrapyd/conf.d/*
+- scrapyd.conf
+- ~/.scrapyd.conf
+
+参考：
+
+- [http://blog.wiseturtles.com/posts/scrapyd.html](http://blog.wiseturtles.com/posts/scrapyd.html)
+
+
+
+
+

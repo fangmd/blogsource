@@ -1,0 +1,118 @@
+---
+title: 设计模式之蝉 - 单例模式
+date: 2016-05-01 21:38:14
+tags: 设计模式
+categories: 读书笔记
+
+---
+
+
+# 定义
+
+Ensure a class has only one instance, and provide a global point of access it.
+
+单例模式的通用代码：
+
+```java
+public class Singleton{
+    private static final Singleton singleton = new Singleton();
+    private Singleton(){
+
+    }
+    public static Singleton getInstance(){
+        return singleton;
+    }
+    // 累中的其他方法，尽量是 static ????
+        public static void doSomething(){
+
+        }
+}
+
+```
+
+<!--more-->
+
+# 应用
+
+## 优点
+
+- 由于只有一个实例，减少内存的开支，特别是一个对象需要频繁创建，销毁时。
+- 单例模式只生成一个实例，所以减少了系统的性能开销
+- 避免对资源的多重占用，比如读写一个文件，使用一个对象去操作可以避免对同一个资源文件同时读写操作
+- 单例模式可以在系统设置全局的访问点，优化和共享资源访问。
+
+## 缺点
+
+- 一般没有接口，扩展困难
+- 单例模式对测试不利。在并行环境下，单例模式没有完成是不能测试的
+- 单例模式与单一原则有冲突。
+
+## 使用场景
+
+1. 要求生成唯一序列号的环境
+2. 在整个项目中需要一个共享访问点或者共享数据
+3. 创建一个对象需要消耗的资源过多
+4. 需要定义大量静态常量和静态方法的环境
+
+## 单例模式的注意事项
+
+懒汉式单例线程不安全。
+
+# 单例模式的扩展
+
+如何做到一个类只能生成两三个对象？
+
+```java
+public class Emperor{
+    private static int mMaxNumOfEmperor = 2;
+    private static ArrayList<String> nameList = new ArrayList<string>();
+    private static ArrayList<String> emperorList = new ArrayList<Emperor>();
+
+    private static int countNumOfEmperor = 0;
+
+    static{
+        for(int i=0; i<mMaxNumOfEmperor; i++){
+            emperorList.add(new Emperor("---"+ (i+1) + "name"))
+        }
+    }
+
+    private Emperor(){
+
+    }
+
+    private Emperor(String name){
+        nameList.add(name);
+    }
+
+    public static Emperor getInstance(){
+        Random random = new Random();
+        countNumOfEmperor = random.nextInt(mMaxNumIfEmperor);
+        return emperorList.get(countNumOfEmperor);
+    }
+
+    //....
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
