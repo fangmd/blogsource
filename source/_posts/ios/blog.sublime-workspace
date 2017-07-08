@@ -1,0 +1,392 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"print",
+				"print_sqlites"
+			],
+			[
+				"sqli",
+				"sqlite3_path"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 187.0,
+		"last_filter": "instal",
+		"selected_items":
+		[
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"MP",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"intall",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"python",
+				"Set Syntax: Python3"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"MaP",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"install pa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/double/Documents/blog/source",
+		"/Users/double/Documents/blog/source/_posts"
+	],
+	"file_history":
+	[
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-开闭原则.md",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-单例模式.mdown",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-接口隔离.md",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-迪米特法则.mdown",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-依赖倒置.md",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-LSP.md",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-.md",
+		"/Volumes/UUI/新建文件夹/book/数据结构与算法分析-笔记.md",
+		"/Users/double/Documents/blog/source/_posts/Android/效果/沉浸式状态栏.md",
+		"/Volumes/fang/_posts/Android/tips/android tips.md",
+		"/Users/double/Downloads/cube_loader.json",
+		"/Users/double/Downloads/example-gui-config.json",
+		"/Users/double/Documents/blog/source/_posts/Android/AndroidStudio/Templates.md",
+		"/Users/double/Desktop/单元测试-Android.md",
+		"/Volumes/fang/_posts/Android/单元测试/单元测试-基本教程.md",
+		"/Volumes/fang/_posts/Android/单元测试/单元测试-开始.md",
+		"/Volumes/fang/_posts/Android/单元测试/单元测试-Android.md",
+		"/Users/double/Documents/blog/source/_posts/Android/view/RecyclerView/RecyclerView扩展SnapHelper.md",
+		"/Users/double/Documents/blog/source/_posts/Android/view/ViewPager/ViewPager.md",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式-里氏替换.md",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式-单一职责的副本.md",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/廖雪峰js.md",
+		"/Users/double/Documents/blog/source/_posts/program/git/git安装.md",
+		"/Users/double/AndroidStudioProjects/workproject/UnitTestLearn/README.md",
+		"/Users/double/Documents/blog/source/_posts/program/Sublime使用.md",
+		"/Users/double/Documents/blog/source/_posts/program/SVN 使用记录.md",
+		"/Users/double/Documents/blog/source/_posts/program/svn.md",
+		"/Users/double/Documents/blog/source/_posts/Android/源码学习/mac下载和编译源码.md",
+		"/Users/double/Documents/blog/source/_posts/linux/terminal设置代理.md",
+		"/Users/double/Documents/blog/source/_posts/Android/view/RecyclerView/RecyclerView悬浮条.md",
+		"/Users/double/Documents/blog/source/_posts/linux/ss 代理.md",
+		"/Users/double/aosp/frameworks/base/core/java/com/android/server/LocalServices.java",
+		"/Users/double/aosp/frameworks/ex/widget/java/com/android/ex/widget/StaggeredGridView.java",
+		"/Users/double/Downloads/new简历.md",
+		"/Users/double/Documents/blog/source/_posts/Android/Handler机制总结.md",
+		"/Users/double/Desktop/mianshi.md",
+		"/Users/double/Documents/blog/source/_posts/Android/view/自定义View/自定义View.md",
+		"/Users/double/Documents/blog/source/_posts/Android/ndk/NDKlearn.md",
+		"/Users/double/Desktop/untitled.html",
+		"/Users/double/Documents/blog/source/_posts/program/git/git-使用流程.md",
+		"/Users/double/Documents/blog/source/_posts/program/git/git-pro.md",
+		"/Users/double/Documents/blog/source/_posts/program/git/git命令.md",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/程序员修炼之道-从小工到专家.md",
+		"/Users/double/Documents/blog/source/_posts/ReadNote/魔鬼经济学摘录.mdown",
+		"/Users/double/Documents/blog/source/_posts/linux/使用 supervisor 管理进程.md",
+		"/Users/double/djangoblog/blog/add_article_to_db.py",
+		"/Users/double/Documents/blog/source/_posts/Android/view/WebView/webView.md",
+		"/Users/double/Documents/blog/source/_posts/Android/view/WebView/WebView js 交互.md",
+		"/Users/double/Documents/blog/source/_posts/Android/view/WebView/WebView基本使用.md",
+		"/Users/double/Desktop/temp",
+		"/Users/double/Documents/blog/source/_posts/program/git/git-教程-廖雪峰.md",
+		"/Users/double/Documents/blog/source/_posts/Android/优化/Android内存优化-Handler.md",
+		"/Users/double/Documents/blog/source/_posts/Android/优化/Android内存优化--内存泄露的原因.md",
+		"/Users/double/Documents/blog/source/_posts/Android/优化/Android内存优化--内存基础.md",
+		"/Users/double/Documents/blog/source/_posts/Android/优化/Android内存优化--工具.md",
+		"/Users/double/Documents/blog/source/_posts/Android/优化/Android内存优化--代码优化.md",
+		"/Users/double/Documents/blog/source/_posts/Android/优化/Android内存优化--布局优化.md",
+		"/Users/double/Documents/blog/source/_posts/Android/tips/android tips.md",
+		"/Users/double/Documents/blog/source/_posts/program/git/Mac.md",
+		"/Users/double/Documents/blog/source/_posts/Python/django_setup.md",
+		"/Users/double/Documents/blog/source/_posts/Python/django/django_setup.md",
+		"/Users/double/Documents/blog/source/_posts/Python/nginx/启动nginx status状态.md",
+		"/Users/double/Documents/blog/source/_posts/linux/使用 virtualenv 建立独立的开发环境.md",
+		"/Users/double/Documents/blog/source/_posts/linux/linux-command.md",
+		"/Users/double/Documents/blog/source/_posts/Python/docker/docker-command.md",
+		"/Users/double/redex/docs/docker.md",
+		"/Users/double/.ShadowsocksX/gfwlist.js",
+		"/Users/double/Documents/blog/source/_posts/Android/第三方/RxJava/Rxjava2代码例子.md",
+		"/Users/double/Documents/blog/source/_posts/Android/加解密.md",
+		"/Users/double/aosp/packages/apps/Settings/src/com/android/settings/AppHeader.java",
+		"/Users/double/aosp/packages/apps/Settings/src/com/android/settings/AllowBindAppWidgetActivity.java",
+		"/Users/double/Downloads/POC/AndroidManifest.xml",
+		"/Users/double/Downloads/POC/src/com/cmccpoc/activity/home/widget/InCommingAlertDialog.java",
+		"/Users/double/Downloads/POC/src/com/cmccpoc/dao/TableMessageDao.java",
+		"/Users/double/Downloads/POC/src/com/cmccpoc/entity/LocationBean.java",
+		"/Users/double/Downloads/POC/src/com/cmccpoc/entity/ImageItem.java",
+		"/Users/double/Downloads/POC/src/com/cmccpoc/entity/ImageBucket.java",
+		"/Users/double/Downloads/bd_speech_sdk_asr_v2.1.21.20170112_3ad14de_beta/demo/src/com/baidu/android/voicedemo/Constant.java",
+		"/Users/double/Downloads/bd_speech_sdk_asr_v2.1.21.20170112_3ad14de_beta/demo/src/com/baidu/android/voicedemo/ActivityMain.java",
+		"/Users/double/Downloads/bd_speech_sdk_asr_v2.1.21.20170112_3ad14de_beta/demo/src/com/baidu/android/voicedemo/ApiActivity.java",
+		"/Users/double/Downloads/recognition_android/src/com/example/speechapi/NewActivity.java",
+		"/Users/double/Documents/blog/source/_posts/Android/multidex.md",
+		"/Users/double/Documents/blog/source/_posts/Android/单元测试/单元测试-开始.md",
+		"/Users/double/Documents/blog/source/_posts/Android/view/ViewFlipper.md",
+		"/Users/double/Documents/blog/source/_posts/Android/android5.0/JobScheduler.md",
+		"/Users/double/work/WorkProjects/VQChat/vQChat/src/main/java/com/waytone/vqchat/AppConstants.java",
+		"/Users/double/work/WorkProjects/VQChat/vQChat/src/main/java/com/waytone/vqchat/BaseApplication.java",
+		"/Users/double/work/WorkProjects/VQChat/vQChat/src/main/java/com/waytone/vqchat/network/ImageLoader.java",
+		"/Users/double/Documents/blog/source/_posts/program/后台开发慢？教你自己模拟API.md",
+		"/Users/double/Desktop/apidemo",
+		"/Users/double/AndroidStudioProjects/Dagger2Demo2/app/build.gradle",
+		"/Users/double/Documents/blog2/_config.yml",
+		"/Users/double/Documents/blog/_config.yml",
+		"/Users/double/Documents/blog2/source/_posts/Python/django/Django Templates - The Django template language.md",
+		"/Users/double/Documents/blog2/source/_posts/Python/django/Django_Models.md",
+		"/Users/double/Documents/blog2/source/_posts/database/database-sqlmdown.mdown",
+		"/Users/double/Documents/blog2/save_md_to_db.py",
+		"/Users/double/splinter_demo.py",
+		"/Users/double/hello.py",
+		"/Users/double/Documents/blog2/source/_posts/Android/进程保活.md",
+		"/Users/double/Documents/blog2/source/_posts/html/html-菜鸟教程.md",
+		"/Users/double/Desktop/hux-blog.min.css",
+		"/Users/double/Desktop/syntax.css",
+		"/Users/double/Documents/blog2/source/_posts/Android/控件使用/Toast大全.md",
+		"/Users/double/work/WorkProjects/WayTone/app/build.gradle",
+		"/Users/double/Documents/blog2/source/_posts/Android/第三方/retrofit/Retrofit缓存.md",
+		"/Users/double/Documents/blog2/source/_posts/Android/第三方/RxJava/Rxjava2代码例子.md",
+		"/Users/double/Documents/blog2/source/_posts/Android/第三方/eventbus/EventBus.md",
+		"/Users/double/Desktop/时间的朋友.md",
+		"/Users/double/Documents/blog2/source/_posts/Android/第三方/Dagger2.md",
+		"/Users/double/Documents/blog2/source/_posts/Python/crawler/Scrapyd.mdown",
+		"/Users/double/Documents/blog2/source/_posts/linux/使用 virtualenv 建立独立的开发环境.md",
+		"/Users/double/Documents/blog2/source/_posts/Android/第三方/retrofit/Retrofit.md",
+		"/Users/double/Documents/blog2/source/_posts/Python/docker/docker-learn.mdown",
+		"/Users/double/Documents/blog2/source/_posts/Python/docker/docker-command.md",
+		"/Users/double/Documents/blog2/source/_posts/program/linux-command.md",
+		"/Users/double/Documents/blog2/source/_posts/Python/django/django_setup.md",
+		"/Users/double/Desktop/记录：",
+		"/Users/double/PycharmProjects/first_django/mysite/mysite_nginx.conf",
+		"/Users/double/Documents/blog2/source/_posts/ReadNote/https.md",
+		"/Users/double/Documents/blog2/source/_posts/ReadNote/http.md",
+		"/Users/double/Documents/blog2/source/_posts/html/CSS.mdown",
+		"/Users/double/Documents/blog2/source/_posts/Python/django/Django-Pagination.md",
+		"/Users/double/temp.py",
+		"/Users/double/Documents/blog2/source/_posts/Android/view/自定义View/自定义View.md",
+		"/Users/double/Documents/blog2/source/_posts/program/vim/vim 问题记录.md",
+		"/Users/double/Documents/blog2/source/_posts/program/vim/vim.md",
+		"/Users/double/Documents/blog2/source/_posts/Android/features/退出应用实现.md"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"包",
+			"dir",
+			"di r",
+			"vir",
+			"vi r",
+			"doc",
+			"do c",
+			"注解",
+			"global",
+			"    \n",
+			"*/\n",
+			"      \n",
+			"{\n",
+			"表示存在",
+			"VoiceRecognitionClient",
+			"tag",
+			"wsgi",
+			"py",
+			"onLayout",
+			"o n L a you t",
+			"onMe",
+			"```",
+			"img-responsive",
+			":\n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "/Users/double/Documents/blog/source"
+		}
+	],
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 234.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 236.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -6,6 +6,12 @@ categories: program
 
 ---
 
+# git 强制 push 本地文件覆盖 remote 所有文件，以及历史版本信息
+
+```
+git push <remote> <branch> --force-with-lease
+```
+
 # git 取消单前的所有修改（未 add，commit）
 
 ```

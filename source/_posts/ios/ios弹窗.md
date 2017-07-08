@@ -23,7 +23,7 @@ category: ios
 
 ## UIAlertController
 
-iOS8推出的新controller，替代了UIAlertView和UIActionSheet，但UIAlertView和UIActionSheet仍可以使用。
+iOS8推出的新 controller，替代了 UIAlertView 和 UIActionSheet，但 UIAlertView 和 UIActionSheet 仍可以使用。
 
 
 

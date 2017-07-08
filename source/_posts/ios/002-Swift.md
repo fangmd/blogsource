@@ -918,3 +918,11 @@ Swift 的子类不会默认继承父类的初始化器
 让子类 初始化器 匹配父类初始化器的时候需要重写： `OVERRIDE`
 
 
+# Access Control
+
+
+open，public，internal，fileprivate，private
+
+
+
+
