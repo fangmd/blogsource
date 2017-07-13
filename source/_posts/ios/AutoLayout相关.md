@@ -1,0 +1,28 @@
+---
+title: AutoLayout 相关
+date: 2017-07-12 13:18:12
+tags: [ios, AutoLayout]
+category: ios
+
+---
+
+
+# 实现 SuperView 的高度由子 View 决定（Android 中的 wrap_content）
+
+主要思路和 UITableView 的 cell 高度自适应方法一样。
+
+1. 第一个子 view 设置 top 约束
+
+比如：
+
+```
+make.top.equalTo(superView).offset(10)
+```
+
+2. 最后一个 view 设置 bottom 约束
+
+比如：
+
+```
+make.bottom.equalTo(superView).offset(10)
+```

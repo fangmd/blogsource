@@ -102,10 +102,12 @@
 	"expanded_folders":
 	[
 		"/Users/double/Documents/blog/source",
-		"/Users/double/Documents/blog/source/_posts"
+		"/Users/double/Documents/blog/source/_posts",
+		"/Users/double/Documents/blog/source/_posts/ios"
 	],
 	"file_history":
 	[
+		"/Users/double/Documents/blog/source/_posts/program/git/git-使用流程.md",
 		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-开闭原则.md",
 		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-单例模式.mdown",
 		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-接口隔离.md",
@@ -145,7 +147,6 @@
 		"/Users/double/Documents/blog/source/_posts/Android/view/自定义View/自定义View.md",
 		"/Users/double/Documents/blog/source/_posts/Android/ndk/NDKlearn.md",
 		"/Users/double/Desktop/untitled.html",
-		"/Users/double/Documents/blog/source/_posts/program/git/git-使用流程.md",
 		"/Users/double/Documents/blog/source/_posts/program/git/git-pro.md",
 		"/Users/double/Documents/blog/source/_posts/program/git/git命令.md",
 		"/Users/double/Documents/blog/source/_posts/ReadNote/程序员修炼之道-从小工到专家.md",
@@ -237,7 +238,7 @@
 	],
 	"find":
 	{
-		"height": 22.0
+		"height": 48.0
 	},
 	"find_in_files":
 	{
@@ -251,6 +252,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Set",
+			"枚举",
+			"enum",
+			"func",
 			"包",
 			"dir",
 			"di r",
