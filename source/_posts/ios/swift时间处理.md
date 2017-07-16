@@ -23,6 +23,8 @@ dateformatter.dateFormat = " YYYY - MM - dd HH:mm:ss"
 let customDate = dateformatter.string(from: currentdate)
 ```
 
+<!--more-->
+
 # String -> Date
 
 ```
