@@ -7,6 +7,13 @@ category: ios
 ---
 
 
+# head view 设置大小
+
+```
+just set head view frame
+```
+
+
 # cell 中创建圆形图片
 
 ```
