@@ -1,0 +1,138 @@
+---
+title: Realm 基本操作
+date: 2017-07-31 21:38:14
+tags: ios
+categories: ios
+
+---
+
+
+文档地址：[Realm Document](https://realm.io/docs/swift/latest/)
+
+# Model 数据模型
+
+## 结合 ObjectMapper 创建的 Model
+
+```swift
+import Foundation
+import ObjectMapper
+import RealmSwift
+import Realm
+
+class CourseModel: Object, Mappable{
+    
+    dynamic var id: String?
+    dynamic var name: String?
+    
+    func mapping(map: Map) {
+        name <- map["name"]
+        id <- map["id"]
+    }
+    
+    required init?(map: Map) {
+        super.init()
+    }
+    
+    required init() {
+        super.init()
+    }
+    
+    required init(value: Any, schema: RLMSchema) {
+        fatalError("init(value:schema:) has not been implemented")
+    }
+    
+    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        fatalError("init(realm:schema:) has not been implemented")
+    }
+}
+```
+
+<!--more-->
+
+## 支持的数据类型
+
+Bool, Int, Int8, Int16, Int32, Int64, Double, Float, String, Date, and Data
+
+## Relationships
+
+### To - One Relationships
+
+### To - Many Relationships
+
+### Inverse Relationships
+
+### Optional Properties 可选属性
+
+```
+let age = RealmOptinal<Int>()
+```
+
+RealmOptional supports Int, Float, Double, Bool
+
+
+## 属性
+
+不同属性需要使用 `dynamic var` 修饰，才能被数据库所接受
+
+LinkingObjects, List and RealmOptional 属性需要使用 `let` 修饰
+
+## 排序
+
+表示按照某个属性排序，排序支持的数据结构：string, integer, boolean, Date
+
+```
+override static func indexedProperties() -> [String] {
+    return ["title"]
+}
+```
+
+## Auto-Updating Objects 更新数据对象
+
+修改一个对象：
+
+```
+let myPuppy = realm.objects(Dog.self).filter("age == 1").first
+try! realm.write {
+  myPuppy!.age = 2
+}
+```
+
+如果 UI 界面的数据是直接从数据中获取的
+
+1. 可以通过注册 Realm notifications 来获取对象的改变的通知。
+2. 可以使用 key-value observation 监听对象的改变
+
+## Primary Keys 设置主键
+
+`primaryKey` 方法返回的值就是主键
+
+```swift
+override static func primaryKey() -> String? {
+    return "id"
+}
+```
+
+## Ignored Preperties 设置忽略属性
+
+重写 `ignoredProperties`
+
+```
+override static func ignoredProperties() -> [String] {
+    return ["tmpID"]
+}
+```
+
+
+# Writes 写入
+
+>All changes to an object (addition, modification and deletion) must be done within a write transaction.
+
+>一个对象所有的增删改操作需要在一个 write 事务中执行完成
+
+
+
+
+
+
+
+
