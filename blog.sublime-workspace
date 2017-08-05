@@ -103,11 +103,17 @@
 	[
 		"/Users/double/Documents/blog/source",
 		"/Users/double/Documents/blog/source/_posts",
-		"/Users/double/Documents/blog/source/_posts/ReadNote",
-		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式"
+		"/Users/double/Documents/blog/source/_posts/Android",
+		"/Users/double/Documents/blog/source/_posts/Android/Android 版本",
+		"/Users/double/Documents/blog/source/_posts/Android/Android 版本/Android5.0",
+		"/Users/double/Documents/blog/source/_posts/Android/Android 版本/Android5.0/design包"
 	],
 	"file_history":
 	[
+		"/Users/double/Documents/blog/source/_posts/Android/Android 版本/Android5.0/Android5.0 新特性.mdown",
+		"/Users/double/Documents/blog/source/_posts/Android/Android 版本/Android5.0/Android5.0动画.md",
+		"/Users/double/Documents/blog/source/_posts/Android/Android 版本/Android5.0/android波纹效果.md",
+		"/Users/double/Documents/blog/source/_posts/Android/Android 版本/Android5.0/design包/CoordinatorLayout.md",
 		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-适配器模式.md",
 		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-责任链模式.md",
 		"/Users/double/Documents/blog/source/_posts/ReadNote/设计模式/设计模式之蝉-装饰模式.md",
@@ -231,11 +237,7 @@
 		"/Users/double/Documents/blog2/source/_posts/linux/使用 virtualenv 建立独立的开发环境.md",
 		"/Users/double/Documents/blog2/source/_posts/Android/第三方/retrofit/Retrofit.md",
 		"/Users/double/Documents/blog2/source/_posts/Python/docker/docker-learn.mdown",
-		"/Users/double/Documents/blog2/source/_posts/Python/docker/docker-command.md",
-		"/Users/double/Documents/blog2/source/_posts/program/linux-command.md",
-		"/Users/double/Documents/blog2/source/_posts/Python/django/django_setup.md",
-		"/Users/double/Desktop/记录：",
-		"/Users/double/PycharmProjects/first_django/mysite/mysite_nginx.conf"
+		"/Users/double/Documents/blog2/source/_posts/Python/docker/docker-command.md"
 	],
 	"find":
 	{
