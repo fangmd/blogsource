@@ -7,7 +7,153 @@ categories: android
 ---
 
 
+# Glide 4.0
 
+参考：![http://www.jianshu.com/p/ab97d6bda8ec](http://www.jianshu.com/p/ab97d6bda8ec)
+
+## gradle 配置
+
+```
+compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
+annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+compile 'com.github.bumptech.glide:okhttp3-integration:4.0.0-RC0'
+compile 'com.android.support:support-v4:26.0.0-alpha1'
+```
+
+如果要把图片缓存本地需要设置权限：
+
+```
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+```
+
+
+<!--more-->
+
+## 0 配置 AppGlideModule
+
+```java
+
+@GlideModule
+public class MyGlideModule extends AppGlideModule {
+
+    @Override
+    public void applyOptions(final Context context, GlideBuilder builder) {
+        //获取内存的默认配置
+//        MemorySizeCalculator calculator = new MemorySizeCalculator.Builder(context).build();
+//        int defaultMemoryCacheSize = calculator.getMemoryCacheSize();
+//        int defaultBitmapPoolSize = calculator.getBitmapPoolSize();
+//        int customMemoryCacheSize = (int) (1.2 * defaultMemoryCacheSize);
+//        int customBitmapPoolSize = (int) (1.2 * defaultBitmapPoolSize);
+//        builder.setMemoryCache(new LruResourceCache(customMemoryCacheSize));
+//        builder.setBitmapPool(new LruBitmapPool(customBitmapPoolSize));
+
+        //内存缓存相关,默认是24m
+        int memoryCacheSizeBytes = 1024 * 1024 * 20; // 20mb
+        builder.setMemoryCache(new LruResourceCache(memoryCacheSizeBytes));
+
+
+        //设置磁盘缓存及其路径
+        //
+        int MAX_CACHE_SIZE = 100 * 1024 * 1024;
+        String CACHE_FILE_NAME = "imgCache";
+        builder.setDiskCache(new ExternalCacheDiskCacheFactory(context,CACHE_FILE_NAME,MAX_CACHE_SIZE));
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            String downloadDirectoryPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +
+                    CACHE_FILE_NAME;
+            //路径---->sdcard/imgCache
+            builder.setDiskCache(new DiskLruCacheFactory(downloadDirectoryPath, MAX_CACHE_SIZE));
+        } else {
+            //路径---->/sdcard/Android/data/<application package>/cache/imgCache
+            builder.setDiskCache(new ExternalCacheDiskCacheFactory(context, CACHE_FILE_NAME, MAX_CACHE_SIZE));
+        }
+    }
+
+    /**
+     * 把glide默认的网络请求方式换成 okhttp
+     */
+    @Override
+    public void registerComponents(Context context, Registry registry) {
+        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory());
+    }
+
+    /**
+     * false: 不使用清单配置的方式,减少初始化时间
+     */
+    @Override
+    public boolean isManifestParsingEnabled() {
+        return false;
+    }
+}
+
+```
+
+## 1 RequestBuilder
+
+RequestBuilder 提供了影响加载过程本身的选项:
+
+- thumbnail: 缩略图
+- listener: 加载监听
+- load: 加载类型
+- preload: 
+- into: 设置图片加载到哪里
+- apply: 添加 RequestOptions 对象
+- transition: 添加 TransitionOptions 对象 设置变换图片加载出来的时候替换老图片的过渡效果
+
+### 获取 RequestBuilder
+
+```
+RequestBuilder<Drawable> requestBuilder = Glide.with(context).load("image url");
+```
+
+
+## RequestOptions
+
+包括：
+
+- centerCrop
+- placeholder
+- error
+- priority
+- disCacheStrategy
+
+```java
+private static RequestOptions getRequestOptions() {
+
+        RequestOptions options = new RequestOptions();
+        //options.format(DecodeFormat.PREFER_ARGB_8888)
+        //options.centerCrop()//图片显示类型
+        //options.placeholder(loadingRes)//加载中图片
+        //options.error(errorRes)//加载错误的图片
+        //options.error(new ColorDrawable(Color.RED))//或者是个颜色值
+        //options.priority(Priority.HIGH)//设置请求优先级
+        //options.diskCacheStrategy(DiskCacheStrategy.ALL);
+        //options.diskCacheStrategy(DiskCacheStrategy.RESOURCE)//仅缓存原图片
+        //options.diskCacheStrategy(DiskCacheStrategy.ALL)//全部缓存
+        //options.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)缓存缩略过的
+        //options.onlyRetrieveFromCache(true)//仅从缓存加载
+        //options.skipMemoryCache(true)//禁用缓存,包括内存和磁盘
+        //options.diskCacheStrategy(DiskCacheStrategy.NONE)仅跳过磁盘缓存
+        //options.override(200,200)加载固定大小的图片
+        //options.dontTransform()不做渐入渐出的转换
+        //options.transition(new DrawableTransitionOptions().dontTransition())//同上
+        //options.circleCrop()设置成圆形头像<这个是V4.0新增的>
+        //options.transform(new RoundedCorners(10))设置成圆角头像<这个是V4.0新增的>
+
+        return options;
+    }
+```
+
+
+## TransitionOptions
+
+
+
+
+
+
+
+# old-----
 
 # load
     .load(参数)
@@ -23,7 +169,7 @@ categories: android
 
 ## 加载到本地
 
-<!--more-->
+
 
 ## 加载自定义数据源 --- 待续
 通过ModelLoader接口实现，用来加载不同尺寸的图片

@@ -15,6 +15,15 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "source/_posts/Android/图片处理/Glide.md",
+			"settings":
+			{
+				"buffer_size": 9040,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -104,9 +113,7 @@
 		"/Users/double/Documents/blog/source",
 		"/Users/double/Documents/blog/source/_posts",
 		"/Users/double/Documents/blog/source/_posts/Android",
-		"/Users/double/Documents/blog/source/_posts/Android/Android 版本",
-		"/Users/double/Documents/blog/source/_posts/Android/Android 版本/Android5.0",
-		"/Users/double/Documents/blog/source/_posts/Android/Android 版本/Android5.0/design包"
+		"/Users/double/Documents/blog/source/_posts/Android/图片处理"
 	],
 	"file_history":
 	[
@@ -306,8 +313,39 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "source/_posts/Android/图片处理/Glide.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9040,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4395,
+								4395
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/MarkdownEditing/Markdown.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2810.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -392,7 +430,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 236.0,
+	"side_bar_width": 89.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
