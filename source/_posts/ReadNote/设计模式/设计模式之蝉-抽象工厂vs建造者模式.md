@@ -91,8 +91,139 @@ public class BWMFactory implements CarFactory{
 ```
 
 
+# 按建造者模式生产车辆
+
+实现宝马发动机，奔驰车轮
 
 
+车辆描述类：
+
+```java
+public interface ICar{
+    public String getWheel();
+    public String getEngine();
+}
+```
+
+具体车辆：
+
+```java
+public class Car implements ICar{
+    private String engine;
+    private String wheel;
+    public Car(String _engine, String _wheel){
+        this.engine = _engine;
+        this.wheel = _wheel;
+    }
+    public String getEngine(){
+        return engine;
+    }
+    public String getWheel(){
+        return wheel;
+    }
+    public String toString(){
+        return "Wheel:" + wheel + "engine:" +engine;
+    }
+}
+```
+
+抽象建造者：
+
+```java
+public abstract class CarBuilder{
+    private ICar car;
+    // 设计蓝图
+    private Blueprint bp;
+
+    public Car buildCar(){
+        return new Car(buildEngine(), buildWheel());
+    }
+
+    public void receiveBluePrint(Blueprint _bp){
+        this.bp = _bp;
+    }
+    protected Blueprint getBlueprint(){
+        return bp;
+    }
+
+    protected abstract String buildWheel();
+    protected abstract String buildEngine();
+}
+```
+
+生产蓝图类：
+
+```java
+public class Blueprint{
+    private String wheel;
+    private String engine;
+
+    public Strng getWheel(){
+        return wheel;
+    }
+    public void setWheel(String wheel){
+        this.wheel = wheel;
+    }
+    public String getEngine(){
+        return engine;
+    }
+    public void setEngine(String engine){
+        this.engine = engine;
+    }
+}
+```
+
+
+宝马车建造车间：
+
+```java
+public class BWMBuilder extends CarBuilder{
+    public String buildEngine(){
+        return super.getBlueprint().getEngine();
+    }
+    public String buildWheel(){
+        return super.getBlueprint().getWheel();
+    }
+}
+```
+
+奔驰车建造车间：
+
+```java
+public class BenzBuilder extends CarBuilder{
+    public String buildEngine(){
+        return super.getBlueprint().getEngine();
+    }
+    public String buildWheel(){
+        return super.getBlueprint().getWheel();
+    }
+}
+```
+
+导演类：编写蓝图，协调生产车间，对外提供最终产品
+
+```java
+public class Director{
+    private CarBuilder benzBuilder = new BenzBuilder();
+    private CarBuilder bmwBuilder = new BWMBuilder();
+
+    public ICar createBenzSuv(){
+        return createCar(benzBuilder, "benz的引擎", "benz的轮胎");
+    }
+
+    public ICar createBWMVan(){
+        return createCar(benzBuilder, "BWM的引擎", "BWM的轮胎");
+    }
+
+    private ICar createCar(CarBuilder _carBuilder, String engine, String wheel){
+        Blueprint bp = new Blueprint();
+        bp.setEngine(engine);
+        bp.setWheel(wheel);
+        _carBuilder.receiveBlueprint(bp)
+        return _carBuilder.buildCar();
+    }
+}
+```
 
 
 
