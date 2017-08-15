@@ -77,19 +77,18 @@ timer 创建一个带延迟的序列
 使用 swift 闭包的方式创建序列
 
 ```
-let myJust = { (singleElement: Int) -> Observable<Int> in
+func myJust<E>(_ element: E) -> Observable<E> {
     return Observable.create { observer in
-        observer.on(.Next(singleElement))
-        observer.on(.Completed)
-        
-        return NopDisposable.instance
+        observer.on(.next(element))
+        observer.on(.completed)
+        return Disposables.create()
     }
 }
 
-_ = myJust(5)
-    .subscribe { event in
-        print(event)
-}
+myJust(0)
+    .subscribe(onNext: { n in
+      print(n)
+    })
 ```
 
 #### timer
