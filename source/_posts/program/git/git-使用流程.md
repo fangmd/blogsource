@@ -6,6 +6,19 @@ categories: program
 
 ---
 
+# ssh-add 未开启
+
+```
+Error connecting to agent: Connection refused
+```
+
+处理：
+
+```
+eval `ssh-agent -s`
+ssh-add
+```
+
 # git 强制 push 本地文件覆盖 remote 所有文件，以及历史版本信息
 
 ```
