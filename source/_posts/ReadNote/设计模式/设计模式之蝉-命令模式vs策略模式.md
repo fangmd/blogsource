@@ -29,6 +29,8 @@ public interface Algorithm{
 }
 ```
 
+<!--more-->
+
 zip 压缩算法：
 
 ```java

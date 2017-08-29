@@ -37,6 +37,8 @@ public interface IPosition{
 }
 ```
 
+<!--more-->
+
 职位：
 
 ```java

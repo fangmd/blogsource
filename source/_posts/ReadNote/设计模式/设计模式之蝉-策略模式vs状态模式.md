@@ -55,6 +55,8 @@ public class Context{
 }
 ```
 
+<!--more-->
+
 使用的时候 需要创建 WorkAlgorithm 具体的子类，传入 Context 使用
 
 # 状态模式实现人生

@@ -48,6 +48,8 @@ public class Agent implements IStar{
 }
 ```
 
+<!--more-->
+
 经纪人把请求传递给明星，让他签名。
 
 

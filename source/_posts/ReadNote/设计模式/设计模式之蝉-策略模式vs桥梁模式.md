@@ -49,6 +49,8 @@ public class TextMail extends MailTemplate{
 }
 ```
 
+<!--more-->
+
 超文本格式邮件：HtmlMail
 
 MailServer:
