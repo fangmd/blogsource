@@ -6,6 +6,16 @@ categories: program
 
 ---
 
+# 如何把已经加入到 git 的文件设置成 ignore
+
+```
+1. 在 ignore 文件中添加忽略
+2. git rm -r --cached 要忽略的文件
+3. git add .
+4. git commit -m'...'
+5. git push ...
+```
+
 # ssh-add 未开启
 
 ```
