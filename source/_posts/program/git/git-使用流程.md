@@ -6,6 +6,21 @@ categories: program
 
 ---
 
+# git fork 过来的代码如何同步作者的代码
+
+```
+git remote add upstream [作者的 git 仓库地址]
+
+git fetch upstream
+
+git checkout master
+
+git merge upstream/master
+
+git push origin master
+
+```
+
 # 如何把已经加入到 git 的文件设置成 ignore
 
 ```
@@ -33,6 +48,13 @@ ssh-add
 
 ```
 git push <remote> <branch> --force-with-lease
+```
+
+# git 强制 pull 远程文件 覆盖 本地文件
+
+```
+git fetch --all
+git reset --hard origin/master
 ```
 
 # git 取消单前的所有修改（未 add，commit）
