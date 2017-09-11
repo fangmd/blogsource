@@ -87,6 +87,12 @@ anim.addListener(new AnimatorListenerAdapter() {
 anim.start();
 ```
 
+设置动画运行时间：
+
+```
+anim.setDuration(..)
+```
+
 
 # activity transition 跳转动画
 
