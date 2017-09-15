@@ -227,7 +227,7 @@ public void register(Object subscriber) {
 
 
 
-真正事件发送方法：
+事件发送方法：
 
 ```
     private void postSingleEvent(Object event, PostingThreadState postingState) throws Error {
@@ -257,7 +257,67 @@ public void register(Object subscriber) {
 
 - `lookupAllEventTypes(Class<?> eventClass)` 方法通过 事件类 寻找 eventTypes【？（Class.getInterfaces）？？】
 - EventBus 成员变量 `Map<Class<?>, List<Class<?>>> eventTypesCache` 实现 事件类-eventTypes 关联
-- 
+
+
+事件不同线程之前切换代码：
+
+```java
+    private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+        switch (subscription.subscriberMethod.threadMode) {
+            case POSTING:
+                invokeSubscriber(subscription, event);
+                break;
+            case MAIN:
+                if (isMainThread) {
+                    invokeSubscriber(subscription, event);
+                } else {
+                    mainThreadPoster.enqueue(subscription, event);
+                }
+                break;
+            case BACKGROUND:
+                if (isMainThread) {
+                    backgroundPoster.enqueue(subscription, event);
+                } else {
+                    invokeSubscriber(subscription, event);
+                }
+                break;
+            case ASYNC:
+                asyncPoster.enqueue(subscription, event);
+                break;
+            default:
+                throw new IllegalStateException("Unknown thread mode: " + subscription.subscriberMethod.threadMode);
+        }
+    }
+```
+
+
+
+### 接收者处理事件的方法
+
+```java
+    void invokeSubscriber(Subscription subscription, Object event) {
+        try {
+            subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
+        } catch (InvocationTargetException e) {
+            handleSubscriberException(subscription, event, e.getCause());
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException("Unexpected exception", e);
+        }
+    }
+```
+
+事件延迟处理实现：
+
+```java
+    void invokeSubscriber(PendingPost pendingPost) {
+        Object event = pendingPost.event;
+        Subscription subscription = pendingPost.subscription;
+        PendingPost.releasePendingPost(pendingPost);
+        if (subscription.active) {
+            invokeSubscriber(subscription, event);
+        }
+    }
+```
 
 
 # EventBusBuilder.class
