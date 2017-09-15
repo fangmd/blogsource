@@ -106,7 +106,7 @@ public interface IReceiver{
 }
 ```
 
-zip 接受者，gzip结束者
+zip 接受者，gzip 接受者
 
 
 调用者：

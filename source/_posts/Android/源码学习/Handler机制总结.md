@@ -17,15 +17,10 @@ Handler 提供了线程之间通信的方法。
 ## Handler
 >Handler 对象来与 Looper 沟通，以便 push 新消息到 MessageQueue 里;或者接收 Looper 从 Message Queue 取出所送来的消息。
 
-Handler 对象内部有下面 3 个重要的成员变量：
+    final MessageQueue mQueue;
+    final Looper mLooper;
+    final Callback mCallback;
 
-```java
-final MessageQueue mQueue;
-final Looper mLooper;
-final Callback mCallback;
-```
-
-上面 3 个成员变量，在 Handler 的构造方法中初始化（`mLooper = Looper.myLooper();`, `mCallback = callback`, `mQueue = mLooper.mQueue`）
 
 ### 方法
 1. 构造方法
@@ -49,12 +44,10 @@ final Callback mCallback;
         	mCallback = callback;
         	mAsynchronous = async;
     	}
-
-几个构造方法最终都会调用这个构造方法，`myLooper()`。获取当前 Looper 对象，通过 looper 获取 MessageQueue，完成了 handler 和 looper 的关联
+几个构造方法最终都会调用这个构造方法，`myLooper()`。获取当前Looper对象，通过looper获取MessageQueue，完成了handler和looper的关联
 
 2. 消息发送方法
 
-```java
 	    public boolean sendMessageAtTime(Message msg, long uptimeMillis) {
         	MessageQueue queue = mQueue;
         	if (queue == null) {
@@ -65,28 +58,21 @@ final Callback mCallback;
         	}
         	return enqueueMessage(queue, msg, uptimeMillis);
     	}
-```
+如果队列为`null`就抛异常，否则向队列中放入消息。
 
+	    private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMillis) {
+        	msg.target = this;
+        	if (mAsynchronous) {
+            	msg.setAsynchronous(true);
+        	}
+        	return queue.enqueueMessage(msg, uptimeMillis);
+    	}
+放入消息的时候要指定目标，默认是发送个自己。
 
-如果队列为 `null` 就抛异常，否则向队列中放入消息。
-
-```java
-private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMillis) {
-    msg.target = this;
-    if (mAsynchronous) {
-        msg.setAsynchronous(true);
-    }
-    return queue.enqueueMessage(msg, uptimeMillis);
-}
-```
-
-放入消息的时候要指定目标，默认是发送给自己。
-
-消息放入队列后，Looper通过 `looper()` 处理消息队列
+消息放入队列后，Looper通过`looper()`处理消息队列
 
 3. 分发消息方法
 
-```java
 	 	/**
      	* Handle system messages here.
      	*/
@@ -102,9 +88,7 @@ private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMilli
             	handleMessage(msg);
         	}
     	}
-```
-
-在这个方法内调用 `handleCallback` 方法处理消息
+在这个方法内调用`handleCallback`方法处理消息
 
 ### 内部接口`Callback`
 	public interface Callback {
@@ -113,27 +97,13 @@ private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMilli
 
 	
 ## Looper
->一个线程只能产生一个 Looper 对象，由它来管理此线程里的 MessageQueue (消息队列)。 
+>一个线程只能产生一个Looper对象，由它来管理此线程里的MessageQueue(消息队列)。 
 
-1. 内部包含了一个消息队列 `MessageQueue` 所有 handler 发送的消息都通过这个队列。
-2. Looper.Looper 方法是一个死循环，不断从 `MessageQueue` 中取 Message ，有就处理，没有就阻塞
-
-### Lopper 类中重要的成员变量
-
-```java
-    final MessageQueue mQueue;
-    final Thread mThread;
-    private static Looper sMainLooper;  // guarded by Looper.class
-    static final ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
-```
-
-- `sThreadLocal` 里面存储了所有线程的 Looper
-- `sMainLooper` 是主线程的 Looper ，由 Android 应用自己创建 `prepareMainLooper()`
+1. 内部包含了一个消息队列`MessageQueue`所有handler发送的消息都通过这个队列。
+2. Looper.Looper方法是一个死循环，不断从`MessageQueue`中取Message，有就处理，没有就阻塞
 
 
-
-### Looper 类的方法
-
+### Looper类的方法
 1. Looper.prepare()方法（调用prepare(true)）
 		
 		private static void prepare(boolean quitAllowed) {
@@ -142,24 +112,17 @@ private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMilli
 			}
 			sThreadLocal.set(new Looper(quitAllowed));
 		}
-
-这个方法为当前线程创建一个 `Looper` ，如果一个线程中已经有一个Looper就会报错，如果没有就调用私有构造方法创建一个新的`Looper`
-
+这个方法创建新的`Looper`，如果一个线程中已经有一个Looper就会报错，如果没有就调用私有构造方法创建一个新的`Looper`
 2. 私有的构造方法
 	
-```java
 		    private Looper(boolean quitAllowed) {
 				mQueue = new MessageQueue(quitAllowed);
 				mThread = Thread.currentThread();
 			} 
-```
-
-
-创建了一个 `MessageQueue` ，并关联当前`Thread`
+创建了一个`MessageQueue`，并关联当前`Thread`
 
 3. `myLopper()`
 
-```java
 		/**
      	* Return the Looper object associated with the current thread.  Returns
      	* null if the calling thread is not associated with a Looper.
@@ -167,14 +130,10 @@ private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMilli
     	public static @Nullable Looper myLooper() {
         	return sThreadLocal.get();
     	}
-```
-
 获取当前Looper对象，
-
 
 4. `myQueue()`
 
-```java
     	/**
      	* Return the {@link MessageQueue} object associated with the current
      	* thread.  This must be called from a thread running a Looper, or a
@@ -183,10 +142,6 @@ private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMilli
     	public static @NonNull MessageQueue myQueue() {
         	return myLooper().mQueue;
     	}
-
-```
-
-
 获取Looper中的MessageQueue
 
 5. 死循环方法 loop()
@@ -247,24 +202,17 @@ private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMilli
 
 	
 ## MessageQueue消息队列
-
 >存储消息的容器
 
 
 
 ## ThreadLocal class
-
-是一个关于创建线程局部变量的类。
-
-作用：在线程中保存信息变量。
-
-在 Android 中的应用：负责 thread 和 looper 之间的关系
+作用：在线程中保存信息变量。负责thread和looper之间的关系
 
 ### 方法
 
 1. set
 
-```java
 		public void set(T value) {
         	Thread currentThread = Thread.currentThread();
         	Values values = values(currentThread);
@@ -273,14 +221,11 @@ private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMilli
         	}
 				values.put(this, value);
     	}
-```
 
-键值对的形式存储 Thread 和 Looper 之间的关系，Thread 是 key，Looper 是值
-
+键值对的形式存储Thread和Looper之间的关系，Thread是key，Looper是值
 
 2. get
 
-```java
 		public T get() {
 			// Optimized for the fast path.
 			Thread currentThread = Thread.currentThread();
@@ -297,8 +242,7 @@ private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMilli
 
 			return (T) values.getAfterMiss(this);
 		}
-```
-
+        
 取出当前线程对应的looper。
 
 ### 内部类 Values
