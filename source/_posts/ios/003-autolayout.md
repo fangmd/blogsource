@@ -1,14 +1,10 @@
 ---
-title: AutoLayout
+title: AutoLayout Learn
 date: 2017-05-18 13:18:12
 tags: ios
 category: ios
 
 ---
-
-
-
-
 
 # Swift AutoLayout 框架
 
@@ -252,7 +248,6 @@ self.topConstraint.uninstall()
 
 // or if you want to update the constraint
 self.topConstraint.updateOffset(5)
-
 ```
 
 #### snp.updateConstraints

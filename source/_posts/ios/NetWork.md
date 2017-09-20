@@ -238,7 +238,95 @@ final class RequestAlertPlugin: PluginType {
 方法二：[https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/NetworkLogger.swift](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/NetworkLogger.swift)
 
 
-## post json 数据 同时设置 url 参数
+## ## post json 数据 同时设置 url 参数（推荐 结合 ObjectMapper）
+
+例子:
+
+```
+enum Api{
+    case postAnswer(examPaperAnswerBodyModel: ExamPaperAnswerBodyModel)
+}
+
+extension Api: TargetType{
+
+    //...
+
+
+    var path: String {
+        case .postAnswer(_):
+            return "api/StudentStudy/SaveSubmitPaperOperate"
+    }
+
+    /// The HTTP method used in the request.
+    var method: Moya.Method {
+        switch self{
+        case .postAnswer(_):
+            return .post
+        default:
+            return .get
+        }
+    }
+
+    /// The parameters to be incoded in the request.
+    var parameters: [String: Any]? {
+        var base: [String : Any] = ["accessKey":1, "secretKey":1]
+        switch self{
+        case .postAnswer(let examPaperAnswerBodyModel):
+            var params:[String: Any] = [:]
+            params["query"] = ["accessKey":1, "secretKey":1]
+            params["body"] = examPaperAnswerBodyModel.toJSONString()
+            return params
+
+        }
+        return base
+    }
+
+    /// The method used for parameter encoding.
+    var parameterEncoding: ParameterEncoding {
+        switch self{
+        case .postAnswer(_):
+            return JSONEncoding()
+        default:
+            return URLEncoding.default
+        }
+    }
+
+    struct JSONEncoding: ParameterEncoding {
+        
+        public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
+            guard let parameters = parameters else {
+                return try urlRequest.asURLRequest()
+            }
+            
+            var urlRequest = try urlRequest.asURLRequest()
+            
+            let queryParameters = (parameters["query"] as? Parameters)
+            let queryRequest = try URLEncoding(destination: .queryString).encode(urlRequest, with: queryParameters)
+            
+            if let body = parameters["body"] {
+                let bodyJson = (body as! String)
+                
+                if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
+                    urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                }                
+                urlRequest.httpBody = bodyJson.data(using: .utf8)
+                urlRequest.url = queryRequest.url
+                return urlRequest
+            } else {
+                return queryRequest
+            }
+            
+        }
+    }
+    
+}
+
+
+```
+
+
+
+## post json 数据 同时设置 url 参数（不推荐）
 
 [https://github.com/Moya/Moya/issues/1119](https://github.com/Moya/Moya/issues/1119)
 

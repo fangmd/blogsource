@@ -6,25 +6,25 @@ category: ios
 
 ---
 
+# NavigationController 上添加 button 的时候
 
-# Install
+>NavigationController 在界面切换的时候，里面的控件位置偏移
+
+不要使用 Snapkit
 
 
-# 设置成透明
+
+# 改变 NavigationController 背景透明度的正确方式
 
 ```
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-    }
+mBarImageView = self.navigationController!.navigationBar.subviews[0]
+
+改变背景透明度：mBarImageView?.alpha = 1
+
+
+
 ```
+
 
 <!--more-->
 

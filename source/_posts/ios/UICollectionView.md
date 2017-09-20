@@ -6,6 +6,40 @@ category: ios
 
 ---
 
+# 左右滑动的时候确定当前 视图 的 index
+
+
+```
+mCollectionView?.delegate = self
+mCollectionView?.dataSource = self
+
+//----
+
+
+extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate{
+
+    //...
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let index = indexPath.row
+        // index
+    }
+    
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let cells = mCollectionView?.visibleCells ?? []
+        if (cells.count) > 0{
+            let indexPath = mCollectionView?.indexPath(for: (cells[0]))
+            let index = indexPath?.row ?? 0
+            // index
+        }
+    }
+
+}
+
+```
+
+
+
 # 隐藏滑动条
 
 ```
