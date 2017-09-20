@@ -6,10 +6,10 @@ category: Android
 
 ---
 
-Android applications 使用gradle构建，gradle是一门高级语言并且广泛用于java中，提供的Android插件为Android apps开发提供了很多的功能，例如build types, flavors, signing configurations, library projects，更多可查看[Android Plugin DSL Reference](http://google.github.io/android-gradle-dsl/current/index.html)
+Android applications 使用 gradle 构建，gradle 是一门高级语言并且广泛用于 java 中，提供的 Android 插件为 Android apps 开发提供了很多的功能，例如 build types, flavors, signing configurations, library projects，更多可查看[Android Plugin DSL Reference](http://google.github.io/android-gradle-dsl/current/index.html)
 
 # Gradle Build Files in Android
-理解创建Android工程生成的build file
+理解创建 Android 工程生成的build file
 
 <!--more-->
 
@@ -17,7 +17,7 @@ Android applications 使用gradle构建，gradle是一门高级语言并且广�
 
 2. 分析
 
-    `settings.gradle`显示当前项目中有哪些module
+    `settings.gradle` 显示当前项目中有哪些 module
 
         include ':app'
 
@@ -39,6 +39,7 @@ Android applications 使用gradle构建，gradle是一门高级语言并且广�
 ## setting project properties
 
 ### 问题
+
 如何通过`ext`节点把一些常量从`build.gradle`中移除加入到`gradle.properties`，或者在控制台`-p`设置值。
 
 ### 解决方法

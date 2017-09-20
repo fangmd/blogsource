@@ -1,20 +1,24 @@
 ---
 title: RecyclerView LayoutManager
-date: 2016-04-17 18:38:14
+date: 2017-09-20 18:38:14
 tags: [RecyclerView, LayoutManager]
 categories: android
 
 ---
 
 
-# RecyclerView LayoutManager
+# 自定义 LayoutManager
+
+
+
+
 
 <!--more-->
 
-## StaggeredGridLayoutManager
+# StaggeredGridLayoutManager
 
-### 让某个item占多列
-在Adapter中添加下面代码：
+## 让某个 item 占多列
+在 Adapter 中添加下面代码：
 
     @Override 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -29,7 +33,8 @@ categories: android
     } 
 
 
-## LinearLayoutManager
+# LinearLayoutManager
 
-## GridLayoutManager
+# GridLayoutManager
+
 

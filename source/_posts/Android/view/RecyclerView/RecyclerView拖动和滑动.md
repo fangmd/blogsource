@@ -17,8 +17,10 @@ categories: android
 - [https://github.com/iPaulPro/Android-ItemTouchHelper-Demo](https://github.com/iPaulPro/Android-ItemTouchHelper-Demo)
 
 ## 0 recyclerViewAdapter
+
 添加如下方法
 
+```java
     public void onItemDismiss(int position) {
         mData.remove(position);
         notifyItemRemoved(position);
@@ -29,9 +31,11 @@ categories: android
         notifyItemMoved(fromPosition, toPosition);
         return true;
     }
+```
 
 ## 1 创建一个ItemTouchHelper.Callback子类
 
+```java
 	public class MyItemTouchHelper extends ItemTouchHelper.Callback {
 	
 	    private final AlbumDetailRecyclerViewAdapter mAdapter; 
@@ -72,9 +76,12 @@ categories: android
 	    }
 	
 	} 
+```
 
 ## 2 给recyclerView 添加触摸功能
 
+```java
     MyItemTouchHelper itemTouchHelperCallback = new MyItemTouchHelper(mRecyclerViewAdapter);
     ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
     itemTouchHelper.attachToRecyclerView(mAlbumList);
+```
