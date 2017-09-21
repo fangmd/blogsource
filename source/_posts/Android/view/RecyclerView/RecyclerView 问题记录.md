@@ -1,5 +1,5 @@
 ---
-title: RecyclerView和CheckBox连用
+title: RecyclerView 问题记录
 date: 2016-04-26 09:38:14
 tags: RecyclerView
 categories: android
@@ -7,9 +7,9 @@ categories: android
 ---
 
 
-# RecyclerView 问题记录
 
-## 1 在点击事件中更新其他项时报错
+
+# 在点击事件中更新其他项时报错
 
 ![](http://7xr8nu.com1.z0.glb.clouddn.com/recyclerviewsinglechoice.png)
 
@@ -34,3 +34,29 @@ categories: android
         };
         handler.post(r);
     }
+
+# 在 RecyclerView 中使用 CardView
+
+
+cardView 的 match_parent 属性实效
+
+处理方法：
+
+```java
+    @Override
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item2, null, true);
+        view.setLayoutParams(new RecyclerView.LayoutParams(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT
+        ));
+        return new Holder((view));
+    }
+```
+
+处理方法二：
+
+```
+CardView 不作为 Item 的 根布局
+```

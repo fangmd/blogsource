@@ -9,6 +9,10 @@ categories: android
 
 # 自定义 LayoutManager
 
+参考：[http://www.jianshu.com/p/08d998d047d8](http://www.jianshu.com/p/08d998d047d8)
+
+
+
 
 ## 继承 RecyclerView.LayoutManager 抽象类
 
@@ -88,6 +92,7 @@ categories: android
         }
 ```
 
+## 如果设置了可滑动，处理用户滑动监听
 
 如果设置了可滑动，就需要重写下面的两个方法中的一个：
 
@@ -126,6 +131,45 @@ categories: android
             return 0;
         }
 ```
+
+### 获取 RecyclerView 的高度
+
+```java
+    private int getVerticalSpace() {
+        return getHeight() - getPaddingBottom() - getPaddingTop();
+    }
+```
+
+### 类似 LinearLayoutManager 的滑动实现
+
+```java
+    private int verticalScrollOffset;
+    private int totalHeight;
+
+    @Override
+    public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+        //实际要滑动的距离
+        int travel = dy;
+
+        //如果滑动到最顶部
+        if (verticalScrollOffset + dy < 0) {
+            travel = -verticalScrollOffset;
+        } else if (verticalScrollOffset + dy > totalHeight - getVerticalSpace()) {//如果滑动到最底部
+            travel = totalHeight - getVerticalSpace() - verticalScrollOffset;
+        }
+
+        // 将竖直方向的偏移量 + travel
+        verticalScrollOffset += travel;
+
+        // 平移容器内的item
+        offsetChildrenVertical(-travel);
+
+        return travel;
+    }
+
+```
+
+
 
 
 
