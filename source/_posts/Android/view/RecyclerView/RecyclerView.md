@@ -18,7 +18,7 @@ categories: android
 # 2017-06-25 局部刷新
 
 - 更改数据源，刷新 RecyclerView
-- 根据 position 获取 ViewHolder 在获取 View，对其进行直接操作（会不会长生服用问题？）
+- 根据 position 获取 ViewHolder 在获取 View，对其进行直接操作（会长产生复用问题）
 
 ```
 mList.get(position).put("favorites", "0");//直接更改数据源
