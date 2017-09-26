@@ -17,6 +17,7 @@ categories: android
 2. 重写onCreateDialog()方法，这个方法内创建Dialog，并将创建好的Dialog返回
 
 		public Dialog onCreateDialog(Bundle savedInstanceState)
+		
 3. 在需要的地方(activity)创建这个类的实例，调用`show()`方法就可以让DialogFragment出现。
 
 
