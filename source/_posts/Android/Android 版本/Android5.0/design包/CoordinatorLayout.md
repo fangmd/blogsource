@@ -179,6 +179,7 @@ Child 控件根据其 Dependency 控件的变化而变化
             .show();
 
 ## FloatingActionButton
+
 >和普通button的用法一样，
 
 	<android.support.design.widget.FloatingActionButton
@@ -237,7 +238,7 @@ Child 控件根据其 Dependency 控件的变化而变化
 	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
 ### NestedScrollView
->代替ScrllView，他能和CoordinatorLayout配合
+>代替ScrllView，他能和 CoordinatorLayout 配合
 
 	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
