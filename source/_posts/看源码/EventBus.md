@@ -22,6 +22,7 @@ categories: android
 
 ## 创建方法 是单例模式
 
+<!--more-->
 
 ```java
 static volatile EventBus defaultInstance;
