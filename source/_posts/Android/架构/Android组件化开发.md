@@ -1,13 +1,98 @@
 ---
-title: Android 组件化开发 -- 老项目改善
+title: Android 组件化开发
 date: 2017-08-02 12:18:12
 tags: 组件化
 category: android
 
 ---
 
+# 模块独立的实现
 
-# 背景
+在 Module 的 build.gradle 中加入下面代码：
+
+```
+if(isBuildModule.toBoolean()){
+    apply plugin: 'com.android.application'
+}else{
+    apply plugin: 'com.android.library'
+}
+```
+
+isBuildModule 在项目根目录的 gradle.properties 中定义:
+
+```
+isBuildModule=false
+```
+
+同样 Manifest.xml 也需要有两套：
+
+```
+sourceSets {
+   main {
+       if (isBuildModule.toBoolean()) {
+           manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+       } else {
+           manifest.srcFile 'src/main/release/AndroidManifest.xml'
+       }
+   }
+}
+```
+
+debug 模式下的 AndroidManifest.xml :
+
+```
+<application
+   ...
+   >
+   <activity
+       android:name="com.baronzhang.android.newhouse.NewHouseMainActivity"
+       android:label="@string/new_house_label_home_page">
+       <intent-filter>
+           <action android:name="android.intent.action.MAIN" />
+           <category android:name="android.intent.category.LAUNCHER" />
+       </intent-filter>
+   </activity>
+</application>
+```
+
+
+realease 模式下的 AndroidManifest.xml :
+
+```
+<application
+   ...
+   >
+   <activity
+       android:name="com.baronzhang.android.newhouse.NewHouseMainActivity"
+       android:label="@string/new_house_label_home_page">
+       <intent-filter>
+           <category android:name="android.intent.category.DEFAULT" />
+           <category android:name="android.intent.category.BROWSABLE" />
+           <action android:name="android.intent.action.VIEW" />
+           <data android:host="com.baronzhang.android.newhouse"
+               android:scheme="router" />
+       </intent-filter>
+   </activity>
+</application>
+```
+
+
+模块设计规则：
+
+1. Business Module Layer: 业务模块之间不能相互依赖，它们之间的跳转通过 路由框架 Router 实现
+
+
+# 资源名冲突处理
+
+对于多个 Bussines Module 中资源名冲突的问题，可以通过在 build.gradle 定义前缀的方式解决：
+
+```
+defaultConfig {
+   ...
+   resourcePrefix "new_house_"
+   ...
+}
+```
 
 
 # 路由实现
@@ -66,4 +151,5 @@ category: android
 1. 主工程依赖所有的 module ？？
 
 
+参考：[http://baronzhang.com/blog/Framework/Android-%E6%A8%A1%E5%9D%97%E5%8C%96%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/](http://baronzhang.com/blog/Framework/Android-%E6%A8%A1%E5%9D%97%E5%8C%96%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/)
 
