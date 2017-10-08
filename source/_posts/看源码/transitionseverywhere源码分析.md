@@ -29,6 +29,7 @@ google 关于 transition 的文档地址 [https://developer.android.com/training
 
 ![transitions 动画](https://developer.android.com/images/transitions/transitions_diagram.png)
 
+<!--more-->
 
 ### Scenes
 
