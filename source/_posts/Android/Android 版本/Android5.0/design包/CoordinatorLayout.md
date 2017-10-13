@@ -221,7 +221,7 @@ Child 控件根据其 Dependency 控件的变化而变化
 属性：
 
 1. `app:layout_scrollFlags="scroll|enterAlways"`一旦向上滚动这个view就可见。
-2. `app:layout_scrollFlags="scroll|enterAlwaysCollapsed"`这个flag定义的是何时进入（已经消失之后何时再次显示）。假设你定义了一个最小高度（minHeight）同时enterAlways也定义了，那么view将在到达这个最小高度的时候开始显示，并且从这个时候开始慢慢展开，当滚动到顶部的时候展开完。
+2. `app:layout_scrollFlags="scroll|enterAlwaysCollapsed"`这个flag定义的是何时进入（已经消失之后何时再次显示）。假设你定义了一个最小高度（minHeight）同时 enterAlways 也定义了，那么 view 将在到达这个最小高度的时候开始显示，并且从这个时候开始慢慢展开，当滚动到顶部的时候展开完。
 3. `app:layout_scrollFlags="scroll|exitUntilCollapsed`: 这个flag定义何时退出，当你定义了一个minHeight，这个view将在滚动到达这个最小高度的时候消失。
 
 
