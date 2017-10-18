@@ -6,7 +6,7 @@ categories: android
 
 ---
 
-# Android内存优化 -- 工具
+# Android 优化 -- 工具
 
 - 使用Hierarchy Viewer查看UI布局层级、
 - 使用AndroidStudio Memory Monitor查看内存使用情况
