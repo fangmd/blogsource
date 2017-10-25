@@ -6,6 +6,13 @@ categories: android
 
 ---
 
+
+```
+2017/10/25 添加 http://hencoder.com/ui-1-6/ 内容
+
+
+```
+
 ## 动画分类
 - 补间动画
 - 帧动画
@@ -277,9 +284,11 @@ android中有实现好的插值器,可以适用于大部分应用场景.
 ![Animator继承图](http://i.imgur.com/fsJHN5g.png)
 
 #### 1 使用`ValueAnimator`
+
 >设置单个动画
 
 #### 2 使用`ObjectAnimator`
+
 1. 使用静态方法`ObjectAnimator objectAnimator = ObjectAnimator.ofInt(text,"textColor",0xffff0000,0xffff00ff);`返回的是animatior对象，这里设置的是控件需要改变的属性
 	1. ofInt
 	2. ofFloat
@@ -305,11 +314,55 @@ android中有实现好的插值器,可以适用于大部分应用场景.
 
 3. `objectAnimator.start();`
 
+
+
+自定义 View 的时候通常可以使用这个。
+
+```java
+public class SportsView extends View {  
+     float progress = 0;
+
+    ......
+
+    // 创建 getter 方法
+    public float getProgress() {
+        return progress;
+    }
+
+    // 创建 setter 方法
+    public void setProgress(float progress) {
+        this.progress = progress;
+        invalidate();
+    }
+
+    @Override
+    public void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        ......
+
+        canvas.drawArc(arcRectF, 135, progress * 2.7f, false, paint);
+
+        ......
+    }
+}
+
+......
+
+// 创建 ObjectAnimator 对象
+ObjectAnimator animator = ObjectAnimator.ofFloat(view, "progress", 0, 65);  
+// 执行动画
+animator.start();  
+```
+
+
+
 #### 3 使用`TimeAnimator`
 >TimeAnimator:提供了一个简单的回调机制，通过 TimeAnimator.TimeListener，在动画的每一帧处通知你。
 
 
-#### 4 使用`ViewPropertyAnimator`
+#### 4 使用`ViewPropertyAnimator` 最简单，最常用
+
 1. 控件对象`.animator()`返回一个`ViewPropertyAnimator`对象
 
 		ViewPropertyAnimator animate = image.animate();
@@ -326,12 +379,16 @@ android中有实现好的插值器,可以适用于大部分应用场景.
 	btn.setPivotY(btn.getHeight() / 2);
     
 #### 5 使用`AnimatorSet`
+
+
 1. `AnimatorSet set = new AnimatorSet();`构建对象
 2. `.playTogether(。。)`相关方法，加入Animator对象:**注意**Animator的对象要相同
 3. `set.start()`
 
 ## 扩展
+
 ### 删除一个控件的操作
+
 1. 伪删除
 	1. `setVisibility(..)`
 
