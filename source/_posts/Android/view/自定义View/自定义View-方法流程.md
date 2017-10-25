@@ -1,15 +1,21 @@
 ---
 title: 自定义View-方法流程
-date: 2016-12-28 09:23:14
+date: 2017-10-25 09:23:14
 tags: [View, 自定义View]
 categories: Android
 
 ---
 
+```
+2017/10/15 添加 [http://hencoder.com/ui-1-5/](http://hencoder.com/ui-1-5/) 笔记
+
+```
 
 # 自定义View 整体流程
 
 ![https://cdn-images-1.medium.com/max/1600/1*abc0UlGj1myFD0eph4pZjQ.png](https://cdn-images-1.medium.com/max/1600/1*abc0UlGj1myFD0eph4pZjQ.png)
+
+这个图中有错误：dispatchDraw() 应该在 onDraw() 之后执行
 
 ## Constructor
 
@@ -121,6 +127,141 @@ protected void onDraw(Canvas canvas)
 绘制条件：画笔-- paint，画布 canvas
 
 由两种情况不需要画笔：drawARGB ， drawColor
+
+
+## 绘制顺序
+
+参考：[http://hencoder.com/ui-1-5/](http://hencoder.com/ui-1-5/)
+
+### 对于非 ViewGroup 类型的 View，比如 TextView，ImageView
+
+```java
+public class AppImageView extends ImageView {  
+    ...
+
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        if (DEBUG) {            
+            myDraw(canvas);
+        }
+    }
+}
+```
+
+上面代码中 myDraw 方法如果在 `super.onDraw` 之前执行就会被 ImageView 设置的图片覆盖。
+
+### 对于 ViewGroup 类型的 View，比如 LinearLayout
+
+在 `super.onDraw` 后面写的 `myDraw` 绘制的内容会被 子View 覆盖
+
+```
+onDraw() 绘制主体
+
+dispatchDraw() 绘制 子View
+```
+
+
+如果要让绘制的内容不被 子View 覆盖, 就需要让 `myDraw` 方法在  `super.dispatchDraw()`  之后执行：
+
+```java
+public class SpottedLinearLayout extends LinearLayout {  
+    ...
+
+    // 把 onDraw() 换成了 dispatchDraw()
+    protected void dispatchDraw(Canvas canvas) {
+       super.dispatchDraw(canvas);
+
+       ... // 绘制斑点
+    }
+}
+```
+
+## 自定义 View 绘制过程简述
+
+1. 背景
+2. 主体（onDraw()）
+3. 子 View（dispatchDraw()）
+4. 滑动边缘渐变和滑动条
+5. 前景
+
+View.java 中的 draw 方法：
+
+```java
+    public void draw(Canvas canvas) {
+        final int privateFlags = mPrivateFlags;
+        final boolean dirtyOpaque = (privateFlags & PFLAG_DIRTY_MASK) == PFLAG_DIRTY_OPAQUE &&
+                (mAttachInfo == null || !mAttachInfo.mIgnoreDirtyState);
+        mPrivateFlags = (privateFlags & ~PFLAG_DIRTY_MASK) | PFLAG_DRAWN;
+
+        /*
+         * Draw traversal performs several drawing steps which must be executed
+         * in the appropriate order:
+         *
+         *      1. Draw the background
+         *      2. If necessary, save the canvas' layers to prepare for fading
+         *      3. Draw view's content
+         *      4. Draw children
+         *      5. If necessary, draw the fading edges and restore layers
+         *      6. Draw decorations (scrollbars for instance)
+         */
+
+        // Step 1, draw the background, if needed
+        int saveCount;
+
+        if (!dirtyOpaque) {
+            drawBackground(canvas);
+        }
+
+        // skip step 2 & 5 if possible (common case)
+        final int viewFlags = mViewFlags;
+        boolean horizontalEdges = (viewFlags & FADING_EDGE_HORIZONTAL) != 0;
+        boolean verticalEdges = (viewFlags & FADING_EDGE_VERTICAL) != 0;
+        if (!verticalEdges && !horizontalEdges) {
+            // Step 3, draw the content
+            if (!dirtyOpaque) onDraw(canvas);
+
+            // Step 4, draw the children
+            dispatchDraw(canvas);
+
+            // Overlay is part of the content and draws beneath Foreground
+            if (mOverlay != null && !mOverlay.isEmpty()) {
+                mOverlay.getOverlayView().dispatchDraw(canvas);
+            }
+
+            // Step 6, draw decorations (foreground, scrollbars)
+            onDrawForeground(canvas);
+
+            // we're done...
+            return;
+        }
+```
+
+简化版本：
+
+```java
+public void draw(Canvas canvas) {  
+    ...
+
+    drawBackground(Canvas); // 绘制背景（不能重写）
+    onDraw(Canvas); // 绘制主体
+    dispatchDraw(Canvas); // 绘制子 View
+    onDrawForeground(Canvas); // 绘制滑动相关和前景
+
+    ...
+}
+```
+
+![https://ws3.sinaimg.cn/large/006tKfTcly1fii5jk7l19j30q70e0di5.jpg](https://ws3.sinaimg.cn/large/006tKfTcly1fii5jk7l19j30q70e0di5.jpg)
+
+### 注意
+
+1. 出于效率的考虑，ViewGroup 默认会绕过 draw() 方法，换而直接执行 dispatchDraw()，以此来简化绘制流程。所以如果你自定义了某个 ViewGroup 的子类（比如 LinearLayout）并且需要在它的除  dispatchDraw() 以外的任何一个绘制方法内绘制内容，你可能会需要调用  View.setWillNotDraw(false) 这行代码来切换到完整的绘制流程（是「可能」而不是「必须」的原因是，有些 ViewGroup 是已经调用过 setWillNotDraw(false) 了的，例如 ScrollView）。
+2. 
+
+
+
+
 
 # 更新视图
 
