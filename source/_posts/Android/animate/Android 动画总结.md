@@ -323,36 +323,6 @@ android中有实现好的插值器,可以适用于大部分应用场景.
 
 自定义 View 的时候通常可以使用这个。
 
-```
-public class SportsView extends View {  
-    float progress = 0;
-
-    //......
-
-    // 创建 getter 方法
-    public float getProgress() {
-        return progress;
-    }
-
-    // 创建 setter 方法
-    public void setProgress(float progress) {
-        this.progress = progress;
-        invalidate();
-    }
-
-    @Override
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        //......
-
-        canvas.drawArc(arcRectF, 135, progress * 2.7f, false, paint);
-
-        //......
-    }
-}
-```
-
 
 
 
