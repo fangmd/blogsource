@@ -1,7 +1,7 @@
 ---
 title: android tips 
 date: 2016-04-02 12:18:12
-tags: tips
+tags: [Tips]
 category: android
 
 ---
