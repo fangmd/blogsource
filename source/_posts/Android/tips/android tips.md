@@ -1,20 +1,20 @@
 ---
 title: android tips 
 date: 2016-04-02 12:18:12
-tags: [Tips]
+tags: Tips
 category: android
 
 ---
 
-- Use Vectors instead of PNG
+## Use Vectors instead of PNG
 
     If you do have to use png, compress them. Take a look at [TinyPNG](https://tinypng.com/).
 
-- Use shrinkResources
+## Use shrinkResources
     
     shrinkResources true
 
-- Define a variable at build time In your build.gradle
+## Define a variable at build time In your build.gradle
 
     ```
     android{
@@ -26,9 +26,6 @@ category: android
             ...
         }
     }
-
-
-
 
 ## android 自带的工具类
 
