@@ -1,7 +1,7 @@
 ---
 title: Android内存优化 -- 内存泄露的原因
 date: 2016-05-14 21:03:14
-tags: [Android内存优化,内存泄露]
+tags: [Android优化,内存泄露]
 categories: android
 
 ---

@@ -1,7 +1,7 @@
 ---
 title: Android错误日志 收集
 date: 2016-11-03 21:03:14
-tags: [崩溃日志]
+tags: [Android优化,崩溃日志]
 categories: android
 
 ---
