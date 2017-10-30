@@ -10,20 +10,7 @@ category: android
 
 在 ConstraintLayout 中控价的 `0dp` 也叫 `match_constraint`，默认行为是撑开(spread)，占满剩余的所有空间。
 
-## 配合 percent 实现占有剩余空间的百分比
 
-```
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.5"
-        
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.5" />
-```
 
 
 # 使用 ConstraintLayout 代替 RelativeLayout
