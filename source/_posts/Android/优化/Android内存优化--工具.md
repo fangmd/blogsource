@@ -1,7 +1,7 @@
 ---
 title: Android内存优化 -- 工具
 date: 2016-05-15 21:03:14
-tags: [Android内存优化,工具]
+tags: [Android优化,工具]
 categories: android
 
 ---

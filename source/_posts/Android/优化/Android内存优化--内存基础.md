@@ -1,7 +1,7 @@
 ---
 title: Android内存优化 -- 内存基础
 date: 2016-05-14 21:03:14
-tags: [Android内存优化,内存基础]
+tags: [Android优化,内存基础]
 categories: android
 
 ---

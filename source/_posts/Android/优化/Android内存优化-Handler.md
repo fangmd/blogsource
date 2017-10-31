@@ -1,7 +1,7 @@
 ---
 title: Android内存优化 -- Handler
 date: 2016-05-14 21:03:14
-tags: [Android内存优化,Handler]
+tags: [Android优化,Handler]
 categories: android
 
 ---

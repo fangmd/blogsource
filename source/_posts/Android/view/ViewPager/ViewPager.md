@@ -292,6 +292,7 @@ ViewPager.OnPageChangeListener
 
 
 ## 禁止ViewPager滑动
+
 >@Override
 
 >public boolean onTouchEvent(MotionEvent ev) {
