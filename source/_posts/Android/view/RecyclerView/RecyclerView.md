@@ -14,6 +14,8 @@ categories: android
 
 <!--more-->
 
+# GridLayoutManager 设置 横跨
+
 
 # 2017-06-25 局部刷新
 
