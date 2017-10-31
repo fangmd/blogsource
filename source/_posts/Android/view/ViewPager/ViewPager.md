@@ -345,3 +345,48 @@ ViewPager.OnPageChangeListener
 	});
 
 
+# 现实现实多个页面
+
+参考：[http://blog.csdn.net/jm_beizi/article/details/51297605](http://blog.csdn.net/jm_beizi/article/details/51297605)
+
+## 0 设置 android:clipChildren属性为”false”.
+
+`android:layerType=”software”` 可能需要
+
+>注意：setClipChildren(false)在3.0以上版本中，开启了硬件加速后将不能正常工作，所以需要将其设置为软件加速。设置软硬件加速使用 setLayerType(View.LAYER_TYPE_SOFTWARE, null); 也可以在布局文件中添加 android:layerType=”software”
+
+```xml
+<RelativeLayout
+    android:id="@+id/viewPager_container"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@android:color/white"
+    android:clipChildren="false"
+    android:layerType="software">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="110dp"
+        android:layout_marginRight="110dp"
+        android:clipChildren="false" />
+</RelativeLayout>
+```
+
+
+## 1 设置 ViewPapger 缓存页数
+
+```java
+mViewPager.setOffscreenPageLimit(2);  // 建议 2
+```
+
+## 2 设置页与页之间的间距 （可跳过）
+
+```java
+mViewPager.setPageMargin(int marginPixls);  // setPageMargin表示设置page之间的间距
+```
+
+## 3 设置滑动，点击事件
+
+

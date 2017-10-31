@@ -1,7 +1,7 @@
 ---
 title: Intent传值和Intent+Bundle传值
 date: 2016-06-03 13:18:12
-tags: [Tips]
+tags: Tips
 category: android
 
 ---

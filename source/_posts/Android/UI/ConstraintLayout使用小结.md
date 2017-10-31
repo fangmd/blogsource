@@ -6,6 +6,12 @@ category: android
 
 ---
 
+# 0dp
+
+在 ConstraintLayout 中控价的 `0dp` 也叫 `match_constraint`，默认行为是撑开(spread)，占满剩余的所有空间。
+
+
+
 
 # 使用 ConstraintLayout 代替 RelativeLayout
 
