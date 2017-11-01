@@ -122,7 +122,20 @@ actionNext                下一项           EditorInfo.IME_ACTION_NEXT
 actionDone               完成              EditorInfo.IME_ACTION_DONE 
 ```
 
-监听事件：
+
+在 xml 中设置 actions：
+
+```xml
+android:imeOptions="actionSend"
+```
+
+在代码中设置 actions:
+
+```java
+mEt.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+```
+
+监听事件 写法一：
 
 ```
 mViewById = (EditText) findViewById(R.id.et);
@@ -137,4 +150,28 @@ mViewById.setOnKeyListener(new View.OnKeyListener() {
 		return false;
     }
 });
+```
+
+监听事件 写法二：
+
+```java
+mEt.setOnKeyListener((v, keyCode, even
+    if (keyCode == EditorInfo.IME_ACTION_SEARCH
+            || keyCode == EditorInfo.IME_ACTION_DONE
+            || event.getAction() == KeyEvent.ACTION_DOWN
+            && event.getKeyCode() == KeyEvent.KEYCODE_E
+        String keyword = mEt.getText().toString();
+        if (TextUtils.isEmpty(keyword)) {
+            mEt.setError(geR.string.error_et_cannot_be_empty));
+        } else {
+            mFragment.search(keyword);
+  
+        return true;
+    }
+    return false;
+});
+```
+
+
+
 

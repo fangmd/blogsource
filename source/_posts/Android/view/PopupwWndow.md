@@ -6,6 +6,17 @@ categories: android
 
 ---
 
+# 获取 width hegith
+
+```java
+
+//UNSPECIFIED WRAP_CONTENT 的时候使用，其他的根据实际情况确定
+
+mPopupWindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+
+int popHeight=mPopupWindow.getContentView().getMeasuredHeight(); 
+```
+
 
 # PopupWindow 介绍
 >一个弹出窗口控件，可以用来显示任意视图(View)，而且会浮动在当前 活动(activity)的顶部
