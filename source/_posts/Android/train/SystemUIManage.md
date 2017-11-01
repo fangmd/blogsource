@@ -65,3 +65,60 @@ decorView.setSystemUiVisibility(uiOptions);
         //END_INCLUDE (set_ui_flags)
     }
 ```
+
+# Hiding the Status Bar
+
+## Hide the Status Bar on Android 4.0 and Lower
+
+[https://developer.android.com/training/system-ui/status.html#40](https://developer.android.com/training/system-ui/status.html#40)
+
+## Android 4.1 and Higher
+
+```java
+View decorView = getWindow().getDecorView();
+// Hide the status bar.
+int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+decorView.setSystemUiVisibility(uiOptions);
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+ActionBar actionBar = getActionBar();
+actionBar.hide();
+```
+
+# Hiding the Navigation Bar
+
+```java
+View decorView = getWindow().getDecorView();
+// Hide both the navigation bar and the status bar.
+// SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
+// a general rule, you should design your app to hide the status bar whenever you
+// hide the navigation bar.
+int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+              | View.SYSTEM_UI_FLAG_FULLSCREEN;
+decorView.setSystemUiVisibility(uiOptions);
+```
+
+
+# Register a Listener 监听 系统界面变化
+
+```java
+View decorView = getWindow().getDecorView();
+decorView.setOnSystemUiVisibilityChangeListener
+        (new View.OnSystemUiVisibilityChangeListener() {
+    @Override
+    public void onSystemUiVisibilityChange(int visibility) {
+        // Note that system bars will only be "visible" if none of the
+        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+        if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+            // TODO: The system bars are visible. Make any desired
+            // adjustments to your UI, such as showing the action bar or
+            // other navigational controls.
+        } else {
+            // TODO: The system bars are NOT visible. Make any desired
+            // adjustments to your UI, such as hiding the action bar or
+            // other navigational controls.
+        }
+    }
+});
+```
+
