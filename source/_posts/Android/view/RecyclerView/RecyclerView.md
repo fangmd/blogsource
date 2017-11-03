@@ -14,13 +14,74 @@ categories: android
 
 <!--more-->
 
+
+# 2017-11-03 滚动过程中修改 ViewHodler 中控件的样式
+
+```java
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int firstPosition = lm.findFirstCompletelyVisibleItemPosition();
+
+                if (mDatas.size() == 0) {
+                    return;
+                }
+
+                Log.d(TAG, "onScrolled: firstPosition:" + firstPosition);
+
+                // 坑1. 不要使用 recyclerView.getChildAt() 获取 itemView, 这种方式获取的可能为 null
+                // 也可以使用 mLayoutManager.findViewByPosition 获取
+                ChoiceVH view = ((ChoiceVH) recyclerView.findViewHolderForAdapterPosition(firstPosition));
+                ChoiceVH view1 = ((ChoiceVH) recyclerView.findViewHolderForAdapterPosition(firstPosition + 1));
+                ChoiceVH view2 = ((ChoiceVH) recyclerView.findViewHolderForAdapterPosition(firstPosition + 2));
+                ChoiceVH view3 = ((ChoiceVH) recyclerView.findViewHolderForAdapterPosition(firstPosition + 3));
+                ChoiceVH view4 = ((ChoiceVH) recyclerView.findViewHolderForAdapterPosition(firstPosition + 4));
+                setViewUI(view, 0);
+                setViewUI(view1, 1);
+                setViewUI(view2, 2);
+                setViewUI(view3, 3);
+                setViewUI(view4, 4);
+            }
+        });
+    }
+
+    private int[] mTextSizes = {12, 14, 16, 14, 12};
+
+    private int[] mTextColors = {R.color.center_choice_0, R.color.center_choice_1, R.color.center_choice_2,
+            R.color.center_choice_3, R.color.center_choice_4};
+
+    private void setViewUI(ChoiceVH holder, int index) {
+        if (holder == null) {
+            Log.d(TAG, "setViewUIFirst: view is null");
+            return;
+        }
+        TextView tv = holder.mTv;
+        Log.d(TAG, "setViewUIFirst: name:" + tv.getText() + " index" + index);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, mTextSizes[index]);
+        tv.setTextColor(mContext.getResources().getColor(mTextColors[index]));
+    }
+```
+
 # GridLayoutManager 设置 横跨
 
 
 # 2017-06-25 局部刷新
 
 - 更改数据源，刷新 RecyclerView
-- 根据 position 获取 ViewHolder 在获取 View，对其进行直接操作（会长产生复用问题）
+- 根据 position 获取 ViewHolder 在获取 View，对其进行直接操作（会产生复用问题）
 
 ```
 mList.get(position).put("favorites", "0");//直接更改数据源
