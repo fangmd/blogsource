@@ -1,6 +1,10 @@
 #!/bin/sh
 
-print  'git add .'
+echo  "git add ."
 git add .
+
+echo "git commit -m 'adll'"
 git commit -m'all'
+
+echo "git push origin master"
 git push origin master 
