@@ -2,7 +2,7 @@
 title: c++ 学习记录
 date: 2016-04-03 13:18:12
 tags: c++
-category: android
+category: 读书笔记
 
 ---
 
