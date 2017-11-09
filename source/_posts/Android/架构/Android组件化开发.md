@@ -102,6 +102,11 @@ defaultConfig {
 ## 0 集成 ARouter
 
 
+## 坑1
+
+在 Module 之前跳转的时候需要让 moduleA 依赖 moduleB
+
+
 
 # 创建一个新的工程
 
