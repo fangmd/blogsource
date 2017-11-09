@@ -28,6 +28,8 @@ Call<List<Repo>> call = service.listRepos("octocat");
 List<Repo> repos = call.execute().body();
 ```
 
+<!--more-->
+
 # 涉及到设计模式
 
 - 构建者模式

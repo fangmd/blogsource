@@ -7,6 +7,7 @@ categories: android
 ---
 
 
+<!--more-->
 
 ```java
 public class MainActivity extends AppCompatActivity {

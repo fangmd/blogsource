@@ -19,6 +19,8 @@ int uiOptions = View.SYSTEM_UI_FLAG_LOW_PROFILE;
 decorView.setSystemUiVisibility(uiOptions);
 ```
 
+<!--more-->
+
 # Reveal the Status and Navigation Bars （全屏模式）
 
 ```java

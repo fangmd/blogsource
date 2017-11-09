@@ -40,6 +40,10 @@ OkHttpClient eagerClient = client.newBuilder()
 Response response = eagerClient.newCall(request).execute();
 ```
 
+
+<!--more-->
+
+
 ## OkHttpClient 构建者模式 框架简化
 
 ```java
