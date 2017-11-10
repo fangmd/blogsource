@@ -14,8 +14,7 @@ category: Android
 
 原来的 compile 关键词现在变成了 api
 
-implementation: 不会对外暴露该库
-
+implementation: 使用implementation添加的依赖不会再编译期间被其他组件引用到，但在运行期间是完全可见的。这也是一种代码隔离。
 
 
 
