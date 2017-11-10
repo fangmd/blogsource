@@ -1,7 +1,7 @@
 ---
 title: MVP 学习
 date: 2016-06-04 13:18:12
-tags: [mvp]
+tags: [Android 架构]
 category: android
 
 ---

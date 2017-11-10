@@ -1,7 +1,7 @@
 ---
 title: Android 组件化开发
 date: 2017-08-02 12:18:12
-tags: 组件化
+tags: [Android 架构]
 category: android
 
 ---
