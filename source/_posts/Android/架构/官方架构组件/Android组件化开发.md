@@ -282,7 +282,7 @@ public class UserRepository {
 }
 ```
 
-![https://developer.android.com/topic/libraries/architecture/guide.html#recommended_app_architecture](https://developer.android.com/topic/libraries/architecture/guide.html#recommended_app_architecture)
+
 
 
 
