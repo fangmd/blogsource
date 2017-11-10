@@ -207,6 +207,83 @@ UserCache 是一个自定义的类，统一保存缓存。
 
 Room：一个数据库框架
 
+基本使用代码：
+
+```java
+@Entity
+class User {
+  @PrimaryKey
+  private int id;
+  private String name;
+  private String lastName;
+  // getters and setters for fields
+}
+
+@Dao  // data access object (DAO).
+public interface UserDao {
+    @Insert(onConflict = REPLACE)
+    void save(User user);
+    @Query("SELECT * FROM user WHERE id = :userId")
+    LiveData<User> load(String userId);
+}
+
+
+@Database(entities = {User.class}, version = 1)
+public abstract class MyDatabase extends RoomDatabase {
+    public abstract UserDao userDao();
+}
+
+@Database(entities = {User.class}, version = 1)
+public abstract class MyDatabase extends RoomDatabase {
+    public abstract UserDao userDao();
+}
+```
+
+由于上面 `load` 方法返回的是 `LiveData` 所以数据库中如果数据变化，会马上反应在 UI 上。
+
+
+在 UserRepository 中使用 Room：
+
+```java
+@Singleton
+public class UserRepository {
+    private final Webservice webservice;
+    private final UserDao userDao;
+    private final Executor executor;
+
+    @Inject
+    public UserRepository(Webservice webservice, UserDao userDao, Executor executor) {
+        this.webservice = webservice;
+        this.userDao = userDao;
+        this.executor = executor;
+    }
+
+    public LiveData<User> getUser(String userId) {
+        refreshUser(userId);
+        // return a LiveData directly from the database.
+        return userDao.load(userId);
+    }
+
+    private void refreshUser(final String userId) {
+        executor.execute(() -> {
+            // running in a background thread
+            // check if user was fetched recently
+            boolean userExists = userDao.hasUser(FRESH_TIMEOUT);
+            if (!userExists) {
+                // refresh the data
+                Response response = webservice.getUser(userId).execute();
+                // TODO check for error etc.
+                // Update the database.The LiveData will automatically refresh so
+                // we don't need to do anything else here besides updating the database
+                userDao.save(response.body());
+            }
+        });
+    }
+}
+```
+
+
+
 
 
 ## Testing
