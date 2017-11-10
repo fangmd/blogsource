@@ -6,6 +6,10 @@ category: Android
 
 ---
 
+
+
+
+
 Android applications 使用 gradle 构建，gradle 是一门高级语言并且广泛用于 java 中，提供的 Android 插件为 Android apps 开发提供了很多的功能，例如 build types, flavors, signing configurations, library projects，更多可查看[Android Plugin DSL Reference](http://google.github.io/android-gradle-dsl/current/index.html)
 
 # Gradle Build Files in Android
