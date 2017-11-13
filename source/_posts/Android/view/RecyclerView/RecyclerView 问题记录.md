@@ -6,6 +6,65 @@ categories: android
 
 ---
 
+# Item remove 后 点击事件中的 position 没有更新
+
+问题描述：移除一个 item 后通过 `mAdapter.notifyItemRemoved(mDeletePosition);` 这种方式更新 Adapter，再去点击移除项下面的 item 的时候 position 错误。
+
+旧代码：
+
+```
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        //...
+        if (mListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClick(holder, position, mDatas.get(position));
+                }
+            });
+        }
+
+        if (mLongClickListener != null) {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mLongClickListener.onItemLongClick(holder, position, mDatas.get(position));
+                    return true;
+                }
+            });
+        }
+    }
+```
+
+新代码：
+
+```java
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        //...
+        if (mListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = holder.getAdapterPosition();
+                    mListener.onItemClick(holder, position, mDatas.get(position));
+                }
+            });
+        }
+
+        if (mLongClickListener != null) {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    mLongClickListener.onItemLongClick(holder, position, mDatas.get(position));
+                    return true;
+                }
+            });
+        }
+    }
+```
 
 
 
