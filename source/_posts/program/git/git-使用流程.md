@@ -25,7 +25,7 @@ git push origin master
 
 ```
 1. 在 ignore 文件中添加忽略
-2. g 要忽略的文件
+2. git rm -r --cached 要忽略的文件
 3. git add .
 4. git commit -m'...'
 5. git push ...
