@@ -32,6 +32,16 @@ dependencies {
 - Qualifier: 当类的类型不足以鉴别一个依赖的时候，我们就可以使用这个注解标示。例如：在Android中，我们会需要不同类型的context，所以我们就可以定义 qualifier注解“@ForApplication”和“@ForActivity”，这样当注入一个context的时候，我们就可以告诉 Dagger我们想要哪种类型的context。
 
 
+
+## @Component
+
+修饰接口类，内部方法：
+
+- 如果是 void 方法就必须有注入环境
+- 入股参数为 空，就必须有返回类。 返回类必须有 @Inject 提供构造方法类，或者引用的 @Module 有 @Provide提供的。
+
+
+
 # dagger2 最简单的使用例子
 
 ## 一个需要被注入到 activity 的对象
@@ -148,8 +158,11 @@ public class PoetryModule {
 
 
 ## @Scope 
-标记当前生成对象的使用范围，标识一个类型的注射器只实例化一次，在同一个作用域内，只会生成一个实例，然后在此作用域内共用一个实例。这样看起来很像单例模式，我们可以查看@Singleton其实就是@Scope的一个默认实现而已。当然，你得是同一个Component对象来生成，这点我们应该可以理解的吧。
-我们可以通过自定义Scope来组织Component的作用域，使得每个Component的作用域清晰明了，各施其职。
+
+标记当前生成对象的使用范围，标识一个类型的注射器只实例化一次，在同一个作用域内，只会生成一个实例，然后在此作用域内共用一个实例。这样看起来很像单例模式，我们可以查看 @Singleton 其实就是@ Scope 的一个默认实现而已。当然，你得是同一个 Component 对象来生成，这点我们应该可以理解的吧。
+我们可以通过自定义 Scope 来组织 Component 的作用域，使得每个 Component 的作用域清晰明了，各施其职。
+
+
 
 ## 组织 Component
 
@@ -157,7 +170,7 @@ public class PoetryModule {
 如果其他 Component 需要 ApplicationComponent 中的全局属性的时候，就需要建立两者之间的 依赖方式。
 
 1. 要有一个全局的Component(可以叫ApplicationComponent),负责管理整个app的全局类实例
-2. 每个页面对应一个Component，比如一个Activity页面定义一个Component，一个Fragment定义一个Component。当然这不是必须的，有些页面之间的依赖的类是一样的，可以公用一个Component。
+2. 每个页面对应一个 Component，比如一个 Activity 页面定义一个 Component，一个 Fragment 定义一个 Component。当然这不是必须的，有些页面之间的依赖的类是一样的，可以公用一个 Component。
 
 ### 依赖方式
 
