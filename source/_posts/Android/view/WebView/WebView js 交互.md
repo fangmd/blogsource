@@ -9,8 +9,6 @@ categories: android
 # WebView js 交互
 
 
-
-
 ## js调用java代码
 
 ### 方法一
@@ -193,6 +191,7 @@ JS端与Native端存在一个伪协议，Native端口根据这个协议去侦听
 
 
 ## WebView 调用JS代码
+
 ### 0
 按照上面的Demo
 
@@ -203,7 +202,7 @@ JS端与Native端存在一个伪协议，Native端口根据这个协议去侦听
 
 Demo流程：
 
-1. 点击图片，则在js端直接调用android上的方法clickOnAndroid()；
+1. 点击图片，则在 js 端直接调用 android 上的方法clickOnAndroid()；
 
 2. clickOnAndroid()方法（利用线程）调用js的方法。
 
@@ -218,11 +217,12 @@ Demo流程：
 	mWebView.addJavascriptInterface(new InsertObj(), "jsObj");
 
 *上面这是前提！！！*
+
 然后实现上面的类，这个类提供了四个方法，注释的非常清楚。
 
 
 	class InsertObj extends Object {
-	    //给html提供的方法，js中可以通过：var str = window.jsObj.HtmlcallJava(); 获取到
+	    //给html提供的方法，js 中可以通过：var str = window.jsObj.HtmlcallJava(); 获取到
 	    @JavascriptInterface
 	    public String HtmlcallJava() {
 		return "Html call Java";

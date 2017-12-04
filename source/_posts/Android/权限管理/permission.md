@@ -128,6 +128,7 @@ A particular permission may be enforced at a number of places during your progra
 	    allow the application to call emergency numbers.</string>
 
 # 自定义权限的建议
+
 确定是否需要自定义权限
 
 1. 在开发一系列的app的时候,如果需要自定义权限,必须确保权限只声明了一次(即使这几个app都使用同一个证书签名也建议确保权限只定义一次)

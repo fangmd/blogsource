@@ -754,13 +754,220 @@ class MyViewModel extends ViewModel {
 
 # ViewModel
 
+
+ViewModel 类的设计用于存储和管理与 UI 有关的数据。在界面参数变化比如屏幕旋转的时候数据不会消失。
+
+对于一些简单的数据可以使用 `onSaveInstanceState()` 方法存储和恢复数据。
+
+
 ## Implements a ViewModel
+
+例子：
+
+```java
+public class MyViewModel extends ViewModel {
+    private MutableLiveData<List<User>> users;
+    public LiveData<List<User>> getUsers() {
+        if (users == null) {
+            users = new MutableLiveData<List<Users>>();
+            loadUsers();
+        }
+        return users;
+    }
+
+    private void loadUsers() {
+        // Do an asyncronous operation to fetch users.
+    }
+}
+```
+
+
+```java
+public class MyActivity extends AppCompatActivity {
+    public void onCreate(Bundle savedInstanceState) {
+        // Create a ViewModel the first time the system calls an activity's onCreate() method.
+        // Re-created activities receive the same MyViewModel instance created by the first activity.
+
+        MyViewModel model = ViewModelProviders.of(this).get(MyViewModel.class);
+        model.getUsers().observe(this, users -> {
+            // update UI
+        });
+    }
+}
+```
+
 
 ## The lifecycle of a ViewModel
 
+![ViewModel lifecycle](https://developer.android.com/images/topic/libraries/architecture/viewmodel-lifecycle.png)
+
 ## Share data between fragments
 
+Activity 中有多个 Fragment 的时候通过共享 ViewModel 实现交互：
+
+
+例子：
+
+
+```java
+public class SharedViewModel extends ViewModel {
+    private final MutableLiveData<Item> selected = new MutableLiveData<Item>();
+
+    public void select(Item item) {
+        selected.setValue(item);
+    }
+
+    public LiveData<Item> getSelected() {
+        return selected;
+    }
+}
+
+public class MasterFragment extends Fragment {
+    private SharedViewModel model;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        itemSelector.setOnClickListener(item -> {
+            model.select(item);
+        });
+    }
+}
+
+public class DetailFragment extends Fragment {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SharedViewModel model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        model.getSelected().observe(this, { item ->
+           // Update the UI.
+        });
+    }
+}
+```
+
+
 ## Replacing Loaders with ViewModel
+
+
+# Saving UI States
+
+保存 UI 状态是提升用户体验的重要环节。
+
+不管是用户 旋转屏幕还是重启应用。
+
+>TODO: Demo: 屏幕旋转导致的数据丢失？ editText 是否会丢失，
+
+
+## Managing simpler cases: OnSavaInstanceState()
+
+onSaveInstanceState() 方法在下面两种情况下会调用：
+
+1. 当应用在后台的时候，由于内存不足系统杀死应用进程
+2. 参数改变：屏幕旋转。。。
+
+
+## Managing more complex states: divide and conquer
+
+
+## Restoring complex states: reassembling the pieces
+
+
+# Room Persistence Library
+
+
+
+# Paging Library
+
+这个库用于应用从一个数据源不断的家在数据。（比如从数据库中加载大量数据的时候）
+
+## Overview
+
+一些应用有大量的数据，但是只需要加载和现实其中的一部分。
+
+虽然现有的Android API允许在内容中进行分页，但它们带来了明显的限制和缺陷：
+
+1. CursorAdapter: 缺点是在主线程中执行数据库操作
+2. AsyncListUtil
+
+## Classes
+
+
+- DataSource
+
+- PagedList
+
+- PagedListAdapter
+
+- LivePagedListProvider
+
+
+![工作流程](https://developer.android.com/images/topic/libraries/architecture/paging-threading.gif)
+
+
+
+例子：
+
+```java
+@Dao
+interface UserDao {
+    @Query("SELECT * FROM user ORDER BY lastName ASC")
+    public abstract LivePagedListProvider<Integer, User> usersByLastName();
+}
+
+class MyViewModel extends ViewModel {
+    public final LiveData<PagedList<User>> usersList;
+    public MyViewModel(UserDao userDao) {
+        usersList = userDao.usersByLastName().create(
+                /* initial load position */ 0,
+                new PagedList.Config.Builder()
+                        .setPageSize(50)
+                        .setPrefetchDistance(50)
+                        .build());
+    }
+}
+
+class MyActivity extends AppCompatActivity {
+    @Override
+    public void onCreate(Bundle savedState) {
+        super.onCreate(savedState);
+        MyViewModel viewModel = ViewModelProviders.of(this).get(MyViewModel.class);
+        RecyclerView recyclerView = findViewById(R.id.user_list);
+        UserAdapter<User> adapter = new UserAdapter();
+        viewModel.usersList.observe(this, pagedList -> adapter.setList(pagedList));
+        recyclerView.setAdapter(adapter);
+    }
+}
+
+class UserAdapter extends PagedListAdapter<User, UserViewHolder> {
+    public UserAdapter() {
+        super(DIFF_CALLBACK);
+    }
+    @Override
+    public void onBindViewHolder(UserViewHolder holder, int position) {
+        User user = getItem(position);
+        if (user != null) {
+            holder.bindTo(user);
+        } else {
+            // Null defines a placeholder item - PagedListAdapter will automatically invalidate
+            // this row when the actual object is loaded from the database
+            holder.clear();
+        }
+    }
+    public static final DiffCallback<User> DIFF_CALLBACK = new DiffCallback<User>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull User oldUser, @NonNull User newUser) {
+            // User properties may have changed if reloaded from the DB, but ID is fixed
+            return oldUser.getId() == newUser.getId();
+        }
+        @Override
+        public boolean areContentsTheSame(@NonNull User oldUser, @NonNull User newUser) {
+            // NOTE: if you use equals, your object must properly override Object#equals()
+            // Incorrectly returning false here will result in too many animations.
+            return oldUser.equals(newUser);
+        }
+    }
+}
+```
+
 
 
 
