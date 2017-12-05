@@ -94,6 +94,15 @@ defaultConfig {
 }
 ```
 
+# 依赖
+
+```
+    if (isModuleIsApplication.toBoolean()) {
+        implementation project(':baselibrary')
+    } else {
+        implementation project(':touchhandler')
+    }
+```
 
 # 路由实现
 
