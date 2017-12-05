@@ -18,6 +18,7 @@ view在屏幕上的位置由一下参数决定：
 - right:View的右下角的横坐标x，`getRight()`,mRight
 
 <!--more-->
+
 **注意：**以上的坐标都是相对于父View来说的，坐标都是相对坐标，因为：子View的布局由父View完成
 
 1. 更具以上的参数可以计算view宽高
@@ -29,6 +30,7 @@ view在屏幕上的位置由一下参数决定：
 
 
 ## 方式一：`scrollTo/scrollBy`
+
 >View自带的方法：scrollTo/scrollBy;
 
 scrollTo：移动到某个位置；srcollBy:移动的位移量；
@@ -76,6 +78,7 @@ mScrollY:表示view的上边缘 - view的内容的上边缘
 滑动是非弹性的
 
 ## 方式二：动画
+
 >通过改变view的translationX和translationY参数实现，好处是平滑；可以通过补间动画或属性动画实现平移；
 
 ### 补间动画：
@@ -104,6 +107,7 @@ mScrollY:表示view的上边缘 - view的内容的上边缘
 	ObjectAnimator.ofFloat(targetView, "translationX" , 0, 100).setDuration(100).start;
 
 ## 方式三：改变布局参数
+
 思路一：view右移就是把marginLeft参数增大，其他的同理
 
 思路二：在要移动的view的旁边预先放置一个view，通过改变这个view的宽高改变目标view的位置
@@ -160,7 +164,7 @@ startScroll方法中并没有进行实际的滚动操作，而是把startX、sta
 
 invalidate方法，这个方法会请求重绘View，这会导致View的draw的方法被调用，draw的方法内部会调用computeScroll方法。
 
-调用了scrollTo方法，并传入mScroller.getCurrX和mScroller.getCurrY方法作为参数。
+调用了 scrollTo 方法，并传入mScroller.getCurrX和mScroller.getCurrY方法作为参数。
 
 computeScrollOffset方法代码：
 
