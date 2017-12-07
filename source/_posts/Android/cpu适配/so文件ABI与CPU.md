@@ -20,6 +20,9 @@ cpu 支持 ABI 表格：
 
 [ABI Management 官方文档](https://developer.android.com/ndk/guides/abis.html)
 
+<!--more-->
+
+
 - x86 设备选择 ABI 优先级
 	- libs/x86目录中如果存在.so文件的话，会被安装
 	- 如果不存在，则会选择armeabi-v7a中的.so文件
