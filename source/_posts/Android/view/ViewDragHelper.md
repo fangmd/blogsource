@@ -8,13 +8,13 @@ category: android
 
 用于分析手势处理的类,一般用在一个自定义ViewGroup的内部
 
-ViewDragHelper.Callback是连接ViewDragHelper与view之间的桥梁（这个view一般是指拥子view的容器即parentView）；
+ViewDragHelper.Callback 是连接 ViewDragHelper 与 view 之间的桥梁（这个 view 一般是指拥子 view 的容器即 parentView）；
 
    ViewDragHelper的实例是创建的；
 
-   ViewDragHelper并不是直接作用于要被拖动的View，而是使其控制的视图容器中的子View可以被拖动，如果要指定某个子view的行为，需要在Callback中想办法；
+   ViewDragHelper 并不是直接作用于要被拖动的View，而是使其控制的视图容器中的子 View 可以被拖动，如果要指定某个子 view 的行为，需要在 Callback 中想办法；
 
-   ViewDragHelper的本质其实是分析onInterceptTouchEvent和onTouchEvent的MotionEvent参数，然后根据分析的结果去改变一个容器中被拖动子View的位置（ 通过offsetTopAndBottom(int offset)和offsetLeftAndRight(int offset)方法 ），他能在触摸的时候判断当前拖动的是哪个子View；
+   ViewDragHelper 的本质其实是分析 onInterceptTouchEvent 和onTouchEvent 的 MotionEvent 参数，然后根据分析的结果去改变一个容器中被拖动子 View 的位置（ 通过 offsetTopAndBottom(int offset)和offsetLeftAndRight(int offset)方法 ），他能在触摸的时候判断当前拖动的是哪个子 View；
 
 # ViewDragHelper 类
 

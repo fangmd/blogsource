@@ -28,6 +28,7 @@ view状态改变的时候调用方法：`drawableStateChanged`
 	}
 
 ## 视图重绘
+
 调用：`setVisibility(),setEnabled()..`都会导致视图重绘，内部都是调用了`invalidate()`方法实现的，我们也可以直接调用这个方法强制重绘视图。
 
 
