@@ -419,26 +419,117 @@ struct 与 class 区别：struct 修饰的类 成员默认访问级别都是 pub
 
 # 第三章 标准库类型
 
-
 ## 命名空间的 using 声明
+
+一次，只能引入一个名字，
+
+```
+using namespace::name
+```
+
+1. 每个名字都需要一个 using 声明
 
 ## 标准库 string 类型
 
+```
+using std::string
+```
+
 ### string 对象的定义和初始化
+
+初始化：
+
+```
+string s1;
+stirng s2(s1);
+sting s3("value");
+string s4(n, 'c')
+```
 
 ### string 对象的读写
 
 ### string 对象的操作
 
+```
+s.empty() ： retrun true/false
+s.size()
+s[n]
+s1 + s2
+s1 = s2
+v1 == v2
+!=, <, <=
+> 和 >=
+```
+
 ### string 对象中字符的处理
+
+单个字符的处理，`#include <cctype>` 中有大量的处理方法：
+
+```
+isalnum(c)	判断是否是字母或者数字
+isalpha(c)	如果c是字母，返回 true
+iscntrl(c)	如果c是控制字符，返回 true
+isdigit(c)	如果c是数字，则为true
+
+isspace(c)
+isupper(c)
+
+
+tolower(c)
+toupper(c)
+```
 
 ## 标准库 vector 类型
 
+vector 集合，容器
+
+```
+#include <vector>
+using std::vector;
+```
+
 ### vector 对象的定义和初始化
+
+```
+vector<T> v1;
+vector<T> v2(v1);
+vector<T> v3(n, i);
+vector<T> v4(n)
+```
+
 
 ### vector 对象的操作
 
+```
+v.empty()
+v.size()	
+v.push_back(t)	在v末尾增加一个值为 t 的元素
+v[n]
+v1 = v2
+v1 == v2
+!=, <=, >, >=
+```
+
+3. vector 的下标操作：
+
+```
+for(vector<int>::size_type ix = 0; ix != ivec.size(); ++ix){
+	ivec[ix] = 0;
+}
+```
+
+- 注意这里使用的是 `!=`
+
+
 ## 迭代器简介
+
+iterator
+
+1. 容器的 iterator 类型
+
+```
+vector<int>::iterator iter;
+```
 
 ## 标准库 bitset 类型
 
