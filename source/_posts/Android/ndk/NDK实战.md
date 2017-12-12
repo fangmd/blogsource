@@ -1,7 +1,7 @@
 ---
 title: NDK Hello
 date: 2016-04-03 13:18:12
-tags: [ndk,实例]
+tags: [NDK]
 category: android
 
 ---
