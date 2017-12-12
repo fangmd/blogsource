@@ -91,7 +91,9 @@ Ta abc(const Ta& a, const Tb& b, const Tc& c){
 
 ### 返回值
 
-返回值可以是：值，引用，常量引用
+返回值可以是：值，引用，常量引用。
+
+返回的对象会被复制到调用环境中。这一步是必须的，因为函数结束的时候临时变量所占用的空间就会被释放。
 
 ### 重载函数
 
@@ -99,11 +101,33 @@ Ta abc(const Ta& a, const Tb& b, const Tc& c){
 
 ### 抛出异常
 
+```c++
+int abc(int a, int b, int c){
+    if(a <= 0 || b <= 0 || c <= 0){
+        throw "All parameters should be > 0";
+    }
+    return a + b * c;
+}
+```
+
 ### 处理异常
+
+```c++
+try
+{
+    
+}
+catch (exception e)
+{
+
+}
+```
 
 ## 动态存储空间分配
 
 ### 操作符 new
+
+
 
 ### 一维数组
 
