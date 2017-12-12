@@ -190,6 +190,11 @@ Child 控件根据其 Dependency 控件的变化而变化
 	        android:layout_margin="20dp"
 	        android:src="@mipmap/ic_launcher"/>
 
+```
+app:layout_anchor="@id/appbar_youdao"
+app:layout_anchorGravity="bottom|right|end"
+```
+
 。
 
 	mBtn = (FloatingActionButton) findViewById(R.id.main_btn);
