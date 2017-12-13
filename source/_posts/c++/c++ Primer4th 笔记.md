@@ -31,6 +31,8 @@ int main(){
 
 编译器：CNU 编译器／微软编译器
 
+<!--more-->
+
 **编译到运行完整流程：**
 
 `hello.cpp`:
@@ -531,14 +533,346 @@ iterator
 vector<int>::iterator iter;
 ```
 
+2. begin and end operator
+
+begin: 返回指向第一个元素的迭代器：
+
+```
+vector<int>::iterator iter = ivec.being();
+```
+
+end：返回指向最后一个元素的迭代器。
+
+3. 迭代器指向的移动
+
+```
+*iter = 0 : 使用 解引用操作符 来访问迭代器所指向的元素
+++iter：指向第二个元素
+--iter：指向前一个元素
+```
+
+使用索引遍历集合：
+
+```c++
+for(vector<int>::size_type ix = 0; ix != ivec.size(); ++ix){
+	ivec[ix] = 0;
+}
+```
+
+for 循环遍历，将每个元素都赋值为 0
+
+使用迭代器遍历集合：
+
+```c++
+for(vector<int>::iterator iter = ivec.being(); iter != ivec.end(); ++iter){
+	*iter = 0;
+}
+```
+
+处理完成最后一个元素后，iter再增加1，就会与 end 操作的返回值相等。
+
+
+4. 只读迭代器 const_iterator
+
+
+5. 迭代器算数操作
+
+```
+vector<int>:: iterator mid = vi.begin() + vi.size()/2;
+```
+
+
 ## 标准库 bitset 类型
 
+```
+#include<bitset>
+using std::bitset
+```
+
+二进制位的有序集合
+
 ### bitset 对象的定义和初始化
+
+```
+bitset<32> bitvec; 	// 32 bits, all zero
+```
+
 
 ### bitset 对象上的操作
 
 # 第四章 数组和指针
 
+C++ 语言提供了两种类似 verctor 和 迭代器类型 和低级复合类型 -- 数组和指针。
+
+>尽量使用 vector和迭代器类型
+
+数组长度固定。
+
+## 数组
+
+### 数组的定义和初始化
+
+数组定义的时候必须指定 维数(长度)，并且 维数 必须是常量：
+
+```
+const unsigned buf_size = 512, max_files = 20;
+int staff_size = 27;
+const unsigned sz = get_size();
+
+char input_buffer[buf_size];	// ok
+string fileTable[max_files + 1]	// ok
+double salaries[staff_size];	// error
+int test_scores[get_size()];	// error
+int value[sz];	// error size not known until run time
+```
+
+1. 显示初始化数组元素
+
+```c++
+const unsigned array_size = 3;
+int ia[array_size] = {0, 1, 2};
+
+int ia2[] = {0, 1, 2}
+```
+
+- 在函数体外的定义的内置数组，其元素均初始化为 0
+- 在函数体内定义的内置数组，其元素无初始化
+- 如果元素为类类型，不管数组在哪里定义 都会使用默认构造函数进行初始化；如果该类没有默认初始化函数，必须为该数组的元素提供显式初始化。
+
+显示初始化数组的时候不需要制定数组的维数(长度)值。
+
+- 指定长度 必须 大于等于 初始化的显示元素个数。
+
+2. 特殊的字符数组
+
+3. 不允许数组直接复制和赋值
+
+```c++
+int ia[] = {0, 1, 2}
+int ia2[]{ia}; // error 复制
+
+int ia3[3];
+ia3 = ia;	// error 赋值
+```
+
+### 数组操作
+
+
+使用下标操作, vector 使用 `vector::size_type` 作为下标， 数组下标类型是 `size_t`
+
+```c++
+int ia[10];
+
+for(size_t ix = 0; ix != 10; ++ix){
+	ia[ix] = ix;
+}
+```
+
+
+## 指针的引入
+
+解引用操作符 dereference operator: `*`
+
+
+### 什么是指针
+
+指针保存的是另一个对象的地址。
+
+去地址符号 address-of：`&`
+
+```c++
+string s("Hello, world");
+string *sp = &s;
+```
+
+第二条语句：定义了一个指向 string 类型的指针 sp，初始化 sp 指向 对象s，`*`操作符表示 sp 是一个指针变量，&s 取地址。
+
+### 指针的定义和初始化
+
+1. 指针变量的定义
+
+```c++
+vector<int> *pvec
+int *op1, *ip2;
+```
+
+2. 另一种声明指针的风格
+
+```c++
+string* ps;	// legal but can be misleading
+```
+
+4. 指针可能的取值
+
+指针的三种状态：
+
+- 保存一个特定对象的地址
+- 指向某个对象后面的另一个对象
+- 0 值，不指向任何对象
+
+```c++
+int ival = 1024;
+int *pi = 0;	// pi initialized to address no object
+int *pi2 = &ival; // pi2 initialized to address of ival
+int  *pi3;	// ok 没有初始化的指针，
+
+pi = pi2;
+pi2 = 0; // pi2 now address no object
+```
+
+5. 避免使用未初始化的指针
+
+7. void 指针：可以指向任何类型
+
+
+### 指针的操作
+
+
+```c++
+string s("hello world");
+string *sp = &s;
+cout << *sp; // prints hello world
+
+*sp = "goodbye"	// 修改 s 的值
+
+string s2 = "some value";
+sp = &s2;	// sp 指向 s2
+```
+
+3. 指向指针的指针
+
+```c++
+itn ival = 1024;
+int *pi = &ival;
+int **ppi = &pi;
+```
+
+### 使用指针访问数组元素
+
+指针和数组密切相关，在表达式中使用数组名的时候，名字会自动转换为指向数组第一个元素的指针。
+
+```c++
+int ia[] = {0, 2, 3, 4, 5};
+int *ip = ia;	// ip points to ia[0]
+
+ip = &ia[4];	// ip points to last element in ia
+```
+
+1. 指针算数
+
+```c++
+ip = ia;
+
+int *ip2 = ip + 4; 	//ok: ip2 points to ia[4]
+
+
+ptrdiff_t n = ip2 - ip1;	// ok, distance between the pointers
+```
+
+
+6. 指针是数组的迭代器
+
+```c++
+for(vector<int>::iterator iter = ivec.begin(); iter != ivec.end(); ++iter){
+	*iter = 0;
+}
+```
+
+
+### 指针和 const 限定符
+
+1. 指向 const 对象的指针
+
+```c++
+const double *cptr;
+
+*cptr = 42;	// error: *cptr migth be const, 不能通过 cptr 修改其所指对象的值
+```
+
+不能把一个 const 对象的地址赋给一个普通的对象指针：
+
+```c++
+const double pi = 3.14;
+double *ptr = &pi;	// error
+const double *cptr = &pi;	// ok
+```
+
+2. const 指针
+
+```c++
+int errNum = 0;
+int *const curErr = &errNum;
+```
+
+
+## C 风格字符串
+
+>C++ 支持 c 风格的字符串，但是不应该在 C++ 中使用这个类型，容易出错。
+
+### 创建动态数组
+
+### 新旧代码的兼容
+
+### 多维数组
+
+# 第五章 表达式
+
+## 算术操作符
+
+## 关系操作符和逻辑操作符
+
+## 位操作符
+
+### bitset 对象或整型值的使用
+
+### 将移位操作符用于 IO
+
+## 赋值操作符
+
+### 赋值操作的右结合性
+
+### 赋值操作具有低优先级
+
+### 复合赋值操作符
+
+## 自增和自减操作符
+
+## 箭头操作符
+
+## 条件操作符
+
+## sizeof 操作符
+
+## 逗号操作符
+
+## 复合表达式的求值
+
+### 优先级
+
+### 结合性
+
+### 求值顺序
+
+## new 和。delete 表达式
+
+## 类型转换
+
+### 何时发生隐式类型转换
+
+### 算术转换
+
+### 其他隐式转换
+
+### 显式转换
+
+### 何时需要强制类型转换
+
+### 命名的强制类型转换
+
+### 旧式强制类型转换
+
+
+# 语句
 
 
 
