@@ -817,19 +817,39 @@ int *const curErr = &errNum;
 
 # 第五章 表达式
 
-
+表达式由 多个操作数和操作符 而成。
 
 ## 算术操作符
 
+```
++, -, *, /, %
+```
+
 ## 关系操作符和逻辑操作符
 
+```
+! < <= > > >= == != && ||
+```
+
 ## 位操作符
+
+```
+~ << >> & ^ |
+```
 
 ### bitset 对象或整型值的使用
 
 ### 将移位操作符用于 IO
 
+```
+cout << "hi" << " there" << endl;
+```
+
 ## 赋值操作符
+
+```
+=
+```
 
 ### 赋值操作的右结合性
 
@@ -837,13 +857,45 @@ int *const curErr = &errNum;
 
 ### 复合赋值操作符
 
+```
++= -= *= /= 
+<<= >>= &= ^= |=
+```
+
 ## 自增和自减操作符
+
+```
+++i
+i++
+
+--i
+
+i--
+```
 
 ## 箭头操作符
 
+```
+->
+```
+
 ## 条件操作符
 
+唯一的 三元操作符
+
+```
+cond ? expr1 : expr2;
+```
+
 ## sizeof 操作符
+
+返回一个对象或类型名的长度，返回值类型为 size_t.
+
+```
+sizeof(type name);
+sizeof(expr);
+sizeof expr;
+```
 
 ## 逗号操作符
 
@@ -855,13 +907,68 @@ int *const curErr = &errNum;
 
 ### 求值顺序
 
-## new 和。delete 表达式
+## new 和 delete 表达式
+
+```c++
+int *pi = new int();
+
+delete pi;
+
+
+int i;
+int *pi = &i;
+string str = "dwareves";
+double *pd = new double(33);
+
+delete str;	// error: str is not a dynamic object
+delete pi;	// error pi refers to a local
+delete pd;	// ok
+```
+
+>如果指针指向不是用 new 分配的内存地址，则在该指针上使用 delete 是不合法的。
+
+
+6. delete 之后，重设指针的值
+
+```
+delete p;
+```
+
+删除指针后，该指针变成悬垂指针(dangling pointer)
+
+7. const 对象的动态分配和回收
 
 ## 类型转换
 
 ### 何时发生隐式类型转换
 
+1. 混合类型的表达式中
+
+```c++
+int ival;
+double dval;
+
+ival >= dval	// ival converted to double
+```
+
+2. 用作条件的表达式转换为 bool 类型
+
+```c++
+int ival;
+if(ival)	// ival converted to bool
+```
+
+3. 用一表达式初始化某个变量，或者将一表达式赋值给某个变量，该表达式被转换成该变量的类型；
+
+```c++
+int ival = 3.24;	// 3.14 converted to int
+int *ip;
+ip = 0;	
+```
+
 ### 算术转换
+
+类型提升
 
 ### 其他隐式转换
 
@@ -875,6 +982,344 @@ int *const curErr = &errNum;
 
 
 # 语句
+
+## 简单语句
+
+大多数语句以分号结束。
+
+空语句：在有些地方语法上需要一个语句，但是逻辑上并不需要。
+
+```c++
+;
+
+
+while(cin >> s && s != sought){
+	;
+}
+```
+
+## 声明语句
+
+## 复合语句
+
+## 语句作用域
+
+## if 语句
+
+```c++
+if(condition){
+
+}
+
+if(condition){
+
+}else{
+
+}
+```
+
+## switch 语句
+
+### 使用 switch
+
+
+```c++
+switch(ch){
+	case 'a':
+		break;
+	case '0':
+		break;
+	default:
+		break;
+}
+```
+
+### switch 中的控制流
+
+c++ 中 switch 语句具有穿透性，需要添加 break
+
+### default 标号
+
+### switch 表达式与 case 标号
+
+### switch 内部的变量定义
+
+## while 语句
+
+```c++
+while(condition){
+
+}
+```
+
+## for 循环语句
+
+```c++
+for(init-statement; condition; expression){
+
+}
+```
+
+### 省略 for 语句头的某些部分
+
+### for 语句头中的多个定义
+
+## do while 语句
+
+```c++
+do{
+
+}while(int foo == get_foo());
+```
+
+## break 语句
+
+跳出最近的循环
+
+## continue 语句
+
+跳出本次循环，继续下次循环
+
+## goto 语句
+
+```c++
+begin:
+int sz = get_size();
+if(sz <= 0){
+	goto begin;
+}
+```
+
+## try 快和异常处理
+
+### throw 表达式
+
+```c++
+throw runtime_error(".....")
+```
+
+### try 块
+
+```c++
+try{
+	//...
+}catch (exception-specifier){
+
+}
+```
+
+### 标准异常
+
+```
+exception
+
+runtime_error
+range_error
+overflow_error
+```
+
+## 使用预处理器进行调试
+
+```c++
+int main(){
+	#ifndef NDEBUG
+	cerr << "starting main"	<< endl;
+	#endif
+	//...
+}
+```
+
+
+# 第七章 函数
+
+## 函数的定义
+
+ 函数由函数名以及一组操作数类型唯一地表示。
+
+ 形参
+
+ 函数体
+
+ 返回类型
+
+1. 函数调用的时候
+
+主调函数（calling function）的执行被挂起，被调函数（called function）开始执行。
+
+2. 函数体是一个作用域
+
+局部变量（local variable）
+
+### 函数返回类型
+
+### 函数形参表
+
+## 参数传递
+
+### 非引用形参
+
+```c++
+int gcd(int v1, int v2){
+	while(v2){
+		int temp = v2;
+		v2 = v1 % v2;
+		v1 = temp;
+	}
+	return v1;
+}
+
+gcd(i, j)
+```
+
+i, j 的值不会受到函数执行而改变。
+
+
+1. 指针形参
+
+```c++
+void reset(int *ip){
+	*ip = 0;	// 可以更改 ip 指针指向的值
+	ip = 0;	// 不能改变 ip 指针指向的值
+}
+
+// 使用 const 避免改变
+
+void use_ptr(const int *p){
+	// *p 只读
+}
+```
+
+2. const 形参数
+
+
+### 引用形参
+
+```c++
+void swap(int &v1, int &v2){
+	int tmp = v2;
+	v2 = v1;
+	v1 = tmp;
+}
+```
+
+### vector 和 其他容器类型 的形参
+
+### 数组 形参
+
+### 传递给函数的数组的处理
+
+### main： 处理命令行选项
+
+### 含有可变形参的函数
+
+## return 语句
+
+### 没有返回值的函数
+
+### 具有返回值的函数
+
+1. main 的返回值
+
+0: 表示程序运行成功
+
+非0: 表示程序运行有问题
+
+2. 返回非引用类型
+
+临时对象 temporary object
+
+3. 返回引用
+
+4. 千万不要返回局部对象的引用
+
+```c++
+const string &manip(const string &s){
+	string ret = s;
+	return ret;	// wrong: returing reference to a local object
+}
+```
+
+6. 千万不要返回指向局部对象的指针
+
+局部对象被释放后，执政变成了 悬垂指针
+
+### 递归
+
+```c++
+int factorial(int val){
+	if(val > 1){
+		return factorial(val - 1) * val;	
+	}
+	return;
+}
+```
+
+## 函数声明
+
+函数的声明可以和函数的定义分离；一个函数只能定义一次，但是可以声明多次。
+
+```c++
+void print(int *array, int size);
+```
+
+在头文件提供函数的声明。
+
+## 局部对象
+
+### 自动对象
+
+自动对象：当定义它的函数被调用的时才存在的对象
+
+### 静态局部对象
+
+static 局部对象：延长对象的声明周期
+
+```c++
+size_t count_calls(){
+	static size_t ctr = 0;
+	return +=ctr;
+}
+
+int main(){
+	for(size_t i = 0;  i != 10; ++i){
+		cout << count_calls() << endl;	
+	}
+	return 0;
+}
+
+// 程序依次输出 1 到 10 整数。
+```
+
+
+## 内联函数
+
+
+
+## 类的成员函数
+
+### 定义成员函数的函数体
+
+### 在类外定义成员函数
+
+### 编写 Sales_item 类的构造函数
+
+### 类代码文件的组织
+
+## 重载函数
+
+### 重载与作用域
+
+### 函数匹配与实参转换
+
+### 重载确定的三个步骤
+
+### 实参类型转换
+
+## 指向函数的指针
+
+# 第八章 标准 IO 库
+
+
 
 
 
