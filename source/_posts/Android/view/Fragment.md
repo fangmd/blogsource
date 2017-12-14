@@ -38,7 +38,7 @@ categories: android
 
 
 
-## fragment 回退栈
+## fragment 回退栈 (不推荐使用，容易出 bug)
 >实际上是事务的回退栈
 
 ### 自定义一个回退栈
@@ -46,7 +46,7 @@ categories: android
 2. 添加新的Fragment的时候，判断栈中是否有fragment，如果有：先隐藏fragment然后添加；如果没有，直接添加
 3. 删除，回退fragment的时候，绑定栈中是否有fragment，如果有：显示栈顶的fragment，
 
-### 事务回退栈
+### 事务回退栈 
 
     transaction.addToBackStack(null);//括号中的参数是栈的名称
 
