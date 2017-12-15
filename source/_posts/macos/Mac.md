@@ -6,6 +6,21 @@ category: program
 
 ---
 
+# 设置环境变量
+
+macos 中环境变量加载顺序：
+
+```
+/etc/profile
+/etc/paths 
+~/.bash_profile 
+~/.bash_login 
+~/.profile 
+~/.bashrc
+```
+
+
+
 
 # 添加启动项
 
