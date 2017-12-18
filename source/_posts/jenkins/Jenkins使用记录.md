@@ -10,15 +10,8 @@ category: Jenkins
 
 # 安装 
 
-官方网站 下载后，安装
 
-```
-https://jenkins.io/download/
-```
-
-安装完成后会自动打开 `https://localhost:8080` 
-
-## brew 安装
+## brew 安装(推荐)
 
 ```
 // 使用brew安装
@@ -26,6 +19,18 @@ brew install jenkins
 // 启动，直接运行jenkins即可启动服务
 jenkins
 ```
+
+## 下载安装包安装（不推荐）
+
+官方网站 下载后，安装
+
+**注意：**这种方法安装后会有权限问题
+
+```
+https://jenkins.io/download/
+```
+
+安装完成后会自动打开 `https://localhost:8080` 
 
 
 # 构建触发器
