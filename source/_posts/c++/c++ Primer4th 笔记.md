@@ -1293,17 +1293,127 @@ int main(){
 
 ## 内联函数
 
+```c++
+const string &shorterString(const string &s1, const string &s2){
+	return s1.size() < s2.size() ? s1 : s2;
+}
+```
+
+为这样的小操作定义一个函数的优点：
+
+1. 阅读和理解函数比读一条表达式要轻松
+2. 方便修改，修改函数比修改所有的表达式要简单
+3. 函数可以重用
+
+缺点：
+
+1. 慢
+
+内联函数可以避免上面的缺点，编译的时候会自动拆解函数：
+
+```c++
+cout << shortString(s1, s2) << endl;
+
+// 编译时会展开：
+cout << (s1.size() < s2.size() ? s1 : s2) << endl;
+```
+
+内联函数：
+
+```c++
+inline const string &shorterString(const string &s1, const string &s2){
+	return s1.size() < s2.size() ? s1 : s2;
+}
+```
+
+内联机制适用于优化小，只有几行并且经常调用的函数。
+
+**内联函数放入头文件**
+
+内联函数的定义对编译器而言必须是可见。
 
 
 ## 类的成员函数
 
+
+```c++
+class Sales_item{
+	public:
+		double avg_price() const;
+		bool same_isbn(const Sales_item &rhs) const{
+			return isbn == rhs.isbn;
+		}
+
+	private:
+		std::string isbn;
+		unsigned unis_sold;
+		double revenue;
+}
+```
+
+
+
 ### 定义成员函数的函数体
+
+
+1. 成员函数含有额外的，隐含的形参数
+
+2. this 指针的引入
+	每个成员函数都有一个额外的，隐含的形参 this。
+
+3. const 成员函数的引入
+
+
 
 ### 在类外定义成员函数
 
+在类的定义外面定义成员函数必须指明它们是类的成员：
+
+```c++
+double Sales_item::avg_price() const{
+	if(units_sold){
+		return revenue/units_sold;
+	}else{
+		return 0;
+	}
+}
+```
+
 ### 编写 Sales_item 类的构造函数
 
+1. 构造函数是特殊的成员函数
+	构造函数和类同名，没有返回值
+	默认构造函数
+
+2. 构造函数的定义
+
+```c++
+class Sales_item{
+	public:
+		double avg_price() const;
+		bool same_isbn(const Sales_item &rhs) const{
+			return isbn == rhs.isbn;
+		}
+
+		Sales_item():units_sold(0), revenue(0.0){
+
+		}
+
+	private:
+		std::string isbn;
+		unsigned unis_sold;
+		double revenue;
+}
+```
+
+3. 构造函数的初始化列表
+
+
 ### 类代码文件的组织
+
+类 Sales_item 放在名为 Sales_item.h 文件中定义。
+
+成员函数的定义在 Sales_item.cc 文件中。
 
 ## 重载函数
 
@@ -1318,6 +1428,274 @@ int main(){
 ## 指向函数的指针
 
 # 第八章 标准 IO 库
+
+## 面向对象的标准库
+
+IO 标准库类型和头文件
+
+- iostream：istream，ostream，iostream
+- fstream：ifstream，ofstream，fstream
+- sstream：istringstream，stringstream
+
+1. 国际字符的支持
+
+`wchar_t` 类型
+
+2. IO 对象不可复制或赋值
+
+```c++
+ofstream out1, out2;
+out1 = out2;	// error, cannot assign stream objects
+```
+
+
+## 条件状态
+
+IO 标准库的条件状态：
+
+- strm::iostate
+- strm::badbit
+- strm::failbit
+- strm::eofbit
+- s.eof()
+- s.fail()
+- s.bad()
+- s.good()
+- s.clear()
+- s.clear(flag)
+- s.setstate(flag)
+- s.rdstate()
+
+
+## 输出缓冲区的管理
+
+每个 IO 对象管理一个缓存区，用于存储程序读写的数据，缓冲区刷新触发条件：
+
+1. 程序结束。main 函数结束
+2. 缓存区满的时候
+3. 使用操纵符显式刷新缓冲区，比如：endl
+4. 在每次输出操作执行完成后，用 unitbuf 操纵符设置流的内部状态，从而清空缓冲区
+5. 输出流与输入流关联(tie)的时候，在读输入流时将刷新关联的输出缓冲区
+
+**输出缓冲区的刷新**
+
+```
+cout << "hi" << flush;	// flushes the buffer
+
+cout << "hi" << ends;	// inserts a null, flushes the buffer
+
+cout << "hi" << endl;	// inserts a newline, then flushes the buffer
+```
+
+3. unitbuf
+
+刷行所有输出
+
+```
+cout << unitbuf << "first" << " second" << nounitbuf
+
+// equals
+
+cout << "first" << flush << " second" << flush;
+```
+
+>如果程序奔溃，则不会刷新缓冲区
+
+
+3. 将输入和输出绑定在一起
+
+
+
+## 文件的输入和输出
+
+### 文件流对象的使用
+
+```c++
+// construct an ifstream and bind it to the file named ifile
+ifstream infile(ifile.c.str());
+
+// ofstream output file object write file named ofile
+ofstream outfile(ofile.c_str());
+```
+
+1. 检查文件是否打开成功
+
+```c++
+if(!infile){
+	cerr << "Error: unable to open input file:"
+		<< ifile << endl;
+	return -1;
+}
+```
+
+```
+if(outfile) 	// ok, to use outfile
+```
+
+2. 将文件流与新文件重新捆绑
+
+fstream 对象打开就会与指定文件关联，如果要与另一个文件关联，需要先关闭之前的。
+
+```c++
+ifstream infile("in");
+infile.close();
+infile.open("next");
+```
+
+3. 清除文件流的状态
+
+```c++
+ifstream input;
+vector<string>::const_iterator it = files.begin();
+
+while(it != files.end()){
+	intput.open(it -> c_str());	// open file
+	if(!input){
+		break;
+	}
+	while(intput >> s){
+		process(s);
+	}
+	input.close();
+	input.clear();	// reset state to ok
+	++it;
+
+}
+```
+
+
+### 文件模式
+
+- in
+- out
+- app
+- ate
+- trunc
+- binary
+
+### 一个打开并检查输入文件的程序
+
+## 字符串流
+
+# 第 9 章 顺序容器
+
+顺序容器：
+
+- vector
+- list
+- deque (double-ended queue)
+
+顺序容器适配器：
+
+- stack: LIFO
+- queue: FIFO
+- priority_queue: 有优先管理的队列
+
+## 顺序容器的定义
+
+```c++
+vector<string> svec;
+list<int> ilist;
+deque<Sales_item> items;
+```
+
+### 容器元素的初始化
+
+1. 容器初始化的时候可以使用另一个相同类型的容器副本
+2. 初始化为一段元素的副本
+
+```c++
+list<string> slist(svec.begin(), svec.end());
+```
+
+3. 分配和初始化指定数目的元素
+
+### 容器内元素的类型约束
+
+## 迭代器和迭代器范围
+
+常用迭代器运算：
+
+```
+*iter 	返回迭代器 iter 所指向的元素的引用
+iter -> mem	, (*iter).mem
+++iter
+iter++
+--iter
+iter--
+iter1 == iter2
+iter1 != iter2
+
+```
+
+### 迭代器范围
+
+c++ 使用一对迭代器标记迭代器范围（iterator range）
+
+包头不包尾
+
+[first, end)
+
+**使用左闭合区间的变成意义：**
+
+- 当 first, last 相等时，迭代器范围为空
+- 当 first, last 不相等, 迭代器范围内至少有一个元素，可以通过下面的代码写循环
+
+```c++
+while(first != last){
+	+=first;
+}
+```
+
+### 使迭代器失效的容器操作
+
+## 顺序容器的操作
+
+### 容器定义的类型别名
+
+### begin 和 end 成员
+
+### 在顺序容器中添加元素
+
+### 关系操作符
+
+### 容器大小的操作
+
+### 访问元素
+
+### 删除元素
+
+### 赋值与 swap
+
+## vector 容器的自增长
+
+## 容器的选用
+
+## 再谈 string 类型
+
+### 构造 string 对象的其他方法
+
+### 修改 string 对象的其他方法
+
+### 只适用于 string 类型的操作
+
+### string 类型的查找操作
+
+### string 对象的比较
+
+## 容器适配器
+
+### 栈适配器
+
+### 队列和优先级队列
+
+
+# 关联容器
+
+
+
+
+
 
 
 

@@ -6,6 +6,42 @@ categories: program
 
 ---
 
+# git tag 使用
+
+查看 tag：
+
+```
+git tag
+
+git tag -l 'v1.4.2.*'
+```
+
+添加一个 Tag：
+
+```
+git tag -a v1.4 -m 'my version 1.4'
+```
+
+push a tag:
+
+>默认情况下，git push 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。
+
+```
+git push origin [tagname]
+
+git push origin --tags
+
+git push --tags
+```
+
+delete a tag:
+
+```
+git push --delete origin [tag_name]
+
+git tag -d [tagName]
+```
+
 # git fork 过来的代码如何同步作者的代码
 
 ```

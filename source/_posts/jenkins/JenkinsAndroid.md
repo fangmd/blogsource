@@ -17,8 +17,6 @@ category: Jenkins
 
 `系统管理` -> `插件管理`
 
->ndroid插件: 用于下载 Android SDK
-
 
 
 # 创建任务
@@ -42,7 +40,7 @@ The specified build file '/Users/Shared/Jenkins/Home/workspace/android-first/And
 
 ![build-type](https://raw.githubusercontent.com/fangmd/markdownphoto/master/src/Jenkins/build-type.png)
 
-构建命令可以改成 `assemble${BUILD_TYPE}`
+构建命令可以改成 `clean assemble${BUILD_TYPE}`
 
 #### 动态设置 keystore 地址
 
@@ -73,6 +71,10 @@ signingConfigs {
 ```
 
 
+#### Jenkins 使用Git Parameter打包
+
+![git-parameter](https://raw.githubusercontent.com/fangmd/markdownphoto/master/src/Jenkins/git-parameter.png)
+
 ## 构建环境
 
 ### 设置构建命名：
@@ -88,16 +90,16 @@ signingConfigs {
 
 勾选 `Use Gradle Wrapper`
 
-- Tasks: 表示要执行的命令, 设置成 `build`
+- Tasks: 表示要执行的命令, 设置成 `clean assumblerelease`
 
 
 ## 构建后操作
 
->目的 移动 apk 文件到外层文件夹中
+>归档 apk 文件
 
-```
+![archive-the-artifacts](https://raw.githubusercontent.com/fangmd/markdownphoto/master/src/Jenkins/archive-the-artifacts.png)
 
-```
+
 
 
 # 问题1
@@ -149,4 +151,10 @@ chmod -R 777 /Users/nerc/Library/
 ```
 file not found
 ```
+
+权限问题，使用 `brew` 安装 jenkins 可以解决。
+
+
+# github hook log polling has not run yet
+
 
