@@ -1653,25 +1653,120 @@ while(first != last){
 
 ### 容器定义的类型别名
 
+- size_type
+- iterator
+- const_iterator
+- reverse_iterator
+- const_reverse_iterator
+- difference_type
+- value_type
+- reference
+- const_reference
+
 ### begin 和 end 成员
+
+begin and end 指向容器内的第一个元素和最后一个元素的下一位置的迭代器。
+
+```
+c.begin()
+
+c.end()
+
+c.rbegin(): 返回一个逆序迭代器，它指向容器 c 的最后一个元素
+
+c.rend(): 返回一个逆序迭代器，它指向容器 c 的第一个元素的前面的位置
+```
 
 ### 在顺序容器中添加元素
 
+```
+c.push_back(t)
+c.push_front(t)
+
+// 下面只适用于 list, deque
+c.insert(p, t)
+c.insert(p, n, t)
+c.insert(p, b, e)
+```
+
+
 ### 关系操作符
+
+```
+ivec1: 1 3
+ivec2: 0 2 4
+
+ivec1 > ivec2 // 第一个元素就能比较出大小
+```
 
 ### 容器大小的操作
 
+```c++
+c.size()
+
+c.max_size()
+
+c.empty()
+
+c.resize(n)
+
+c.resize(n, t)
+```
+
 ### 访问元素
+
+```
+c.back()
+c.front()
+
+// 下面两个适用于 vector deque
+c[n]
+c.at(n)
+
+```
 
 ### 删除元素
 
+```
+c.erase(p)
+c.erase(b, e)
+c.clear()
+c.pop_back()
+c.pop_front()
+```
+
 ### 赋值与 swap
+
+```
+c1 = c2	删除容器 c1 的所有元素，然后将 c2 的元素复制给 c1. c1 和 c2 的类型必须相同
+
+c1.swap(c2) 交换内容
+
+c.assign(b, e)
+c.assign(n, t)	将容器 c 重新设置为存储 n 个值为 t 的元素
+
+```
 
 ## vector 容器的自增长
 
+vector 容器的元素以连续的方式存储元素。（数组数据结构）
+
+**capacity, reserve 成员**：capacity 操作获取在容器需要分配更多存储空间之前能够存储的元素总数，而 reserve 操作则告诉 vector 容器应该预留多少个元素的存储空间。
+
+>每当 vector 容器不得不分配新的存储空间时，以加倍当前容量的分配策略实现重新分配。
+
+
 ## 容器的选用
 
+list 容器：内存区域不连续，允许向前和向后遍历元素。插入和删除效率高，不支持随机访问，访问某个元素必须遍历所有相关元素。
+
+vector：除了尾部外，其他位置插入／删除数据都需要移动其他数据效率低，内存区域连续
+
+deque：从两端插入和删除元素都很快，但是在中间插入和删除元素效率低。
+
 ## 再谈 string 类型
+
+
 
 ### 构造 string 对象的其他方法
 
@@ -1685,7 +1780,69 @@ while(first != last){
 
 ## 容器适配器
 
+- queue
+- priority_queue
+- stack
+
+适配器：一个事物转化成另一个事物的机制。
+
+适配器通用的操作和类型：
+
+```
+size_type
+
+value_type
+
+container_type
+
+A a;
+
+A a(c);
+
+关系操作符
+```
+
 ### 栈适配器
+
+栈容器适配器支持的操作：
+
+```
+s.empty()
+s.size()
+s.pop()
+s.top()
+s.push(item)
+```
+
+```c++
+const stack<int>::size_type stk_size = 10;
+stack<int> intStack;	// empty stack
+
+// fill up the stack
+int ix = 0;
+while(intStack.size() != stk_size){
+	intStack.push(ix++);
+}
+int error_cnt = 0;
+
+// look at each value and pop it off the stack
+while(intStack.empty == false){
+	int value = intStack.top();
+	// read the top element of the stack
+	if(value != --ix){
+		cerr << "oops! expected" << ix
+			<< "received " << value << endl"
+
+		++error_cnt;
+	}
+	intStack.pop();	// op the top element, and repeat
+}
+
+cout << "Our program ran with "
+	<< error_cnt << " errors!" << endl;
+```
+
+
 
 ### 队列和优先级队列
 
