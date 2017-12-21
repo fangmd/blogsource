@@ -6,6 +6,12 @@ categories: android
 
 ---
 
+# New
+
+1. Service 不是一个单独的进程 ，它和应用程序在同一个进程中。
+2. Service 不是一个线程，所以我们应该避免在Service里面进行耗时的操作。
+3. IntentService 具有异步功能，有子线程
+
 
 **涉及API**
 
@@ -20,7 +26,8 @@ categories: android
 - `AIDL`
 
 # Service简介
-Service是一个可以在后台执行长时间操作而不使用用户界面的应用组件。其他的应用组件可以启动Service，并且即使用户切换了界面Service也会在后台运行。此外，组件可以绑定服务与之交互，甚至是执行进程间通信(IPC)。
+
+Service 是一个可以在后台执行长时间操作而不使用用户界面的应用组件。其他的应用组件可以启动 Service，并且即使用户切换了界面Service也会在后台运行。此外，组件可以绑定服务与之交互，甚至是执行进程间通信(IPC)。
 
 **注意：**Service运行在主进程中的主线程中，`IntentService`类有运行在自己的线程中不会再主线程中运行。
 
@@ -120,7 +127,8 @@ Service可以被其他应用启动如果它是公开的。
 
 
 # IntentService
-它在`Service`的基础上增加了异步任务的功能，其中`onHandleIntent()`方法是抽象方法必须重写，方法内的代码是在子线程中执行的，用作耗时操作。
+
+它在 `Service` 的基础上增加了异步任务的功能，其中`onHandleIntent()`方法是抽象方法必须重写，方法内的代码是在子线程中执行的，用作耗时操作。
 
 >IntentService只适合执行一个耗时任务，不适合长期操作。
 

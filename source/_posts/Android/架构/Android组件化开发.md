@@ -104,6 +104,19 @@ defaultConfig {
     }
 ```
 
+# 减少编译项 
+
+`settings.gradle`: 将不需要使用到的模块排除
+
+```
+include ':touchhandler', ':baselibrary', ':youtubeview'
+
+//根据是否模块开发，是否引入app 模块
+if (!isModuleIsApplication.toBoolean()) {
+    include ':app'
+}
+```
+
 # 路由实现
 
 使用 [ARouter](https://github.com/alibaba/ARouter) 实现跳转
