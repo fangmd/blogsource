@@ -1846,8 +1846,643 @@ cout << "Our program ran with "
 
 ### 队列和优先级队列
 
+队列和优先级队列支持的操作：
 
-# 关联容器
+```
+q.empty()
+q.size()
+q.pop()
+q.push(item)
+
+q.front()	// 只适用于队列
+q.back()	// 只适用于队列
+
+q.top()	// 只适用于优先级队列
+```
+
+
+# 第十章 关联容器
+
+associative container
+
+```
+map 	关联数组，元素通过键来存储和读取
+set 	大小可变的集合，支持通过键实现快速读取
+multimap 	支持同一个键多次出现的 map
+multiset	支持同一个键多次出现的 set
+```
+
+## 引言：pair 类型
+
+pair 类型，在 utility 头文件中定义
+
+## 关联容器
+
+关联容器不能通过容器大小来定义，因为这样的话就无法知道键所对应的值是什么了。
+
+## map 类型
+
+### map 对象的定义
+
+```c++
+map<string, int> word_count;	// empty map from string to int
+```
+
+map 构造函数：
+
+```
+map<k, v> m;
+map<k, v> m(m2);
+map<k, v> m(b, e);
+```
+
+>在实际应用中，键类型必须定义 < 操作符，而且该操作符应能“正确地工作”，这点很重要
+
+### map 定义的类型
+
+```
+map<K, V>::key_type	
+map<K, V>::mapped_type
+map<K, V>::value_type
+```
+
+1. map 迭代器进行解引用将产生 pair 类型的对象
+
+```c++
+map<string, int>::iterator map_it = word_count.begin();
+
+// *map_it is a reference to a pair<const string, int> object
+
+cout << map_it->first
+cout << " " << map_it->seconds;
+
+map_it->first = "new Key";	// error:key is const
+++map_it->second;	// ok cahnge value
+```
+
+pair 对象，first 成员存放键，为 const，second 存放值。
+
+### 给 map 添加元素
+
+- insert
+- 先用下标操作符获取元素，通过给元素赋值
+
+
+### 使用下标访问 map 对象
+
+```c++
+map<string, int> word_count;
+
+word_count["Anna"] = 1;
+```
+
+
+2. 下标行为的编程意义
+
+如果下标表示的键在容器中不存在，就会添加新元素。
+
+```c++
+map<string, int> word_count;
+string word;
+while(cin >> word){
+	++word_count[word];
+}
+```
+
+### map::insert 的使用
+
+
+
+### 查找并读取 map 中的元素
+
+```c++
+map<string, int> word_count;
+int occurs = word_count["foobar"]
+```
+
+上面这种方式，如果 `footbar` 键不存在就会创建新的元素返回 0。
+
+```
+m.count(k) 	返回 m 中 k 的出现次数
+m.find(k)	如果 m 容器中存在 k 索引的元素，则返回指向该元素的迭代器。如果不存在就返回超出末端迭代器。
+```
+
+1. 检查 键 是否存在
+
+```c++
+int occurs = 0;
+if(word_count.couint("foobar")){
+	occurs = word.count["foobar"];
+}
+```
+
+2. 读取元素而又不插入该元素
+
+```c++
+int occurs = 0;
+map<string, int>::iterator it = word_count.find("foobar");
+if(it != word_count.end()){
+	occurs = it->second;
+}
+```
+
+### 从 map 对象中删除元素
+
+```
+m.erase(k)
+m.erase(p)
+m.erase(b, e)
+```
+
+### map 对象的迭代遍历
+
+```c++
+map<string, int>::const_iterator map_it = word_count.begin();
+
+while(map_it != word_count.end()){
+	cout << map_it->first << " occurs "
+		<< map_it->second << " times " << endl;
+	++map_it;
+}
+```
+
+### 单词转换 map 对象
+
+## set 类型
+
+### set 容器的定义和使用
+
+```c++
+set<string> set1;
+set1.insert("the");
+
+set1.insert(svec,begin, svec.end());
+
+// query
+iset.find(1)
+iset.count(1)
+
+set<int>::iterator set_it = iset.find(1);
+*set_it = 11;
+```
+
+### 创建 单词排除 集
+
+## multimap 和 multiset 类型
+
+### 元素的添加和删除
+
+```c++
+// authors is multimap
+authors.insert(make_pair(
+	string("barth, John"),
+	string("Sot-Weed Factor")
+	));
+
+authors.insert(make_pair(
+	string("barth, John"),
+	string("Sot-Weed Factor")
+	));	
+
+
+multimap<string, string>size_type cnt = authors.erase(search_item);
+```
+
+### 在 myltimap 和 multiset 中查找元素
+
+## 容器的综合应用：文本查询程序
+
+### 查询程序的设计
+
+### TextQuery 类
+
+### TextQuery 类的使用
+
+### 编写成员函数
+
+# 第十一章 泛型算法
+
+标准库只提供了容器的基本操作。
+
+排序，取最大值，取最小值等复杂操作需要，泛型算法
+
+## 概述
+
+1. 算法如何工作
+
+每个泛型算法的实现都独立于单独的容器。
+
+2. 标准算法固有地独立于类型
+
+3. 迭代器将算法和容器绑定起来
+
+## 初窥算法
+
+```c++
+#include<algorithm>
+#include<numeric>
+```
+
+### 只读算法
+
+
+
+### 写容器元素的算法
+
+### 对容器元素重新排列的算法
+
+## 在谈迭代器
+
+### 插入迭代器
+
+### iostream 迭代器
+
+### 反向迭代器
+
+### const 迭代器
+
+### 五种迭代器
+
+## 泛型算法结构
+
+### 算法的形参模式
+
+### 算法的命名规范
+
+## 容器特有算法
+
+
+# 第十二章 类
+
+c++ 中，用类来定义自己的 抽象数据类型（abstract data type）。
+
+三个新特征：
+
+- 友元
+- 可变成员
+- 静态成员
+
+## 类的定义和声明
+
+### 类定义：扼要重述
+
+### 数据抽象和封装
+
+1. 访问标号实施抽象和封装
+
+
+### 关于类定义的更多内容
+
+1. 同一类型的多个数据成员
+
+```c++
+class Screen{
+	public:
+
+	private:
+		std::string constents;
+		std::string::size_type cursor;
+		std::string::size_type height, width;
+}
+```
+
+2. 使用类型别名来简化类
+
+
+```c++
+class Screen{
+	public:
+		typedef std::string::size_type index;
+
+	private:
+		std::string contents;
+		index cursor;
+		index hegiht, width;
+}
+```
+
+3. 成员函数可被重载
+4. 定义重载成员函数
+
+```c++
+class Screen{
+	public:
+		typedef std::string::size_type index;
+
+		char get() const { return contens[cursor]};
+		char get(index ht, index wd) const;
+
+	private:
+		std::string contents;
+		index cursor;
+		index height, width;
+}
+```
+
+
+### 类声明和类定义
+
+### 类对象
+
+## 隐含的 this 指针
+
+## 类的作用域
+
+1. 使用类的成员
+
+在类作用域之外，成员只能通过对象或指针分别使用成员访问操作符 `.` 或 `->` 来访问。
+
+另一些直接通过类使用作用域操作符 `::` 来访问。
+
+
+2. 作用域与成员定义
+
+```c++
+double Sales_item::avg_price() const{
+	if(units_sold){
+		return revenue/units_sold;
+	}else{
+		return 0;
+	}
+}
+```
+
+完全限定名 `Sales_item::avg_price` 来指出这是类 Sales_item 作用域中的 avg_price 成员的定义。
+
+
+4. 函数返回类型不一定在类作用域中
+
+```c++
+class Screen{
+	public:
+		typedef std::string::size_type index;
+		index get_cursor() const;
+}
+
+inline Screen::index Screen::get_cursor() const{
+	return cursor;
+}
+```
+
+函数的返回值类型必须使用 完全限定名。
+
+
+
+## 构造函数
+
+### 构造函数初始化
+
+### 默认实参予构造函数
+
+### 默认构造函数
+
+### 隐式类类型转换
+
+### 类成员的显式初始化
+
+## 友元
+
+## static 类成员
+
+类静态成员
+
+2. 定义 static 成员
+
+```c++
+class Account{
+	public:
+		void applyint(){
+			amount += amount * interestRate;
+		}
+		static double rate(){
+			return interestRate;
+		}
+		static void rate(double);
+
+	private:
+		std::string owner;
+		double amount;
+		static double interestRate;
+		static double initRate();
+};
+```
+
+3. 使用 static 成员
+
+```c++
+Account ac1;
+Account *ac2 = &ac1;
+
+double rate;
+rate = ac1.rate();
+rate = ac2->rate();
+rate = Account:;rate();
+```
+
+
+### static 成员函数
+
+Account 类中有 rate 的 static 成员函数，在类外部定义 static 成员时 无须重复指定 static 保留字：
+
+```c++
+void Account::rate(double newRate){
+	interestRate = newRate;
+}
+```
+
+### static 数据成员
+
+# 第十三章 复制控制
+
+复制构造函数：copy constructor, 是一种特殊的构造函数，具有单一形参，该参数时对该类类型的引用。
+
+析构函数: destructor，当对象超出作用域或动态分配的对象被删除时，将自动应用析构函数。析构函数可用于释放对象时构造或在对象的生命期中所获取的资源。不管类是否定义了自己的析构函数，编译器都自动执行类中非 static 数据成员的析构函数。
+
+## 复制构造函数
+
+只有单个形参，而且该形参是对本类类型对象的引用（常用 const 修饰），这样的构造函数称为 复制构造函数。
+
+作用：
+
+- 根据另一个同类型的对象显示或隐式初始化一个对象
+- 复制一个对象，将它作为实参传给一个函数
+- 从函数返回时复制一个对象
+- 初始化顺序容器中的元素
+- 根据元素初始化式时列表初始化数组元素
+
+1. 对象的定义形式
+
+```c++
+string null_book = "9-999-9999";	// copy-initialization
+
+string dots(10, " .");	// direct-initialization
+```
+
+
+2. 形参与返回值
+
+3. 初始化容器元素
+
+
+### 合成的复制构造函数
+
+### 定义自己的复制构造函数
+
+### 禁止复制
+
+## 赋值操作符
+
+## 析构函数
+
+## 消息处理示例
+
+## 管理指针成员
+
+### 定义智能指针类
+
+### 定义值型类
+
+
+# 第十四章 重载操作符与转换
+
+442
+
+# 第十五章 面向对象编程
+
+
+## 面向对象编程：概述
+
+
+面向对象编程的关键思想是 多态性
+
+1. 继承
+2. 动态绑定
+
+## 定义基类和派生类
+
+
+### 定义基类
+
+```c++
+class Item_base{
+public:
+	Item_base(const std::string &book = "",
+			double sales_price = 0.0):
+				isbn(book), price(sales_price){
+
+				}
+
+	std::string book() const {return isbn;}
+
+	virtual double net_price(std::size_t n) const{
+		return n * price;
+	}
+
+
+private:
+	std::string isbn;
+
+protected:
+	double price;
+};
+```
+
+1. 基类成员函数
+
+`virtual` 保留字表示启用动态绑定
+
+>基类将派生类需要重新定义的任意函数定义为虚函数
+
+2. 访问控制和继承
+
+
+### protected 成员
+
+### 派生类
+
+1. 定义派生类
+
+```c++
+class Bulk_item: public Item_base{
+
+public:
+	double net_price(std::size_t) const;
+
+private:
+	std::size_t min_qty;
+	double discount;
+};
+```
+
+2. 派生类和虚函数
+
+
+
+### virtual 与其他成员函数
+
+### 公用，私有和受保护的继承
+
+### 友元关系与继承
+
+### 继承与静态成员
+
+## 转换与继承
+
+### 派生类到基类的转换
+
+### 基类到派生类的转换
+
+## 构造函数和复制控制
+
+### 基类构造函数和复制控制
+
+### 派生类构造函数
+
+### 复制控制和继承
+
+### 虚析构函数
+
+### 构造函数和析构函数中的虚函数
+
+## 继承情况下的类作用域
+
+### 名字查找在编译时发生
+
+### 名字冲突与继承
+
+### 作用域与成员函数
+
+### 虚函数与作用域
+
+## 纯虚函数
+
+## 容器与继承
+
+## 句柄类与继承
+
+### 指针型句柄
+
+### 复制未知类型
+
+### 句柄的使用
+
+## 再谈文本查询示例
+
+### 面向对象的解决方案
+
+### 值型句柄
+
+### Query_base 类
+
+### Query 句柄类
+
+### 派生类
+
+### eval 函数
+
+# 第十六章 模版与泛型编程
+
+
 
 
 
