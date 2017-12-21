@@ -127,19 +127,66 @@ catch (exception e)
 
 ### 操作符 new
 
+操作符 new 用来进行动态存储分配或运行时存储分配，它的值是一个指针，指向所分配的空间。
 
+```c++
+int *y = new int(10);
+```
 
 ### 一维数组
+
+```c++
+float *x = new float[n];
+```
 
 ### 异常处理
 
 ### 操作符 delete
 
+动态分配的存储空间不需要时应该把它释放.
+
+```c++
+delete y;
+delete []x;
+```
+
 ### 二唯数组
+
+```c++
+template <class T>
+bool make2dArray(T ** &x, int numberOfRows, int numberOfColums){
+    try{
+        x = new T * [numberOfRows]
+
+        for(int i=0; i < numberOfRows; i++){
+            x[i] = new int[numberOfColums];            
+        }
+        return true;
+    }catch(bad_alloc){
+        return false;
+    }
+}
+```
+
+```c++
+template <class T>
+
+void delete2dArray(T ** &x, int numberOfRows){
+    for(int i=0; i<numberOfRows; i++){
+        delete []x[i];
+    }
+    delete []x;
+    x = NULL;
+}
+
+```
+
 
 ## 自有数据类型
 
-### 类 currency
+### 类 currency （货币类型）自定义类
+
+
 
 ### 一种不同的描述方法
 
