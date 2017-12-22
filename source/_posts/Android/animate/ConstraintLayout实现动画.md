@@ -10,6 +10,12 @@ category: android
 
 
 ```java
+
+mConstraintSet1 = new ConstraintSet();
+mConstraintSet1.clone(mRoot);
+mConstraintSet2 = new ConstraintSet();
+mConstraintSet2.clone(this, R.layout.activity_constaint_layout_animate_small);
+
 public void change2(View view) {
     TransitionManager.beginDelayedTransition(mRoot);
     if (mChanged) {

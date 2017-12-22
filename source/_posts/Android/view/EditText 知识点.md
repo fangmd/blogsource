@@ -42,6 +42,18 @@ categories: android
 	android:background="@color/white"
 
 # EditText 调出键盘让底部的控件被键盘顶上来
+
+>具体需求具体分析，下面的 方案一，方案二 都只在特定布局中能用
+
+## 方案三 推荐
+
+
+
+
+
+
+
+
 ## 方案一
 
 只需要把底部需要不被键盘覆盖的控件用`ScrollView`包裹起来
