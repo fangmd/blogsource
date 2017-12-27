@@ -2415,22 +2415,67 @@ private:
 ```
 
 2. 派生类和虚函数
-
+3. 派生类对象包含基类对象作为子对象
+4. 派生类中的函数可以使用基类的成员
 
 
 ### virtual 与其他成员函数
 
 ### 公用，私有和受保护的继承
 
+
+
 ### 友元关系与继承
 
+基类或派生类可以使其他类或函数成为友元。
+
+>友元关系不能继承
+
+```c++
+class Base{
+	fridend class Frnd;
+
+protected:
+	int i;
+};
+
+class D1 : public Base{
+protected:
+	int j;
+};
+
+class Frnd{
+
+public:
+	int men(Base b){
+		return b.i;	// ok
+	}
+
+	int men(D1 d){
+		return d.i;	// error: friendship does not inherit
+	}
+
+}
+```
+
 ### 继承与静态成员
+
 
 ## 转换与继承
 
 ### 派生类到基类的转换
 
+如果有一个派生类型的对象，则可以使用它的地址对基类类型的指针进行赋值或初始化。
+
+1. 引用转换不同于转换对象
+
+2. 用派生类对象对基类对象进行初始化或赋值
+
+3. 派生类到基类转换的可访问性
+
 ### 基类到派生类的转换
+
+
 
 ## 构造函数和复制控制
 
@@ -2440,25 +2485,124 @@ private:
 
 ### 复制控制和继承
 
+1. 定义派生类复制构造函数
+
+```c++
+class Base{ /* ... */}
+class Derived: public Base{
+public:
+	Derived(const Derived& d):
+		Base(d){
+			//...
+		}
+
+}
+
+```
+
 ### 虚析构函数
 
 ### 构造函数和析构函数中的虚函数
 
 ## 继承情况下的类作用域
 
+每个类都保持着自己的作用域，在该作用域中定义了成员的名字。
+
+在继承情况下，派生类的作用域嵌套在基类作用域中。
+
 ### 名字查找在编译时发生
 
 ### 名字冲突与继承
+
+>与基类成员名相同的派生类成员将屏蔽对基类成员的直接访问。
 
 ### 作用域与成员函数
 
 ### 虚函数与作用域
 
+```c++
+class Base{
+public:
+	virtual int fcn();
+};
+
+class D1: public Base{
+public:
+	int fcn(int);
+};
+
+class D2: public D1{
+public:
+	int fcn(int);
+	int fcn();
+};
+```
+
+D1 中 fcn 没有重定义 Base 中的虚函数 fcn，相反它屏蔽了基类的 fcn。结果 D1 有两个名为 fcn 的函数。
+
+D2 重定义了它继承的两个函数，它重定义了 Base 中定义的 fcn 的原始版本并重定义了 D1 中定义的非虚版本。
+
+**通过基类调用被屏蔽的虚函数：**
+
+```c++
+Base bobj; D1 d1obj; D2 d2obj;
+Base *bp1 = &bobj, *bp2 = &d1obj, *bp3 = &d2obj;
+
+bp1->fcn();	// ok Base::fcn
+bp2->fcn();	// ok Base::fcn
+bp3->fcn();	// ok D2::fcn
+```
+
 ## 纯虚函数
+
+在函数形参表后面写上 =0 指定纯虚函数：
+
+```c++
+class Disc_item: public Item_base{
+public:
+	double net_price(std::size_t) const = 0;
+};
+```
+
+将函数定义为存虚能够说明。该函数为后代类型提供了可以覆盖的接口，但是这个类中的版本绝不会调用。
+
+用户不能创建 Disc_item 类型的对象。（类似 java 中的抽象类）
+
 
 ## 容器与继承
 
+```c++
+multiset<Item_base> basker;
+Item_base base;
+Buld_item bulk;
+
+basket.insert(base);
+basket.insert(bulk);	// ok, but bulk sliced down to its base part
+```
+
 ## 句柄类与继承
+
+c++ 中不能使用对象支持面向对象编程，必须使用指针或引用。
+
+```c++
+void get_prices(Item_base object, const Item_base *pointer, const Item_base &reference){
+
+	// which version of net_price is called is determined at run time
+	cout << pointer->net_price(1) << endl;
+	cout << reference.net_price(1) << endl;
+
+	// always invokes Item_base::net_price
+	cout << object.net_price(1) << endl;
+}
+```
+
+通过 pointer 和 reference 进行的调用在运行时根据它们所绑定对象的动态类型而确定。
+
+使用指针或引用会加重类用户的负担。
+
+定义包装（cover）类
+
+句柄（handle）类
 
 ### 指针型句柄
 
@@ -2481,6 +2625,145 @@ private:
 ### eval 函数
 
 # 第十六章 模版与泛型编程
+
+## 模版定义
+
+### 定义函数模版
+
+```c++
+template <typename T>
+int compare(const T &v1, const T &v2){
+	if(v1 < v2) return -1;
+	if(v1 > v2) return 1;
+	return 0;
+}
+```
+
+### 定义类模版
+
+```c++
+template <class type> class Queue{
+public:
+	Queue();
+	Type &front();
+	const type &front() const;
+	void push(const Type &);
+	void pop();
+	bool empty() const;
+private:
+	//...
+}
+```
+
+1. 模版形参作用域
+2. 使用模版形参名字的限制
+3. 模版声明
+
+### 模版类型形参
+
+1. typename 与 class 的区别
+
+在函数模版形参表中，关键字 typename 和 class 具有相同的含义。
+
+```c++
+template <typename T, class U> calc(const T&, const U&);
+```
+
+2. 在模版定义内部指定类型
+
+### 编写泛型程序
+
+## 实例化
+
+1. 类的实例化
+
+当编写 `Queue<int> qi`时，编译器自动chuangj `Queue<int>` 的类。
+
+```c++
+template <class Type> class Queue<int>{
+public:
+	Queue();
+	int &front();
+	const int &front() const;
+	void push(const int &);
+	void pop();
+	bool empty() const;
+
+private:
+	//...
+};
+```
+
+>类模版的每次实例化都会产生一个独立的类类型。
+
+2. 类模版形参是必须的
+
+```c++
+Queue qs;	// error: which template instantiation?
+```
+
+3. 函数模版实例化
+
+### 模版实参推断
+
+1. 多个类型形参的实参必须完全匹配
+
+```c++
+template <typename T>
+int compare(const T& v1, const T& v2){
+	if(v1 < v2) return -1;
+	if(v2 < v1) return 1;
+	return 0;
+}
+```
+
+上面模版在使用的时候 v1 和 v2 的类型必须一样。
+
+2. 类型形参的实参的受限转换
+
+v1 和 v2 之前只要可以转换到同一个类型也可以，比如（int short）可作为 (int, int) 处理
+
+### 函数模版的显式实参
+
+## 模版编译模型
+
+## 类模版成员
+
+### 类模版成员函数
+
+### 非类型形参的模版实参
+
+### 类模版中的友元声明
+
+### Queue 和 QueueItem 的友元声明
+
+### 成员模版
+
+### 完整的 Queue 类
+
+### 类模版的 static 成员
+
+## 一个泛型句柄类
+
+### 定义句柄类
+
+### 使用句柄
+
+## 模版特化
+
+### 函数模版的特化
+
+### 类模版的特化
+
+### 特化成员而不特化类
+
+### 类模版的部分特化
+
+## 重载与函数模版
+
+# 第十七章 用于大型程序的工具
+
+
 
 
 

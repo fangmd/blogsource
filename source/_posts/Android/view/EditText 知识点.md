@@ -42,6 +42,112 @@ categories: android
 	android:background="@color/white"
 
 # EditText 调出键盘让底部的控件被键盘顶上来
+
+>具体需求具体分析，下面的 方案一，方案二 都只在特定布局中能用
+
+## 方案三 推荐
+
+监听虚拟键盘是否出现，修改布局。
+
+```java
+
+@Override
+public void onStart() {
+    super.onStart();
+    addKeyboardStateListener();
+
+@Override
+public void onStop() {
+    super.onStop();
+    removeKeyboardStateListener();
+}
+
+
+// keyboard
+private View mRootView;
+private boolean isKeyboardListenerAdd;
+private boolean isKeyboardShow;
+ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = ()
+        -> mRootView.postDelayed(() -> {
+    if (isKeyboardShown(mRootView)) {
+        onKeyBoardShow();
+    } else {
+        onKeyBoardHide();
+    }
+}, 100);
+
+/**
+ * 添加软键盘状态监听器
+ */
+protected void addKeyboardStateListener() {
+    FragmentActivity activity = getActivity();
+    if (activity != null && !isKeyboardListenerAdd) {
+        if (mRootView == null) {
+            mRootView = activity.getWindow().getDecorView().findViewBandroid.R.id.content);
+        }
+        mRootView.getViewTreeObserver().addOnGlobalLayoutListeonGlobalLayoutListener);
+        isKeyboardListenerAdd = true;
+    } else {
+        LoggerUtils.e("getActivity() == null");
+    }
+
+private void removeKeyboardStateListener() {
+    isKeyboardListenerAdd = false;
+    if (mRootView != null) {
+        mRootView.getViewTreeObserver().removeOnGlobalLayoutListeonGlobalLayoutListener);
+    }
+
+/**
+ * 判断软键盘是否打开
+ *
+ * @param rootView 最上层布局
+ * @return 打开：true，隐藏：false
+ */
+private boolean isKeyboardShown(View rootView) {
+    final int softKeyboardHeight = 100;
+    Rect r = new Rect();
+    rootView.getWindowVisibleDisplayFrame(r);
+    DisplayMetrics dm = rootView.getResources().getDisplayMetrics();
+    int heightDiff = rootView.getBottom() - r.bottom;
+    return heightDiff > softKeyboardHeight * dm.density;
+}
+
+private void onKeyBoardShow() {
+    LoggerUtils.d("show");
+    if (mCLRoot == null) {
+        return;
+    }
+    if (isKeyboardShow) {
+        return;
+    }
+    isKeyboardShow = true;
+    TransitionManager.beginDelayedTransition(mCLRoot);
+    mConstraintSet.constrainWidth(R.id.iv_login, ScreenUtils.dp2px(getContext(), 60));
+    mConstraintSet.constrainHeight(R.id.iv_login, ScreenUtils.dp2px(getContext(), 60));
+    mConstraintSet.setMargin(R.id.iv_login, ConstraintSet.TOP, ScreenUtils.dpgetContext(), 10));
+    mConstraintSet.applyTo(mCLRoot);
+
+private synchronized void onKeyBoardHide() {
+    LoggerUtils.d("hide");
+    if (mCLRoot == null) {
+        return;
+    }
+    if (!isKeyboardShow) {
+        return;
+    }
+    isKeyboardShow = false;
+    TransitionManager.beginDelayedTransition(mCLRoot);
+    mConstraintSet.constrainWidth(R.id.iv_login, ScreenUtils.dp2px(getContext(), 160));
+    mConstraintSet.constrainHeight(R.id.iv_login, ScreenUtils.dp2px(getContext(), 160));
+    mConstraintSet.setMargin(R.id.iv_login, ConstraintSet.TOP, ScreenUtils.dpgetContext(), 80));
+    mConstraintSet.applyTo(mCLRoot);
+}
+```
+
+
+
+
+
 ## 方案一
 
 只需要把底部需要不被键盘覆盖的控件用`ScrollView`包裹起来

@@ -6,6 +6,12 @@ categories: program
 
 ---
 
+# git delete remote branch
+
+```
+git push -d <remote_name> <branch_name>
+```
+
 # git tag 使用
 
 查看 tag：
