@@ -186,13 +186,106 @@ void delete2dArray(T ** &x, int numberOfRows){
 
 ### 类 currency （货币类型）自定义类
 
+currency 类声明
 
+```c++
+class currency{
+    public:
+        // 构造函数
+        currency(signType theSign = plus,
+                unsigned long theDollars = 0,
+                unsigned int theCents = 0);
+
+        // 析构函数
+        ~currency(){}
+
+        void setValue(signType, unsigned long, unsigned int);
+        void setValue(double);
+        signType getSign() const{ return sign; }
+        unsigned long getDollars() const {return dollars;}
+        unsigned int getCents() const {return cents;}
+        currency add(const currency&) const;
+        currency& increment(const currency&);
+        void output() const;
+
+    private:
+        signType sign;
+        unsigned long dollars;
+        unsigned in cents;
+}
+```
+
+```c++
+void currency::setValue(signType theSign, unsigned long theDollars, unsigned int theCents){
+    if(theCents > 99){
+        throw illegalParameterValue("Cents should be < 100");
+    }
+    sign = theSign;
+    dollars = theDollars;
+    cents = theCents;
+}
+
+void currency::setValue(double theAmount){
+    if(theAmount < 0){
+        sign = minus;
+        thisAmount = -theAmount;
+    }else{
+        sign = plus
+    }
+    dollars = (unsigned long) theAmount;
+    cents = (unsigned int)((theAmount + 0.001 - dollars) * 100);
+}
+```
+
+```c++
+currency currency::add(const currency& x) const{
+    long a1, a2, a3;
+    currency result;
+
+    a1 = dollars * 100 + cents;
+    if(sign == minus) a1 = -a1;
+
+    a2 = x.dollars * 100 + x.cents;
+    if(x.sign == minus) a2 = -x.a1;
+
+    a3 = a1 + a2;
+
+    if(a3 < 0){
+        result.sign = minus;
+        a3 = -a3;
+    }else{
+        result.sign = plus;
+    }
+
+    result. dollars = a3 / 100;
+    result.cents = a3 - result.dollars * 100;
+    return result;
+}
+```
+
+```c++
+currency& currency::increment(const currency& x){
+    *this = add(x);
+    return *this;
+}
+
+void currency::output() const{
+    if(sign == minus) cout << "-";
+    cout << "$" << dollars << ".";
+    if(cents < 10) cout << "0";
+    cout << cents;
+}
+```
 
 ### 一种不同的描述方法
 
 ### 操作符重载
 
+>定义类对象 +，-，*，/ 的运算方式
+
 ### 友元和保护性类成员
+
+友元函数或方法可以反问私有成员。
 
 ### 增加 #ifndef #define #endif
 
@@ -200,19 +293,45 @@ void delete2dArray(T ** &x, int numberOfRows){
 
 ## 递归函数
 
+递归函数：recursive function
+
+直接递归：direct recursion
+
+间接递归：indirect recursion
+
 ### 递归的数学函数
 
+递归定义需要的条件：
+
+- 有一个基础部分，它包含 n 的一个或者多个值，对这些值，f(n) 是直接定义的（即不用递归就能求解）
+- 递归部分
+
+典型例子：斐波那契数列(F0 = 0, F1 = 1, Fn = Fn-1 + Fn-2)
+
 ### 归纳
+
+归纳证明
+
+需要证明一个等式成立的时候，可以先确认 n=0 的时候等式成立。
+
+再假设 n=n 时等式成立，在证明 n=n+1 时等式成立。
+
+则等式成立
 
 ### C++ 递归函数
 
 ## 标准模版库
+
+标准模版库（STL）：是一个容器，适配器，迭代器，函数度喜庆，算法集合。
 
 ## 测试与调试
 
 ### 什么是测试
 
 ### 测试数据的设计
+
+1. 黑盒测试：I/O 分类和因果图。保证各种数据类型都测试到。
+2. 白盒测试：基于代码来设计测试数据。对于一个测试集最起码的要求是程序的每条语句都至少执行一次。
 
 ### 调试
 
@@ -221,6 +340,76 @@ void delete2dArray(T ** &x, int numberOfRows){
 
 
 # 第二章 程序性能分析
+
+## 什么是程序性能
+
+程序性能：运行这个程序所需要的内存和时间的多少。
+
+使用两种方法确定程序的性能：
+
+- 性能分析，分析方法
+- 性能测量，实验方法
+
+空间复杂度：程序运行时所需要的内存大小。
+
+时间复杂度：程序运行所需要的时间。
+
+## 空间复杂度
+
+空间主要由下面几个部分组成：
+
+1. 指令空间 instruction space: 编译之后程序指令所需要的存储空间
+2. 数据空间 data space: 所有常量和变量值所需要的存储空间
+3. 环境栈空间 environment stack space: 用来保存暂停的函数和方法在恢复运行时所需要的信息
+
+### 空间复杂度的组成
+
+### 距离
+
+## 时间复杂度
+
+### 时间复杂度的组成
+
+### 操作计数
+
+选择排序：
+
+1. 首先找到最大的元素，把它和数组最后一个交换位置,在找到余下的最大值和倒数第二个位置的元素交换位置。
+2. 或者找到最小值和第一个元素交换位置。。。
+
+### 最好，最坏的平均操作计数
+
+原地重排：
+
+### 步数
+
+一个程序步：可以大概地定义为一个语法或语义上的程序片段，该片段的执行时间独立于实例特征。
+
+计算程序步的例子：
+
+```c++
+template<class T>
+
+T sum(T a[], int i){
+    T theSum = 0;
+    stepCount++;
+
+    for(int i = 0; i < n; i++){
+        stepCount++;
+        theSum += a[i];
+        stepCount++;
+    }
+    stepCount++;    // for 最后的判断语句
+    stepCount++;    // return 语句
+    return theSum;
+}
+```
+
+计算平均步数：所有情况步数和 / 情况种类
+
+# 第三章 渐近记法
+
+
 
 
 
