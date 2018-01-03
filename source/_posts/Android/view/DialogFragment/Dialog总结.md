@@ -451,6 +451,14 @@ shape：
 	     }  
 	 }  
 
+如果报错：
+
+```
+java.lang.NoSuchFieldException: No field mShowing in class Landroid/support/v7/app/AppCompatDialog; (declaration of 'android.support.v7.app.AppCompatDialog' appears in /data/app/com.rencarehealth.mirhythm-1/split_lib_dependencies_apk.apk:classes19.dex)
+```
+
+从错误描述可知，mShowing名字的field并不存在AppCompatDialog的class中，所以需要将你代码中引入的Dialog类修改为非support_v7中的Dialog。
+
 ## DialogFragment 设置背景透明
 
 
