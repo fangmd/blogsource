@@ -6,6 +6,15 @@ categories: android
 
 ---
 
+# DialogFragment 不会触发 Activity 的 onPause 方法
+
+1. onPause: Called when the system is about to start resuming another activity. 
+2. onPause() is called when the device goes to sleep or when a dialog appears. 
+
+普通的 Dialog 创建的时候是基于 透明Activity 的所以会触发 onPause 方法
+
+但是 DialogFragment 不会创建 透明Activity 所以不会触发 onPause 方法
+
 
 # Dialog官方文档总结
 >file:///C:/MyProgram/androidprogram/adt-bundle-windows-x86_64-20140702/sdk/docs/guide/topics/ui/dialogs.html
