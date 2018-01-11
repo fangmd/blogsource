@@ -6,6 +6,15 @@ categories: android
 
 ---
 
+# DialogFragment 不会触发 Activity 的 onPause 方法
+
+1. onPause: Called when the system is about to start resuming another activity. 
+2. onPause() is called when the device goes to sleep or when a dialog appears. 
+
+普通的 Dialog 创建的时候是基于 透明Activity 的所以会触发 onPause 方法
+
+但是 DialogFragment 不会创建 透明Activity 所以不会触发 onPause 方法
+
 
 # Dialog官方文档总结
 >file:///C:/MyProgram/androidprogram/adt-bundle-windows-x86_64-20140702/sdk/docs/guide/topics/ui/dialogs.html
@@ -441,6 +450,14 @@ shape：
 	         e.printStackTrace();  
 	     }  
 	 }  
+
+如果报错：
+
+```
+java.lang.NoSuchFieldException: No field mShowing in class Landroid/support/v7/app/AppCompatDialog; (declaration of 'android.support.v7.app.AppCompatDialog' appears in /data/app/com.rencarehealth.mirhythm-1/split_lib_dependencies_apk.apk:classes19.dex)
+```
+
+从错误描述可知，mShowing名字的field并不存在AppCompatDialog的class中，所以需要将你代码中引入的Dialog类修改为非support_v7中的Dialog。
 
 ## DialogFragment 设置背景透明
 
