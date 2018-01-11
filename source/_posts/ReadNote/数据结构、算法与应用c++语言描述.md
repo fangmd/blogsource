@@ -504,7 +504,7 @@ int main(){
 
 ## 线性表数据结构
 
-线性表(liner list) 也成 有序表(ordered list)
+线性表(liner list) 也称 有序表(ordered list)
 
 线性列表的操作：
 
@@ -626,6 +626,236 @@ arrayList<T>::arrayList(const arrayList<T>& theList){
     copy(theList.element, theList.element + listSize, element);
 }
 ```
+
+构造函数：O(1)
+复制函数：O(n)
+
+arrayList 基本方法
+
+```c++
+template<class T>
+void arrayList<T>::checkIndex(int theIndex) const{
+    if(theIndex < 0 || theIndex >= listSize){
+        ostringstream s;
+        s << "index = " << theIndex << " size ="<< listSize;
+        thorw illegalIndex(s.str());
+    }
+}
+
+template<class T>
+T& arrayList<T>::get(int theIndex) const{
+    checkIndex(theIndex);
+    return element[theIndex];
+}
+
+template<class T>
+int arrayList<T>::indexOf(const T& theElement) const{
+    int theIndex = (int) (find(element, element + listSize, theElement) - element);
+
+    if(theIndex == listSize){
+        // not find
+        return -1;
+    }else{
+        return theIndex;
+    }
+}
+```
+
+删除一个元素
+
+```c++
+template<class T>
+void arrayList<T>::erase(int theIndex){
+    checkIndex(theIndex);
+
+    copy(element + theIndex + 1, element + listSize, element + theIndex);
+    element[--listSize].~T();   // 调用析构函数
+}
+```
+
+利用 copy 算法把索引从 theIndex+1, theIndex+2,..., listSize-1 的元素左移一个位置，然后 listSize 值减1。
+
+插入一个元素
+
+```c++
+template<class T>
+void arrayList<T>::insert(int theIndex, const T& theElement){
+    if(theIndex < 0 || theIndex > listSize){
+        ostringstream s;
+        s << "index = " << theIndex << " size = " << listSize;
+        throw illegalIndex(s.str());
+    }
+
+    if(listSize == arrayLength){
+        // 数组已经满了，增加数组长度
+        changeLengthID(element, arrayLength, 2 * arrayLength);
+        arrayLength *= 2;
+    }
+
+    // 元素右移一位
+    copy_backward(element + theIndex, element + listSize, element + listSize +1);
+    element[theIndex] = theElement;
+    listSize++;
+}
+```
+
+输出函数output和重载<<
+
+```c++
+template<class T>
+void arrayList::output(cout->out) const{
+    copy(element, element + listSize, ostream_iterator<T>(cout, " "));
+}
+
+template<class T>
+ostream& operator<<(ostream& out, const arrayList<T>& x){
+    x.output(out);
+    return out;
+}
+```
+
+减少数组长度
+
+可以修改 erase 方法，当 `listSize<arrayLength/4` 时减少数组长度。
+
+### C++ 迭代器
+
+一个迭代器 iterator 是一个指针，指向对象的一个元素。
+
+一个迭代器可以用来逐个访问对象的所有元素。
+
+
+数组迭代器：
+
+y 初始化指向 x[] 的首元素（x 实际上就是指向数组首元素的指针）
+
+y++: 表示指向数组的下一个元素
+
+x+3: 是一个指针
+
+*y: 指针 y 的解引用 获取 y 指向的值。
+
+```c++
+
+int main(){
+    int x[3] = {0, 1, 2};
+
+    // 用指针 y 遍历数组
+    for(int* y=x; y!=x+3; y++)
+        cout << *y << " ";
+
+    return 0;
+}
+```
+
+抽象化的迭代器代码:
+
+```
+for(iterator i=start; i!=end; i++){
+    cout << *i << " ";
+}
+
+输出范围：[start, end)
+start: 指向范围的首元素
+end: 指向要输出的最有一个元素的下一个位置
+```
+
+### arrayList 的一个迭代器
+
+
+arrayList 类中增加：
+
+1. 迭代器成员对象
+2. begin() 方法：返回指向第一个元素的 迭代器
+3. end() 方法：返回指向最后一个元素的下个位置的 迭代器
+
+```
+class iterator
+iterator begin(){return iterator(element);}
+iterator end(){return iterator(element+listSize);}
+```
+
+
+iterator.class:
+
+```c++
+class iterator{
+
+public:
+    typedef bidirectional_iterator_tag iterator_category;
+    typedef T value_type;
+    typedef ptrdiff_t difference_type;
+    typedef T* pointer;
+    typedef T& reference;
+
+    // constructor
+    iterator(T* thePosition=0){positino = thePosition;}
+
+    //解引用操作符
+    T& operator*() const {return *position;}
+    T* operator->() const {return &*position;}
+
+    // 迭代器值增加
+    iterator& operator++(){ // 前加
+        ++position;
+        return *this;
+    }
+    iterator operator++(int){ // 后加
+        iterator old = *this;
+        ++position;
+        return old;
+    }
+
+    iterator& operator--(){
+        --position;
+        return *this;
+    }
+    iterator operator--(int){
+        iterator old = *this;
+        --position;
+        return old;
+    }
+
+    // 测试是否相等
+    bool operator!=(const iterator right) const{
+        return position != right.position;
+    }
+    bool operator==(const iterator right)const{
+        return position == right.position;
+    }
+
+protected:
+    T* position;
+}
+```
+
+## vector 描述
+
+STL 中提供了基于数组的类 vector. 这个类中有 arrayList 的所有功能。
+
+# 第六章 线性表--链式描述
+
+在链式描述中，线性表的元素在内存中的存储位置是随机的。每个元素都有明确的指针或链指向线性表的下一个元素的位置。
+
+在数组描述中，元素的地址可以通过数学公式决定和获取。但是在链式描述中，元素地址是随机分配的。
+
+几个概念：
+
+- 链式描述
+- 链表，循环表，双向链表
+- 头节点
+
+STL 的容器类 list 使用带头节点的双向循环链表描述实例。
+
+## 单向链表
+
+### 描述
+
+
+
+
+
+
 
 
 
