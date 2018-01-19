@@ -6,6 +6,10 @@ categories: Android
 
 ---
 
+# 利用 属性动画
+
+
+
 
 # 利用 ValueAnimation 实现动画
 
