@@ -365,22 +365,25 @@ style文件：
         return dialog;
     }
 
->下面的方法有时候可行
+or
 
-    @NonNull
+```java
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+    public void onStart() {
+        super.onStart();
+
+        Dialog dialog = getDialog();
         dialog.show();
         Window window = dialog.getWindow();
-        window.setContentView(R.layout.share_fragment);
-        WindowManager.LayoutParams attributes = window.getAttributes();
-        attributes.windowAnimations = R.style.dialogAnim;
-        attributes.gravity = Gravity.BOTTOM;
-        attributes.width = WindowManager.LayoutParams.MATCH_PARENT;
-        window.setAttributes(attributes);
-        return dialog;
+        window.setBackgroundDrawable(null);
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.BOTTOM;
+        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        wlp.windowAnimations = R.style.dialogAnim;
+        window.setAttributes(wlp);
     }
+```
+
 
 ## DialogFragment里面EditText调出键盘
 
