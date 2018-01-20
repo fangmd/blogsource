@@ -9,13 +9,20 @@ categories: Android
 # 绘制文字
 
 ## 方法一 常用
+
+Canvas 调用下面的方法
+
 ```java
 public void drawText(@NonNull String text, float x, float y, @NonNull Paint paint)
 ```
 
 - 参数1: 需要绘制的文本
 - 参数2: 绘制的文本起始 x 坐标
-- 参数3: 绘制的文本起始 y 坐标
+- 参数3: 绘制的文本起始 y 坐标 文字的 baseline Y 坐标
+
+关于 BaseLine:
+
+![http://img.blog.csdn.net/20140402150646718?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGFueWluZ2ppZTMyNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast](http://img.blog.csdn.net/20140402150646718?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGFueWluZ2ppZTMyNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 
 # 获取文字的宽度
@@ -37,6 +44,7 @@ public void drawText(@NonNull String text, float x, float y, @NonNull Paint pain
 ```
 
 方式二：
+
 ```java
     /**
      * @param text  绘制的文字
@@ -78,6 +86,14 @@ public void drawText(@NonNull String text, float x, float y, @NonNull Paint pain
     float bottom = metrics.bottom; // 最低底边的线
     Log.d(TAG, "top=" + top + "ascent=" + ascent + "leading=" + leading + "descent=" + descent + "bottom=" + bottom);
     canvas.drawText("测试文字", 100, 300, mPaint);  // 文字的基线 baseline    top,ascent,leading,descent,bottom
+```
+
+或者:
+
+```java
+float ascent = mPaint.ascent();
+float descent = mPaint.descent();
+float textHeight = -ascent + descent;
 ```
 
 # 文本绘制水平居中

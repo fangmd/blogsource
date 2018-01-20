@@ -360,20 +360,6 @@ public class MainActivityTest {
 在类名上点击右键运行测试
 
 
-# Using the Monkey tool for creating a random event stream
-
-## How to use Monkey
-
-```
-adb shell monkey -p [package name] -v 2000
-```
-如果出现问题：重启 adb
-```
-adb kill-server
-adb start-server
-```
-
-
 参考：
 
 - [https://developer.android.com/training/testing/start/index.html](https://developer.android.com/training/testing/start/index.html)

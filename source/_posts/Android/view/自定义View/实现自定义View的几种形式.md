@@ -1,5 +1,5 @@
 ---
-title: 自定义View
+title: 实现自定义View的几种形式
 date: 2016-03-28 09:23:14
 tags: [View, 自定义View]
 categories: android

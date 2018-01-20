@@ -6,6 +6,52 @@ categories: program
 
 ---
 
+# Please commit your changes or stash them before you merge.
+
+A开发者 在本地文件修改到一半还没有 commit 的时候，B开发者 上传了代码。
+
+A开发者需要先更新 B开发者 上传的代码然后继续开发。
+
+A开发者:
+
+```
+git pull origin [branch]
+
+Error: Please commit your changes or stash them before you merge.
+```
+
+## 处理方式 1
+
+A开发者:
+
+```
+git stash // 暂时存储代码
+
+git pull origin [branch]
+
+// git stash pop // 取出暂时存储的代码, 并删除历史记录
+
+或者
+
+git stash apply // 取出暂时存储的代码，不删除
+
+确认代码无误后 
+
+git stash drop [stash index]  // 删除一个暂时存储的代码
+```
+
+##  处理方式 2 
+
+删除本地修改的代码
+
+A开发者：
+
+```
+git reset --hard
+git pull
+```
+
+
 # git delete remote branch
 
 ```
