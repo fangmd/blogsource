@@ -6,11 +6,8 @@ categories: Android
 
 ---
 
-
 - 重写onMeasure()方法是为了自定义View尺寸的规则
 - 如果你的自定义View的尺寸是根据父控件行为一致，就不需要重写onMeasure()方法
-
-
 
 ```java
 @Override
@@ -21,6 +18,7 @@ protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
 - `widthMeasureSpec`, `heightMeasureSpec`: 里面封装了 size 和 mode
 
+<!--more-->
 
 # MeasureSpec.class
 
@@ -53,7 +51,7 @@ Mode 类型有：
          * to the specified size.
          */
         public static final int AT_MOST     = 2 << MODE_SHIFT;
-```        
+```
 
 
 # 当不实现 onMeasure 方法，或者实现了直接调用父类 onMeasure 方法的时候
@@ -84,13 +82,53 @@ public static int getDefaultSize(int size, int measureSpec) {
 
 # MeasureSpec Mode
 
-MeasureSpec.UNSPECIFIED：
+- MeasureSpec.UNSPECIFIED：
 
-MeasureSpec.AT_MOST: 子控件设置成 wrap_content 的时候
+- MeasureSpec.AT_MOST: 子控件设置成 wrap_content 的时候
 
-MeasureSpec.EXACTLY: 子控件设置指定的值，或者设置成 match_parent 的时候触发
+- MeasureSpec.EXACTLY: 子控件设置指定的值，或者设置成 match_parent 的时候触发
 
-一个自定义 View 例子 高度计算例子：
+# 触发这个方法的条件
+
+- 自定义 View 内调用 `requestLayout();` 方法
+
+```java
+
+    /**
+     * Call this when something has changed which has invalidated the
+     * layout of this view. This will schedule a layout pass of the view
+     * tree. This should not be called while the view hierarchy is currently in a layout
+     * pass ({@link #isInLayout()}. If layout is happening, the request may be honored at the
+     * end of the current layout pass (and then layout will run again) or after the current
+     * frame is drawn and the next layout occurs.
+     *
+     * <p>Subclasses which override this method should call the superclass method to
+     * handle possible request-during-layout errors correctly.</p>
+     */
+    @CallSuper
+    public void requestLayout() {
+    }
+```
+
+如果需要重新设置控件的宽高的时候调用。
+
+
+例子：
+
+```java
+    /// 数值改变后，控件 宽度 可能需要增加
+    public void setNumber(int number){
+        this.number_old = this.number;
+        this.number = number;
+        requestLayout();
+    }
+```
+
+
+
+# 例子
+
+## 一个显示文字的自定义 View 高度计算例子
 
 ```java
     @Override
