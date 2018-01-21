@@ -72,6 +72,10 @@ public void drawText(@NonNull String text, float x, float y, @NonNull Paint pain
     }
 ```
 
+```java
+-mPaint.ascent() + mPaint.descent()
+```
+
 # 文字的度量，参数获取 Paint.FontMetrics
 
 ```java

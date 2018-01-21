@@ -1315,10 +1315,34 @@ void towersOfHanoi(int n, int x int y, int z){
 方法二 使用栈处理
 
 ```c++
+arrayStack<int> tower[4];
 
+void moveAndShow(int, int, int, int);
 
+void towerOfHanoi(int n){
+    // 初始化 塔1
+    for(int d=n; d>0; d--){
+        tower[1].push(d);
+    }
 
+    // 开始移动， 从塔1移动到塔2
+    moveAndShow(n, 1, 2, 3);
+}
+
+void moveAndShow(int n, int x, int y, int z){
+
+    moveAndShow(n-1, x, z, y);
+    int d = tower[x].top();
+    tower[x].pop();
+    tower[y].push(d);
+    showState();
+    moveAndShow(n-1, z, y, x);
+}
 ```
+
+### 列车车厢重排
+
+
 
 
 
