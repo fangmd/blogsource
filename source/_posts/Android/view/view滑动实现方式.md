@@ -19,7 +19,9 @@ view在屏幕上的位置由一下参数决定：
 
 <!--more-->
 
-**注意：**以上的坐标都是相对于父View来说的，坐标都是相对坐标，因为：子View的布局由父View完成
+**注意：**
+
+以上的坐标都是相对于父View来说的，坐标都是相对坐标，因为：子View的布局由父View完成
 
 1. 更具以上的参数可以计算view宽高
 2. 平移的参数：
@@ -135,7 +137,7 @@ mScrollY:表示view的上边缘 - view的内容的上边缘
 	public void computeScroll {
 		if (scroller.computeScrollOffset) {
 			scrollTo(scroller.getCurrX, scroller.getCurY);
-			postInvalidate;
+			postInvalidate();
 		}
 	}
 
@@ -162,9 +164,9 @@ Scroller方法源码：
 
 startScroll方法中并没有进行实际的滚动操作，而是把startX、startY、deltaX、deltaY等参数都保存了下来。
 
-invalidate方法，这个方法会请求重绘View，这会导致View的draw的方法被调用，draw的方法内部会调用computeScroll方法。
+invalidate 方法，这个方法会请求重绘View，这会导致 View 的 draw 的方法被调用，draw 的方法内部会调用 computeScroll 方法。
 
-调用了 scrollTo 方法，并传入mScroller.getCurrX和mScroller.getCurrY方法作为参数。
+调用了 scrollTo 方法，并传入 mScroller.getCurrX 和 mScroller.getCurrY 方法作为参数。
 
 computeScrollOffset方法代码：
 
@@ -184,7 +186,7 @@ computeScrollOffset方法代码：
 		return true;
 	}
 
-以上代码中第8行和第9行设置的mCurrX和mCurrY即为以上scrollTo的两个参数，表示本次滑动的目标位置。computeScrollOffset方法返回true表示滑动过程还未结束，否则表示结束。
+以上代码中第8行和第9行设置的 mCurrX 和 mCurrY 即为以上 scrollTo 的两个参数，表示本次滑动的目标位置。computeScrollOffset 方法返回 true 表示滑动过程还未结束，否则表示结束。
 
 **原理：**invaldate方法会导致View的draw方法被调用，而draw会调用computeScroll方法，因此重写了computeScroll方法，而computeScrollOffset方法会根据时间的流逝动态的计算出很小的一段时间应该滑动多少距离。也就是把一次滑动拆分成无数次小距离滑动从而实现“弹性滑动”。
 

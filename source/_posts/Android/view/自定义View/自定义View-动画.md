@@ -8,8 +8,57 @@ categories: Android
 
 # 利用 属性动画
 
+```java
+    private float mProgress;
 
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        Log.d(TAG, "onDraw: ");
+
+        // draw background
+        canvas.drawRGB(0xff, 0x00, 0x00);
+
+        // draw text
+        Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
+        float y = getHeight() / 2 + (Math.abs(fontMetrics.ascent) - fontMetrics.descent) / 2;
+
+        canvas.drawText(mContent + mProgress, 0, y, mPaint);
+
+    }
+
+    public void startAnimate() {
+        if (mAnimator == null) {
+            mAnimator = ObjectAnimator.ofFloat(this, "progress", 0.5f, 1);
+            mAnimator.setDuration(2000);
+        }
+
+        if (mAnimator.isStarted()) {
+            return;
+        }
+
+        mAnimator.start();
+    }
+
+    public void stopAnimate() {
+        if (mAnimator == null) return;
+
+        mAnimator.cancel();
+    }
+
+    public void setProgress(float progress) {
+        this.mProgress = progress;
+        invalidate();
+    }
+```
+
+- `ObjectAnimator` 动画修改 `progress` 的值
+- `invalidate()` 方法会触发 `onDraw()` 执行
+
+
+<!--more-->
 
 # 利用 ValueAnimation 实现动画
 

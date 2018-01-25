@@ -72,6 +72,10 @@ public void drawText(@NonNull String text, float x, float y, @NonNull Paint pain
     }
 ```
 
+```java
+-mPaint.ascent() + mPaint.descent()
+```
+
 # 文字的度量，参数获取 Paint.FontMetrics
 
 ```java
@@ -118,3 +122,27 @@ float textHeight = -ascent + descent;
 - `setTextSize(float f)`
 - `setUnderlineText(booelan b)`: 设置下滑线
 
+# 绘制透明文字
+
+```java
+mPaint.setAlpha(((int) (255 * progress)));
+canvas.drawText(String.valueOf(number), 0, y + (ascent*(progress)), mPaint);
+```
+
+
+# 例子
+
+## 文字交替动画
+
+```java
+        float ascent = mPaint.ascent();
+        float descent = mPaint.descent();
+
+        Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
+        float y = getHeight() / 2 + (Math.abs(fontMetrics.ascent) - fontMetrics.descent) / 2;
+
+        mPaint.setAlpha(((int) (255 * progress)));
+        canvas.drawText(String.valueOf(oldNumber), 0, y - (ascent*(1-progress)), mPaint);
+        mPaint.setAlpha(((int) (255 * (1 - progress))));
+        canvas.drawText(String.valueOf(number), 0, y + (ascent*(progress)), mPaint);
+```        
