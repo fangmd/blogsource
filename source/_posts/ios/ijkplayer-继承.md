@@ -19,5 +19,5 @@ category: ios
 
 # 打包 IJKMediaFrame.framework
 
->把 ijkplayer 打包成 framework导入工程中使用
+>把 ijkplayer 打包成 framework 导入工程中使用
 
