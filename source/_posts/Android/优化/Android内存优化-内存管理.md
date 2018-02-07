@@ -8,15 +8,11 @@ categories: android
 
 原文地址: https://mp.weixin.qq.com/s?__biz=MzIxNjc0ODExMA==&amp;mid=2247484311&amp;idx=1&amp;sn=1fe0416bed4137dd45c6e9c153bb14f4&amp;chksm=97851ab6a0f293a0cde28ff6d1091b2232e1758e9845a05549d01c62f412def742985d642630&amp;scene=21#wechat_redirect
 
-
-
 # 前言
 
 LowMemoryKiller 策略：App 退出到后台之后不占用 cpu 资源但是任然会占用内存空间。当系统内存不足的时候，会按照优先级清理进程。
 
-
 App 将内存使用降低可以提高优先级，实现不被系统回收的功能。
-
 
 # onTrimMemory
 
@@ -61,31 +57,42 @@ level 分三类：
 ## 自定义 noTrimMemory 监听
 
 ```java
-public void registerComponentCallbacks(){
-    synchronized (mTrimMemoryCallback){
-        this.registerComponentCallbacks(mTrimMemoryCallback);
+    public void registerComponentCallbacks() {
+        synchronized (mTrimMemoryCallback) {
+            this.registerComponentCallbacks(mTrimMemoryCallback);
+        }
     }
 
-public void unregisterComponentCallbacks(){
-    synchronized (mTrimMemoryCallback){
-        this.unregisterComponentCallbacks(mTrimMemoryCallback);
+    public void unregisterComponentCallbacks() {
+        synchronized (mTrimMemoryCallback) {
+            this.unregisterComponentCallbacks(mTrimMemoryCallback);
+        }
     }
-}
 
-public ComponentCallbacks2 mTrimMemoryCallback = ComponentCallbacks2() {
-    @Override
-    public void onTrimMemory(int level
-  
-    @Override
-    public void onConfigurationChanged(Configuration newConfig
-  
-    @Override
-    public void onLowMemory(
-    }
-};
+    public ComponentCallbacks2 mTrimMemoryCallback = new ComponentCallbacks2(){
+
+        @Override
+        public void onConfigurationChanged(Configuration newConfig) {
+
+        }
+
+        @Override
+        public void onLowMemory() {
+
+        }
+
+        @Override
+        public void onTrimMemory(int level) {
+            
+        }
+    };
 ```
 
 
 # onTrimMemory 的一些思考
 
 通常需要释放的资源：图片，文件
+
+通过这个实现 应用退到后台 的事件捕获
+
+
