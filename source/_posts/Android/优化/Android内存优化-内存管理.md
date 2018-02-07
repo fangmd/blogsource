@@ -27,6 +27,8 @@ onTrimMemory：Android 4.0 之后提供的 API，作用是提醒开发者系统�
 public void onTrimMemory(int level)
 ```
 
+<!--more-->
+
 ## onTrimmemory 参数的意义
 
 - TRIM_MEMORY_UI_HIDDEN：App 的所有 UI 界面被隐藏，最常见的就是 App 被 home 键或者 back 键，置换到后台了。
