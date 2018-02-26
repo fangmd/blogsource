@@ -87,7 +87,7 @@ public class Calculator {
     @Test
     public void subtract() throws Exception {
         assertEquals(1d, mCalculator.subtract(5d, 4d), 0);
-    }
+    }a
 
     @Test
     public void divide() throws Exception {
