@@ -17,6 +17,7 @@ Android 5.0 出现了一个新的 API JobScheduler。
 3. 应用有需要在网络连接或者 Wi-Fi 连接的状态执行的任务	
 4. 应用有定时执行的任务
 
+<!--more-->
 
 # JobInfo
 
@@ -54,22 +55,22 @@ jobScheduler.schedule(uploadTask);
 	NETWORK_TYPE_ANY			表示有网络连接的时候
 	```
 
-- `setRequiresCharging (boolean requiresCharging)`	设置是否需要充电器接入。默认false
-- `setRequiresDeviceIdle (boolean requiresDeviceIdle)`	设置是否需要设备处于空闲状态。默认false
+- `setRequiresCharging (boolean requiresCharging)` 设置是否需要充电器接入。默认false
+- `setRequiresDeviceIdle (boolean requiresDeviceIdle)` 设置是否需要设备处于空闲状态。默认false
 	
 	空闲状态指设置已经有一段时间没有被使用
 
-- `addTriggerContentUri (JobInfo.TriggerContentUri uri)` 利用ContentObserver来监控一个Content Uri
+- `addTriggerContentUri (JobInfo.TriggerContentUri uri)` 利用 ContentObserver 来监控一个 Content Uri
 	
 	***注意：***为了持续监控 content 的变化，你需要在最近的任务触发后再调度一个新的任务
 
 - `setTriggerContentMaxDelay (long durationMs)` 设置从 content 变化到任务被执行，中间的最大延迟
 
-- `setTriggerContentUpdateDelay (long durationMs)` 设置从content变化到任务被执行中间的延迟。如果在延迟期间content发生了变化，延迟会重新计算
+- `setTriggerContentUpdateDelay (long durationMs)` 设置从content变化到任务被执行中间的延迟。如果在延迟期间 content 发生了变化，延迟会重新计算
 - `.setPersisted(true)` 设置周期执行任务
 - `.setPeriodic(500)` 设置周期任务的周期, 通常周期最短时间为 15min
 
-	```java
+```java
 	    /* Minimum interval for a periodic job, in milliseconds. */
     private static final long MIN_PERIOD_MILLIS = 15 * 60 * 1000L;   // 15 minutes
 
@@ -86,14 +87,13 @@ jobScheduler.schedule(uploadTask);
     public static final long getMinFlexMillis() {
         return MIN_FLEX_MILLIS;
     }
-    ```
+```
 
 向 JobService 传值：
 
 ```java
 setExtras(PersistableBundle extras)
 ```
-
 
 
 ### JobInfo.TriggerContentUri
@@ -119,6 +119,7 @@ setExtras(PersistableBundle extras)
 负责调度任务。一般调用schedule(JobInfo)方法将任务加入到调度队列中。
 
 JobScheduler 对象获取：
+
 ```java
 JobScheduler jobScheduler = (JobScheduler) App.getInstance().getSystemService(Context.JOB_SCHEDULER_SERVICE);
 ```
@@ -127,6 +128,7 @@ JobScheduler jobScheduler = (JobScheduler) App.getInstance().getSystemService(Co
 
 	- RESULT_SUCCESS 加入成功
 	- RESULT_FAILURE 不合法的参数将会导致失败，有可能是该任务的run-time太短（不是很懂），或者其指定的JobService无法解析
+
 - `cancel(int jobId)` 取消对应ID的任务
 - `cancelAll()` 取消由这个包注册的所有任务
 - `List< JobInfo > getAllPendingJobs()` 获得这个包注册的正在等待的任务

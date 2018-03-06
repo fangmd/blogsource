@@ -9,6 +9,7 @@ category: android
 # Android 单元测试基本介绍
 
 ## 测试分类
+
 Android 单元测试分为两种：
 
 1. 运行在 JVM 上的测试(local unit tests)
@@ -16,11 +17,13 @@ Android 单元测试分为两种：
 3. Mockito
 
 ## 相关框架
+
 测试使用的框架：
 
 1. AndroidJUnitRunner：local unit
 
     获取 Android 相关 Api 通过 InstrumentationRegistry 获取 context
+
 2. espresso：UI 测试
 
 ## 测试目录结构
@@ -65,7 +68,9 @@ public class Calculator {
 ```
 在类名上 点击右键-》选择 go to --》 选 test --》勾选 （所有方法，勾选 setUp/@Before）
 选择生成 test文件的位置：test
+
 生成：
+
 ```java
     private Calculator mCalculator;
 
@@ -82,7 +87,7 @@ public class Calculator {
     @Test
     public void subtract() throws Exception {
         assertEquals(1d, mCalculator.subtract(5d, 4d), 0);
-    }
+    }a
 
     @Test
     public void divide() throws Exception {
@@ -142,6 +147,7 @@ AndroidJUnit4 继承 JUnit4
 
 
 #### Error: "Method ... not mocked"
+
 ```
 android {
   ...
@@ -204,6 +210,7 @@ onView(withId(R.id.my_view))            // withId(R.id.my_view) is a ViewMatcher
 
 
 perform:
+
 ```java
 // ViewInteraction.class
 public ViewInteraction perform(final ViewAction... viewActions)
@@ -230,6 +237,7 @@ public static ViewInteraction onView(final Matcher<View> viewMatcher)
 ##### Matcher 创建
 
 ###### 1
+
 通过 `ViewMatchers.class` 类的静态方法获取 Matcher 对象
 
 ```java
@@ -254,10 +262,6 @@ ex:
 onData(allOf(is(instanceOf(Map.class)),
         hasEntry(equalTo(LongListActivity.ROW_TEXT), is("test input")));
 ```
-
-
-
-
 
 
 
@@ -299,6 +303,7 @@ onData(allOf(is(instanceOf(Map.class)),
 创建 UI 测试类
 
 在 `androidTest` 目录中
+
 ```java
 package com.nerc.unittestlearn;
 
