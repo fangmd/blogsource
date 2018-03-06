@@ -64,5 +64,18 @@ https://jenkins.io/download/
 
 `系统管理` -》`管理用户`
 
+# 启动 & 停止
 
+```
+设置开机自启动：sudo launchctl load -w /Library/LaunchDaemons/org.jenkins-ci.plist
+取消开机自启动：sudo launchctl unload -w /Library/LaunchDaemons/org.jenkins-ci.plist
+手动启动：Java -jar jenkins.war
+后台启动(默认端口)：nohup java -jar jenkins.war &
+后台启动(指定端口)：nohup java -jar jenkins.war -httpPort=88 &
+后台启动(HTTPS)：nohup java -jar jenkins.war -httpsPort=88 &
+
+启动 ： sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist
+
+停止： sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist
+```
 
