@@ -1343,6 +1343,261 @@ void moveAndShow(int n, int x, int y, int z){
 ### 列车车厢重排
 
 
+### 开关盒布线
+
+
+### 离线等价类问题
+
+### 迷宫老鼠
+
+
+# 队列
+
+队列：FIFO，先进先出
+
+## 定义和应用
+
+队列 queue，是一个线性表，其插入和删除操作分别在表的不同端进行。插入元素端为 队尾 back rear，删除元素端称为 队首 front。
+
+现实中的队列：
+
+1. 餐厅排队
+2. 分布式系统：请求 分发队列 确定把请求传给哪个服务器，每个服务器有一个请求处理 队列。
+
+## 抽象数据类型
+
+```
+template<class T>
+class queue{
+
+public:
+    virtual ~queueu(){}
+    virtual bool empty() const=0;
+    virtual int size() const=0;
+    virtual T& front() = 0; // 返回头元素引用
+    virtual T& back() = 0;  // 返回尾元素引用
+    virtual void pop();
+    virtual void push(const T& theElement)=0;
+}
+```
+
+## 数组描述
+
+### 描述
+
+- 使用下面公式映射队列中的元素：
+
+```
+location(i) = i;
+```
+
+那么每次删除一个队首元素的时候都要将剩余的元素往前移动一格。O(n)
+
+- 使用下面的公式映射队列中的元素：
+
+```
+location(i) = location(队首元素) + i;
+```
+
+这里 队首元素在数组中的位置是动态的。
+
+每次删除队首元素的时候不需要移动后面的元素，只需要修改 队首元素 指向的位置即可。O(1)
+
+空队列的判断：queueBack < queueFront (相等的时候是 1 个元素)
+
+`queueBack=arrayLength-1 和 queueFront>0` 表示队列元素个数小于数组长度，队列左端有空的空间。但是移动队列就增加了复杂度 O(arrayLength)
+
+把队列两端相接，实现 循环队列。
+
+```
+location(i) = (location<队首元素> + i) % arrayLength
+```
+
+`queueFront = queueBack` 的时候，队列为空。也可能是队列满了，所以需要判断是否满了。
+
+*所以循环队列不能让数组全部存满，而应该留出一个位置用于判断是否满了。*
+
+### 类 arrayQueue
+
+push
+
+```c++
+template<class T>
+void arrayQueue<T>::push(const T& theElement){
+    if((theBack+1) % arrayLength == theFront){
+        // 加倍数组长度
+    }
+
+    // 把元素插入队尾
+    queueBack = (queueBack + 1) % arrayLength;
+    queue[queueBack] = theElement;
+}
+```
+
+delete:
+
+```c++
+void pop(){
+    if(thrFront == theBack){
+        throw queueEmpty();
+    }
+
+    theFront = (theFront +1) % arrayLength;
+    queue[theFront].~T();
+}
+```
+
+## 链表描述
+
+
+```c++
+template<class T>
+void linkedQueue<T>::push(const T& theElement){
+    chainNode<T>* newNode = new chainNode<T>(theElement, NULL);
+
+    if(queueSize == 0){
+        queueFront = newNode;   // 队列空
+    }else{
+        queueBack->next = newNode;  // 队列不空
+    }
+    queueBack = newNode;
+
+    queueSize++;
+}
+
+template<class T>
+void linkedQueue<T>::pop(){
+    if(queueFront = NULL){
+        throw queueEmpty();
+    }
+
+    chainNode<T>* nextNode = queueFront->next;
+    delete queueFront;
+    queueFront = nextNode;
+    queueSize--;
+}
+```
+
+## 应用
+
+### 列车车厢重排
+
+### 电路布线
+
+### 图元识别
+
+### 工厂仿真
+
+# 跳表和散列
+
+skip list: 增加了额外向前指针的链表。
+
+跳表的查找，插入，删除的平均时间复杂度为 O(logn)
+
+散列：是用来查找，插入，删除的另一种随机方法。
+
+## 字典
+
+dictionary
+
+字典的操作：
+
+- 确定字典是否为空
+- 确定字典有多少数对
+- 寻找一个指定了关键字的数对
+- 插入一个数队
+- 删除一个指定了关键字的数对
+
+## 抽象数据类型
+
+```c++
+template<class K, class E>
+class dictionary{
+
+public:
+    virtual ~dictionary(){}
+    virtual bool empty() const = 0;
+    virtual int size() const=0;
+    virtual pair<const K, E>* find(const K&) const=0;
+    virtual void erase(const K&) = 0;
+    virtual void insert(const pair<const K, E>&>) = 0;
+};
+```
+
+## 线性表描述
+
+字典可以保存在线性表中
+
+## 散列表描述
+
+### 理想散列
+
+字典的另一种表示方法是 散列（hashing）。用一个 散列函数 把字典的数对映射到一个 散列表 的具体位置。
+
+。。。。
+
+# 第十一章 二叉树和其他树
+
+
+## 树
+
+根 root
+
+子树 subtree
+
+高度 height / 深度 depth：树中级的个数
+
+一个元素的度 degree of an element：其孩子的个数，叶节点的度为 0
+
+一颗树的度 degree of an tree：其元素的度的最大值
+
+## 二叉树
+
+二叉树与树的区别：
+
+1. 每个元素有两个子树
+2. 子树有序，左子树，右子树
+
+## 二叉树特性
+
+1. 一颗二叉树有 n 个元素，n>0，它有 n-1 条边
+2. 一颗二叉树的高度为 h ，h>=0, 它最少有 h 个元素，最多有 2^h - 1 个元素
+
+满二叉树：高度为 h 的树有 2^h - 1 个元素。
+
+完全二叉树：
+
+## 二叉树的描述
+
+### 数组描述
+
+
+
+7000 - 2000 = 5000
+
+
+5000 - 2000 基金 - 2000 bitcoin - 1000 存支付宝 
+
+
+
+
+
+
+
+
+
+
+
+
+
+shug.123
+
+
+
+
+
+
+
 
 
 

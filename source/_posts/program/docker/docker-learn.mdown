@@ -7,6 +7,7 @@ category: Docker
 ---
 
 # Get Started with Docker
+
 ## Build your own image
 
 ### Write a Dockerfile
