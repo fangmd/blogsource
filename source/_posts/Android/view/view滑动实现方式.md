@@ -6,9 +6,9 @@ category: android
 
 ---
 
-# view滑动的实现方式
+# view 滑动的实现方式
 
-## view位置
+## view 位置
 
 view在屏幕上的位置由一下参数决定：
 
@@ -28,7 +28,7 @@ view在屏幕上的位置由一下参数决定：
 	1. translationX： x = left + translationX;
 	2. translationY： y = top + translationY;
 
-这里的xy决定了view的最终位置；
+这里的 xy 决定了 view 的最终位置；
 
 
 ## 方式一：`scrollTo/scrollBy`
@@ -71,17 +71,17 @@ scrollTo：移动到某个位置；srcollBy:移动的位移量；
         scrollTo(mScrollX + x, mScrollY + y);
     }
 
-mScrollX:表示view的左边缘 - view的内容的左边缘
+mScrollX: 表示view的左边缘 - view的内容的左边缘
 
-mScrollY:表示view的上边缘 - view的内容的上边缘
+mScrollY: 表示view的上边缘 - view的内容的上边缘
 
-调用scrollBy/scrollTo方法只能实现View的内容的滚动，而View的四个位置参数是保持不变的。我们平常使用ListView时，滚动的是ListView的内容，而ListView本身在屏幕上的位置是不变的。向右滚动时mScrollX负的，向左滚动时mScrollX是正的。向下滚动时，mScrollY是负的，向上滚动时，mScrollY是正的。
+调用 scrollBy/scrollTo 方法只能实现View的内容的滚动，而View的四个位置参数是保持不变的。我们平常使用ListView时，滚动的是 ListView 的内容，而ListView本身在屏幕上的位置是不变的。向右滚动时mScrollX负的，向左滚动时mScrollX是正的。向下滚动时，mScrollY是负的，向上滚动时，mScrollY是正的。
 
 滑动是非弹性的
 
 ## 方式二：动画
 
->通过改变view的translationX和translationY参数实现，好处是平滑；可以通过补间动画或属性动画实现平移；
+>通过改变view的 translationX 和 translationY 参数实现，好处是平滑；可以通过补间动画或属性动画实现平移；
 
 ### 补间动画：
 
@@ -110,9 +110,9 @@ mScrollY:表示view的上边缘 - view的内容的上边缘
 
 ## 方式三：改变布局参数
 
-思路一：view右移就是把marginLeft参数增大，其他的同理
+思路一：view右移就是把 marginLeft 参数增大，其他的同理
 
-思路二：在要移动的view的旁边预先放置一个view，通过改变这个view的宽高改变目标view的位置
+思路二：在要移动的 view 的旁边预先放置一个view，通过改变这个view的宽高改变目标view的位置
 
 	MarginLayoutParams params = (MarginLayoutParams)mButton.getLayoutParams;
 	params.leftMargin += 100;
@@ -120,9 +120,9 @@ mScrollY:表示view的上边缘 - view的内容的上边缘
 
 非弹性。
 
-## 使用Scroller实现弹性滑动
+## 使用 Scroller 实现弹性滑动
 
-实现代码
+实现代码, 下面代码在 自定义 View 内使用
 
 	Scroller scroller = new Scroller(mContext);
 	
@@ -130,7 +130,7 @@ mScrollY:表示view的上边缘 - view的内容的上边缘
 		int scrollX = getScrollX;
 		int delta = dstX - scrollX;
 		scroller.startScroll(scrollX, 0, delta, 0, 1000);
-		invalidate;
+		invalidate();
 	}
 	 
 	@Override

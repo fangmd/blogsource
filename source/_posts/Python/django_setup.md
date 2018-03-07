@@ -68,6 +68,7 @@ sudo uwsgi --stop /tmp/mysite.pid
 
 
 ## nginx 配置文件
+
 mac 中配置文件地址：`/usr/local/etc/nginx/nginx.conf`
 
 通过：添加下面的代码隔离配置
@@ -120,6 +121,7 @@ include /usr/local/etc/nginx/servers/*;
 # nginx 
 
 ## nginx log 地址
+
 mac: `/usr/local/Cellar/nginx/1.10.2_1/logs/error.log`
 
 ## 关闭,重启 nginx

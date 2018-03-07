@@ -11,8 +11,8 @@ categories: program
 	$ export https_proxy='http://localhost:8087'
 
 
-	export http_proxy=http://127.0.0.1:1087/
-	export https_proxy=http://127.0.0.1:1087/
+	export http_proxy=http://127.0.0.1:1080/
+	export https_proxy=http://127.0.0.1:1080/
 
 
 PS：别用 ping 对以上代理进行测试，不管用。
