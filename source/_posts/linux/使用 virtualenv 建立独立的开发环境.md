@@ -59,5 +59,7 @@ virtualenv -p /usr/bin/python2.6 <path/to/new/virtualenv/>
 example:
 
 ```
-virtualenv -p /usr/bin/python2.6 ~/temp/ENV/
+virtualenv -p /usr/bin/python3 ~/temp/ENV/
+
+virtualenv -p /usr/local/bin/python3 ~/temp/ENV/
 ```

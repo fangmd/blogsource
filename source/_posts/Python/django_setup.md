@@ -10,6 +10,7 @@ category: Python
 # uwsgi 使用
 
 ## uWSGI配置文件
+
 Django 中配置文件地址在工程中
 
 ```
@@ -140,6 +141,7 @@ sudo nginx -s reload
 ## 如果出现端口占用的问题
 
 方法一：确认端口，关闭占用端口的进程
+
 ```
 lsof -i :[port]
 
@@ -148,6 +150,7 @@ sudo kill [pid number]
 
 方法二：（如果上面的方法没发现占用端口的程序使用这个方法）
 查看下面的程序是否在运行, 关闭进程
+
 ```
 ps -ax | grep nginx
 

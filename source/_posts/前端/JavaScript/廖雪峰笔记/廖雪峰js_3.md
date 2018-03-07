@@ -17,6 +17,7 @@ category: 读书笔记
 jQuery对象，不需要考虑游览器的差异，全部统一操作。
 
 ### 修改Text和HTML
+
 jQuery对象的`text()`,`html()`方法获取节点的文本和原始HTML文本：
 
 
@@ -62,6 +63,7 @@ jQuery对象的所有方法都返回一个jQuery对象（可能是新的也可�
 	div.removeClass('highlight'); // 删除highlight这个class
 
 ## 显示和隐藏DOM
+
 隐藏DOM可以设置CSS的`display`的属性为`none`,利用`css()` 方法可以实现，但是如果要恢复原有的`display`就需要记下原来的`display`属性到底是`block`还是`inline`还是别的值。
 
 在jQuery中可以直接使用`show()`,`hide()`:

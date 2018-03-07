@@ -7,6 +7,7 @@ category: 读书笔记
 ---
 
 ## JSON
+
 JavaScript Object Notation
 
 json中有的数据类型：
@@ -276,6 +277,7 @@ JavaScript出现是为了能在游览器中运行。
 - screen.colorDepth:返回颜色位数
 
 ### location
+
 表示当前页面的URL信息
 
 	location.protocol; // 'http'
