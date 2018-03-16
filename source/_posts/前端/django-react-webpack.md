@@ -10,7 +10,8 @@ npm install -g create-react-app
 
 # react http 请求
 npm install --save axios
-
+# react markdown
+npm install --save react-markdown
 npm install --save react-router-dom lodash
 
 
