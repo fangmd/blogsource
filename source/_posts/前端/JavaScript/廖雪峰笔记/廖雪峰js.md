@@ -2,7 +2,7 @@
 title: 廖雪峰 js
 date: 2016-08-07 13:18:12
 tags: [js]
-category: 读书笔记
+category: 前端
 
 ---
 

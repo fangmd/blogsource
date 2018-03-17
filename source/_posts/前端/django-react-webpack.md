@@ -1,4 +1,10 @@
+---
+title: react 基本使用
+date: 2018-03-10 13:18:12
+tags: [react]
+category: 前端
 
+---
 
 # Install
 
@@ -39,6 +45,8 @@ npm install -g webpack-cli -D
 # 跨域访问
 # pip install django-cors-headers
 ```
+
+<!--more-->
 
 # 配置 webpack
 

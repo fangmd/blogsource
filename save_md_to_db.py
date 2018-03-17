@@ -30,7 +30,7 @@ class Category:
 
 
 def get_sqlite3_conn(sqlite3_path):
-    # print("connect db : ", str(sqlite3_path))
+    print("connect db : ", str(sqlite3_path))
     return sqlite3.connect(sqlite3_path)
 
 
@@ -195,8 +195,8 @@ def get_all_md_file(root_directory):
 
 def root():
     file_paths = get_all_md_file("/Users/double/Documents/blog2/source/_posts")
-    conn = get_sqlite3_conn(
-        '/Users/double/Documents/djangoblog/blog/db.sqlite3')
+    conn = get_sqlite3_conn('/Users/double/Documents/BlogSource2/djangowebpack/db.sqlite3')
+
     for file_path in file_paths:
         article = parse_md_to_article(file_path)
         insert_article_to_db(conn=conn, article=article)

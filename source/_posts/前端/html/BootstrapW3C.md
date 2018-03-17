@@ -2,7 +2,7 @@
 title: Bootstrap w3c 学习记录
 date: 2016-11-23 13:18:12
 tags: [html, 学习记录, Bootstrap]
-category: android
+category: 前端
 
 ---
 

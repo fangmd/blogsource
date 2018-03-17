@@ -39,7 +39,7 @@ The migrate command looks at the INSTALLED_APPS setting and creates any necessar
 
     python3 manage.py makemigrations
 
-    python3 manage.py migreate
+    python3 manage.py migrate
 
 <!--more-->
 
