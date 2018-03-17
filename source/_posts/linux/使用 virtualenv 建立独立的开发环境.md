@@ -54,6 +54,10 @@ deactivate
 
 ```
 virtualenv -p /usr/bin/python2.6 <path/to/new/virtualenv/>
+
+virtualenv -p /usr/local/bin/python3 <path/to/new/virtualenv/>
+
+
 ```
 
 example:
