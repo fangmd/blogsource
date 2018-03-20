@@ -39,6 +39,7 @@ android:enabled：是否可被系统实例化，默认true.
 android:exported : 设为false则其它应用(user ID不同)无法启动此服务。默认true。
 android:permission：指定启动服务及其运行所在进程所需的权限。
 android:process：指定服务运行进程，默认当前应用进程。
+
 注意：Android5.0以后禁止了隐式声明Intent来启动Service。可以通过setPackage()解决或者把一个隐式Intent转换成显式Intent
 
 ## Service开启方式
@@ -46,10 +47,11 @@ android:process：指定服务运行进程，默认当前应用进程。
 2. `Context.bindService()`
 
 ### Service生命周期
+
 ![](http://i.imgur.com/pzuXMgy.png)
 
 - 两种启动方式
-- 两种模式：` onStartCommand()`的返回值**一般使用系统默认的返回值就可以了**		
+- 两种模式：`onStartCommand()`的返回值**一般使用系统默认的返回值就可以了**
 	- `START_STICKY`：当系统由于内存不足杀死Service后，Service会尝试重新启动；用户杀死Service的时候不会重新启动。
 	- `START_NOT_STICKY`和`START_REDELIVER_INTENT`
 
@@ -68,6 +70,7 @@ Service可以被其他应用启动如果它是公开的。
 - 一个开启后的Service可以使用`startForeground(int, Notification)`方法让服务处在前台的状态，让系统以为他属于用户正在的activity，从而不会再内存不足的时候杀死他。
 
 ## 绑定Service的停止时机
+
 1. 当你的`activity`需要在可见时才需要同`service`交互则需要在activity的`onStart()`中绑定service，并在`onStop()`方法中解除绑定。
 
 2. 若当在activity在后台时仍需要与service交互，则需要在`onCreate()`方法中绑定，并在`onDestory()`方法中解除绑定。
@@ -80,6 +83,7 @@ Service可以被其他应用启动如果它是公开的。
 
 
 # Activity操作Service
+
 >关键：在Activity中获取到启动的Service实例。
 
 `Activity`绑定启动`Service`

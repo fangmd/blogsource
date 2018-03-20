@@ -104,7 +104,7 @@ defaultConfig {
     }
 ```
 
-# 减少编译项 
+# 减少编译项
 
 `settings.gradle`: 将不需要使用到的模块排除
 
@@ -168,14 +168,13 @@ if (!isModuleIsApplication.toBoolean()) {
         //...
         aaptOptions.cruncherEnabled = false
         aaptOptions.useNewCruncher = false
-    }    
+    }
     ```
 
 5. 不能使用 switch-case 访问资源ID: 使用 Android Studio 快捷修复按钮修复即可
 
 # 关于依赖
 
-1. 主工程依赖所有的 module ？？
 
 
 参考：[http://baronzhang.com/blog/Framework/Android-%E6%A8%A1%E5%9D%97%E5%8C%96%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/](http://baronzhang.com/blog/Framework/Android-%E6%A8%A1%E5%9D%97%E5%8C%96%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/)

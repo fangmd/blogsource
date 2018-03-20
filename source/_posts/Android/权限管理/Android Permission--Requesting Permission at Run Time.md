@@ -6,13 +6,13 @@ category: android
 
 ---
 
-# Requesting Permission at Run Time  
+# Requesting Permission at Run Time
 
 官方地址:[https://developer.android.com/training/permissions/requesting.html](https://developer.android.com/training/permissions/requesting.html)
 
 Android 6.0 (API level 23) 开始
 
-1. app在运行的时候才会去获取权限,而不是在app安装的时候. 这个改进简化了app安装的步骤,因为app不需要在安装的时候去获取权限. 
+1. app在运行的时候才会去获取权限,而不是在app安装的时候. 这个改进简化了app安装的步骤,因为app不需要在安装的时候去获取权限.
 2. 用户可以更多的控制app的功能:因为用户可以在设置中关闭app已经获取到的权限
 
 权限分为:普通权限和危险权限
@@ -34,7 +34,7 @@ Android 6.0 (API level 23) 开始
 ### 解释为什么app需要这个权限
 
 1. 确定app需要这个危险权限,并向用户解释为什么需要这个权限
-2. ` shouldShowRequestPermissionRationale()`:返回`true`如果用户拒绝了app获取权限
+2. `shouldShowRequestPermissionRationale()`:返回`true`如果用户拒绝了app获取权限
 
 ### 获取需要的权限
 

@@ -7,7 +7,7 @@ categories: android
 ---
 
 
-# Broadcast 
+# Broadcast
 
 **涉及到的API**
 
@@ -18,6 +18,7 @@ categories: android
 - `ActivityCompat`
 
 ## 广播接收者 BroadcastReceiver
+
 创建一个`BroadcastReceiver`的继承类
 
 在`onReceive()`方法里面对获取的广播进行处理。
@@ -28,17 +29,19 @@ categories: android
 	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	context.startActivity(intent);
 
-拦截广播：` abortBroadcast();`对有序广播才有效
+拦截广播：`abortBroadcast();` 对有序广播才有效
+原因：Receiver 没有任务栈，启动activity的时候要新建一个任务栈，这里改变了活动的启动方式
 
-原因：Receiver没有任务栈，启动activity的时候要新建一个任务栈，这里改变了活动的启动方式
 
 ## 广播注册
+
 ### 静态注册：在xml清单文件这个注册
+
 >广播不会强制要求注册，不报错
 
 快捷创建
 
-	<receiver 
+	<receiver
 		android:name=".HeadestBroacastReceiver"
 		android:enabled="true"
 		android:exported="true">
@@ -59,7 +62,7 @@ categories: android
 	- `android.intent.action.SCREEN_OF`
 	- `android.intent.action.SCREEN_ON`
 	- `android.intent.action.BOOT_COMPLETED`
-	
+
 **注意：**有些监听需要加权限，对于敏感权限需要在code里面确定获取。
 #### 获取权限方法
 **注意：**权限获取的代码执行完后，在执行需要权限的代码的时候还是要判断一下是否获取了权限。

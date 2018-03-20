@@ -39,7 +39,7 @@ UID和文件权限。注意：为了保证安全，只有两个应用使用同�
 
 应用存储的所有数据都会被UID签名，并且通常不会被其他应用获取。当使用下面的方法创建文件的时候：
 
-- ` getSharedPreferences(String, int), openFileOutput(String, int)`
+- `getSharedPreferences(String, int), openFileOutput(String, int)`
 - `openOrCreateDatabase(String, int, SQLiteDatabase.CursorFactory)`
 
 你可以使用标签：` MODE_WORLD_READABLE`或者`MODE_WORLD_WRITEABLE `来允许其他的应用去读/写文件。当设置了这些flags的时候，文件还是属于该应用的，但是其他的应用有权限来读/写该文件。

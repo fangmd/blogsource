@@ -6,7 +6,7 @@ category: android
 
 ---
 
-# Guide to App Architecture 
+# Guide to App Architecture
 
 ![官方文档地址](https://developer.android.com/topic/libraries/architecture/guide.html#common_architectural_principles)
 

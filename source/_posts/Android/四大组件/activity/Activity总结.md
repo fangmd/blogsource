@@ -46,7 +46,7 @@ category: android
 3. foreground lifetime:`onResume` --> `onPause()`
 
 #### 异常情况的生命周期
-##### 资源相关的系统配置发生改变导致Activity被杀死并重新创建 
+##### 资源相关的系统配置发生改变导致Activity被杀死并重新创建
 activity会调用下面的方法来保存当前的数据,activity在重新创建的时候会恢复数据.
 
 现场保护：`protected void onSaveInstanceState(Bundle outState)`
@@ -58,10 +58,11 @@ activity会调用下面的方法来保存当前的数据,activity在重新创建
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-##### 资源内存不足导致低优先级的Activity被杀死 
+##### 资源内存不足导致低优先级的 Activity 被杀死
 
 
-### Configuration Changes 
+### Configuration Changes
+
 `Resources.Configuration`类
 
 ## 笔记

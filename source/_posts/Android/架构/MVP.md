@@ -29,7 +29,7 @@ MVP：
 
 - View不直接与Model交互，而是通过与Presenter交互来与Model间接交互
 - Presenter与View的交互是通过接口来进行的，更有利于添加单元测试
-- 通常View与Presenter是一对一的，但复杂的View可能绑定多个Presenter来处理逻辑    
+- 通常View与Presenter是一对一的，但复杂的View可能绑定多个Presenter来处理逻辑
 
 MVC：
 
