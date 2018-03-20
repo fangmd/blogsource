@@ -81,7 +81,7 @@ display 是 CSS 中最重要的用于控制布局的属性。每个元素都有�
 
 `top`, `left`, `bottom`, `right`: 表示相对 body 控件的位置坐标。
 
-# float 
+# float
 
 实现文字环绕图片效果。
 
@@ -104,6 +104,29 @@ Flex 容器（flex container）
 - align-self: flex-start | flex-end | center | baseline | stretch, 子控件在交叉轴上如何排列
 
 
+```
+/* Basic values */
+flex: auto;
+flex: initial;
+flex: none;
+flex: 2;
+
+/* One value, unitless number: flex-grow */
+flex: 2;
+
+/* One value, width/height: flex-basis */
+flex: 10em;
+flex: 30px;
+
+/* Two values: flex-grow | flex-basis */
+flex: 1 30px;
+
+/* Two values: flex-grow | flex-shrink */
+flex: 2 2;
+
+/* Three values: flex-grow | flex-shrink | flex-basis */
+flex: 2 2 10%;
+```
 
 
 # 例子
