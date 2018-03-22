@@ -16,6 +16,7 @@ category: android
 - 属性动画
 
 ## 动画属性
+
 - translate:平移动画
 - scale:缩放动画
 - rotate:旋转动画
@@ -47,7 +48,7 @@ category: android
 根结点的属性:
 
 - `xmlns:android="http://schemas.android.com/apk/res/android"`
-- ` android:visible="true"`
+- `android:visible="true"`
 - `android:variablePadding="true"`
 - `android:oneshot="true"`:是否循环
 
@@ -112,6 +113,7 @@ item属性:
 - 在动画完毕后控件回到其属性设置的位置和状态
 
 ### 使用xml创建动画
+
 1. 创建包`res/anim`
 2. 创建xml资源文件.可以有的根结点:
     1. set:动画集合:可以内嵌set,同过`startOffset`调整先后顺序
@@ -164,6 +166,7 @@ item属性:
 >和Animation相关的api用于补间动画,`AnimationSet`
 
 ### AnimationSet的使用
+
 1. 创建`AnimationSet`对象
 
         AnimationSet animationSet = new AnimationSet(true);
@@ -192,6 +195,7 @@ item属性:
 ## 属性动画
 
 ### 特点
+
 - 改变了控件的属性
 
 ### 属性动画工作方式
@@ -224,15 +228,15 @@ android中有实现好的插值器,可以适用于大部分应用场景.
 自定义Interpolator,返回插值因子
 
 ```java
-    public class CustomInterpolator implements TimeInterpolator {  
+    public class CustomInterpolator implements TimeInterpolator {
 
-        @Override  
-        public float getInterpolation(float input) {  
-        // 编写相关的逻辑计算  
-        //input *= 0.8f;  
-        return input * input;  
-        }  
-    }  
+        @Override
+        public float getInterpolation(float input) {
+        // 编写相关的逻辑计算
+        //input *= 0.8f;
+        return input * input;
+        }
+    }
 ```
 
 
@@ -267,7 +271,7 @@ android中有实现好的插值器,可以适用于大部分应用场景.
 
 是ValueAnimator的子类, 继承了ValueAnimator的所有方法和特性,并且封装了很多实用的方法,方便快速实现动画.
 
-属性值会自动更新, 不用实现ValueAnimator.AnimatorUpdateListener
+属性值会自动更新, 不用实现 ValueAnimator.AnimatorUpdateListener
 
 动画:
 
@@ -280,7 +284,7 @@ android中有实现好的插值器,可以适用于大部分应用场景.
 
 #### 使用步骤
 
-1. 调用静态方法 ofFloat(),ofInt... 创建ObjectAnimator对象,并设置View对象,改变的属性名,初始值,结束值.
+1. 调用静态方法 ofFloat(),ofInt... 创建 ObjectAnimator 对象,并设置View对象,改变的属性名,初始值,结束值.
 2. 设置动画持续时间,是否重复,重复次数.
 3. 启动动画.
 
@@ -328,9 +332,9 @@ android中有实现好的插值器,可以适用于大部分应用场景.
 
 ```
 // 创建 ObjectAnimator 对象
-ObjectAnimator animator = ObjectAnimator.ofFloat(view, "progress", 0, 65);  
+ObjectAnimator animator = ObjectAnimator.ofFloat(view, "progress", 0, 65);
 // 执行动画
-animator.start();  
+animator.start();
 ```
 
 
@@ -360,7 +364,8 @@ animator.start();
 btn.setPivotX(btn.getWidth() / 2);
 btn.setPivotY(btn.getHeight() / 2);
 ```
-    
+
+
 #### 5 使用`AnimatorSet`
 
 

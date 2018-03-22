@@ -97,9 +97,11 @@ http工具推荐：chrome插件：postman，
 - 异步javascript调用（AJAX）
 
 ### session
+
 服务器在发送响应数据的时候带一个唯一令牌token，之后客户端在发起请求的时候都把token加在后面
 
 ### Cookies
+
 存储在游览器里包含会话信息的小文件。
 
 ### AJAX

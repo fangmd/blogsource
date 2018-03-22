@@ -6,9 +6,8 @@ category: android
 
 ---
 
-# 视频播放 
 
-## VideoView MediaController
+# VideoView MediaController
 
 ### 获取对象
 
@@ -33,7 +32,11 @@ category: android
 	mVideoView.setMediaController(mediaController);
 
 
-## MediaPlayer SurfaceView
+# MediaPlayer SurfaceView
 见[SurfaceView]()
+
+# ijkplayer
+
+# exoplayer
 
 

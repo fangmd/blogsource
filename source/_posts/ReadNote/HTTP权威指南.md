@@ -39,6 +39,7 @@ MiME type：描述被标记的多媒体内容。是一种文本标记，中间�
 - PowerPoint application/vnd.ms-powerpoint
 
 <!--more-->
+
 #### URI
 
 Uniform Resource Identifier 统一资源标识符
@@ -155,7 +156,7 @@ HTTP是应用层协议，无需关心网络通信细节
 4. 网络特有的链路接口 数据链路层
 5. 物理网络硬件 物理层
 
-#### 连接，ip地址几端口 
+#### 连接，ip地址几端口
 
 连接需要：ip／域名，端口（没有指定端口号的时候默认80）
 

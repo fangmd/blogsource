@@ -211,8 +211,8 @@ Demo流程：
 
 ### 1
 
-	WebSettings webSettings = mWebView .getSettings(); 
-	webSettings.setJavaScriptEnabled(true); 
+	WebSettings webSettings = mWebView .getSettings();
+	webSettings.setJavaScriptEnabled(true);
 
 	mWebView.addJavascriptInterface(new InsertObj(), "jsObj");
 

@@ -163,7 +163,7 @@ chain 是 ConstraintLayout 中加入的控件与控件间的关系。组成 chai
 
 ![chain style](https://mmbiz.qpic.cn/mmbiz_png/6GYDCe0a268PLcpvXmbU3LncJiaZMiaDpJdeByyMzFfas5KE2SjBCITdPBztRz2aSVFkR3URBicMAh3hpftALA4tQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
 
-### demo 1 chain style 
+### demo 1 chain style
 
 ```
     <View

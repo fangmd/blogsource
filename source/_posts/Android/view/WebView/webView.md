@@ -12,7 +12,7 @@ categories: android
 
 <!--more-->
 
-    
+
     // 支持获取手势焦点，输入用户名、密码或其他
     webview.requestFocusFromTouch();
     setNeedInitialFocus(true); //当webview调用requestFocus时为webview设置节点
@@ -26,7 +26,7 @@ webSettings.setJavaScriptEnabled(true);  // 是否允许js脚本运行
 
 webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
 
-webSettings.setPluginsEnabled(true);  //支持插件 
+webSettings.setPluginsEnabled(true);  //支持插件
 
 webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
@@ -225,7 +225,7 @@ class JavaScriptInterface{
     public void showToast(String toast) {
         Log.d("TAG","Js Invoker Native Function");
         Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
-    }      
+    }
 
 }
 ```
@@ -551,7 +551,7 @@ Activity `onDestory` 方法中执行下面代码
         intent.putExtra("bundle",bundle);
         startActivity(intent);
 
-然后在 Html5Activity 的onDestory() 最后加上 System.exit(0); 杀死当前进程。
+然后在 Html5Activity 的 onDestory() 最后加上 System.exit(0); 杀死当前进程。
 
 2. 不能在xml中定义 Webview ，而是在需要的时候创建，并且Context使用 getApplicationgContext()，如下代码：
 

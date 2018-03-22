@@ -15,6 +15,7 @@ categories: Android
 
 ![https://cdn-images-1.medium.com/max/1600/1*abc0UlGj1myFD0eph4pZjQ.png](https://cdn-images-1.medium.com/max/1600/1*abc0UlGj1myFD0eph4pZjQ.png)
 
+
 这个图中有错误：dispatchDraw() 应该在 onDraw() 之后执行
 
 ## Constructor
@@ -44,6 +45,7 @@ categories: Android
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
 
 两个参数封装了宽高的模式和宽高的值：
+
 ```java
     int widthMode = MeasureSpec.getMode(widthMeasureSpec);
     int widthSize = MeasureSpec.getSize(widthMeasureSpec);//在不动的模式下Size有不同的意义
@@ -66,7 +68,8 @@ categories: Android
 
 参考：[http://blog.csdn.net/cyp331203/article/details/45027641](http://blog.csdn.net/cyp331203/article/details/45027641)
 
-#### MeasureSpe
+#### MeasureSpec
+
 >描述了父View对子View大小的期望.里面包含了测量模式和大小
 
 通过一个静态方法将大小和模式合成：方法内部知识简单的相加
@@ -76,17 +79,19 @@ MeasureSpec.makeMeasureSpec(specSize,specMode);
 ```
 
 ## onLayout
+
 >决定子控件在布局中如何放置
 
 控件中如果有子控件，通过这个方法确定自控件的位置。
 
-onLayout方法:在measure过程结束后，视图大小确定后，接下来就是layout的过程。
+onLayout方法: 在 measure 过程结束后，视图大小确定后，接下来就是layout的过程。
 
 ```java
 protected void onLayout(boolean changed, int l, int t, int r, int b)
 ```
 
 ### 流式布局
+
 一排放满，放下一排
 
 ```java
@@ -136,13 +141,13 @@ protected void onDraw(Canvas canvas)
 ### 对于非 ViewGroup 类型的 View，比如 TextView，ImageView
 
 ```java
-public class AppImageView extends ImageView {  
+public class AppImageView extends ImageView {
     ...
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (DEBUG) {            
+        if (DEBUG) {
             myDraw(canvas);
         }
     }
@@ -165,7 +170,7 @@ dispatchDraw() 绘制 子View
 如果要让绘制的内容不被 子View 覆盖, 就需要让 `myDraw` 方法在  `super.dispatchDraw()`  之后执行：
 
 ```java
-public class SpottedLinearLayout extends LinearLayout {  
+public class SpottedLinearLayout extends LinearLayout {
     ...
 
     // 把 onDraw() 换成了 dispatchDraw()
@@ -240,7 +245,7 @@ View.java 中的 draw 方法：
 简化版本：
 
 ```java
-public void draw(Canvas canvas) {  
+public void draw(Canvas canvas) {
     ...
 
     drawBackground(Canvas); // 绘制背景（不能重写）
@@ -257,7 +262,7 @@ public void draw(Canvas canvas) {
 ### 注意
 
 1. 出于效率的考虑，ViewGroup 默认会绕过 draw() 方法，换而直接执行 dispatchDraw()，以此来简化绘制流程。所以如果你自定义了某个 ViewGroup 的子类（比如 LinearLayout）并且需要在它的除  dispatchDraw() 以外的任何一个绘制方法内绘制内容，你可能会需要调用  View.setWillNotDraw(false) 这行代码来切换到完整的绘制流程（是「可能」而不是「必须」的原因是，有些 ViewGroup 是已经调用过 setWillNotDraw(false) 了的，例如 ScrollView）。
-2. 
+
 
 
 
