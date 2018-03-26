@@ -40,7 +40,7 @@ List<Repo> repos = call.execute().body();
 ```
 - Body
 - GET, POST, DELETE, PUT
-- Field, FieldMap, 
+- Field, FieldMap,
 - ForumUrlEncode
 - HEAD
 - Header, HeaderMap, Headers

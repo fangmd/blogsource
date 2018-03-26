@@ -9,7 +9,7 @@ categories: android
 >compile 'com.squareup.retrofit2:retrofit:2.3.0'
 >okhttp 3.8.0
 
-# OkHttpClient.class 
+# OkHttpClient.class
 
 作用：
 
@@ -59,7 +59,7 @@ public class MyClient {
         this.msg = builder.msg;
         this.msg1 = builder.msg1;
     }
-    
+
     public Builder newBuilder(){
         return new Builder(this);
     }
@@ -186,7 +186,7 @@ URL 地址的封装
   }
 ```
 
-# Dispatcher.class 
+# Dispatcher.class
 
 >Policy on when async requests are executed.
 

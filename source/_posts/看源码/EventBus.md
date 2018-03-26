@@ -15,7 +15,7 @@ categories: android
 
 数据结构知识：
 
-1. 链表结构（PendingPostQueue 事件队列）
+1. 链表结构（ PendingPostQueue 事件队列）
 
 
 # EventBus.class
@@ -593,7 +593,7 @@ class AsyncPoster implements Runnable {
 
 # EventBusBuilder.class
 
-用于创建 EventBus 
+用于创建 EventBus
 
 里面保存的参数有：
 

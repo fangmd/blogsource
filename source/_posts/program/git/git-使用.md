@@ -35,12 +35,12 @@ git pull origin [branch]
 
 git stash apply // 取出暂时存储的代码，不删除
 
-确认代码无误后 
+确认代码无误后
 
 git stash drop [stash index]  // 删除一个暂时存储的代码
 ```
 
-##  处理方式 2 
+##  处理方式 2
 
 删除本地修改的代码
 
