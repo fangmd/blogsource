@@ -48,4 +48,6 @@ Note：
         int color = a.getColor(R.styleable.StatusIndicateView_siv_center_color, Color.BLACK);
         int testSize = a.getInteger(R.styleable.StatusIndicateView_siv_text_size, 0);
         mCenterPaint.setColor(color);
+
+        a.recycle();
 ```

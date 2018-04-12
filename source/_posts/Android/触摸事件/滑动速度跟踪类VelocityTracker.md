@@ -13,7 +13,11 @@ categories: android
 通过静态方法 `obtain` 获取速度检测对象（可以在 MotionEvent.ACTION_DOWN 中执行）
 
 ```java
-tracker = VelocityTracker.obtain();
+
+if (null == tracker) {  
+    tracker = VelocityTracker.obtain();
+}
+
 ```
 
 开始检测滑动：(可以在 MotionEvent.ACTION_MOVE 中执行)
@@ -29,3 +33,13 @@ tracker.computeCurrentVelocity(int units)
 tracker.getXVelocity(int id)
 tracker.getYVelocity(int id)
 ```
+
+例子：
+
+```java
+tracker.computeCurrentVelocity(200);
+float yVelocity = Math.abs(tracker.getYVelocity());
+tracker.clear();
+tracker.recycle();
+```
+

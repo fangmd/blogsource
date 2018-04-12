@@ -6,6 +6,18 @@ categories: program
 
 ---
 
+# git 版本回退和前进
+
+前进： 
+
+```
+# 查看所有的 head, 找到要的 hash
+git reflog
+
+# 定位 head
+# git reset --hard [hash]
+```
+
 # Please commit your changes or stash them before you merge.
 
 A开发者 在本地文件修改到一半还没有 commit 的时候，B开发者 上传了代码。

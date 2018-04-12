@@ -6,14 +6,18 @@ categories: android
 
 ---
 
-
-
 官网介绍：[http://developer.android.com/training/material/lists-cards.html](http://developer.android.com/training/material/lists-cards.html)
 
 ![](http://i.imgur.com/O93BmPu.png)
 
 <!--more-->
 
+# 2018-04-07 去掉滚动条和滑动到边界阴影
+
+```
+android:overScrollMode="never"
+android:scrollbars="none"
+```
 
 # 2017-11-03 滚动过程中修改 ViewHodler 中控件的样式
 

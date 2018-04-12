@@ -233,6 +233,7 @@ actionDone               完成              EditorInfo.IME_ACTION_DONE
 
 ```xml
 android:imeOptions="actionSend"
+android:inputType="text" # 必须要有
 ```
 
 在代码中设置 actions:

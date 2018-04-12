@@ -14,10 +14,17 @@ categories: android
 ## gradle 配置
 
 ```
-compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
-annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
-compile 'com.github.bumptech.glide:okhttp3-integration:4.0.0-RC0'
-compile 'com.android.support:support-v4:26.0.0-alpha1'
+    // glide
+    implementation ("com.github.bumptech.glide:glide:4.6.1") {
+        exclude group: "com.android.support"
+    }
+    compile 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+
+    // glide transformations
+//    implementation 'jp.wasabeef:glide-transformations:3.1.1'
+    // If you want to use the GPU Filters
+//    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 ```
 
 如果要把图片缓存本地需要设置权限：
@@ -149,23 +156,83 @@ private static RequestOptions getRequestOptions() {
 
 
 
+## 常用 API
+
+```
+thumbnail(float sizeMultiplier). 请求给定系数的缩略图。如果缩略图比全尺寸图先加载完，就显示缩略图，否则就不显示。系数sizeMultiplier必须在(0,1)之间，可以递归调用该方法。
+sizeMultiplier(float sizeMultiplier). 在加载资源之前给Target大小设置系数。
+**diskCacheStrategy(DiskCacheStrategy strategy).**设置缓存策略。> -DiskCacheStrategy.SOURCE：缓存原始数据，DiskCacheStrategy.RESULT：缓存变换(如缩放、裁剪等)后的资源数据，DiskCacheStrategy.NONE：什么都不缓存，DiskCacheStrategy.ALL：缓存SOURC和RESULT。默认采用> -> -DiskCacheStrategy.RESULT策略，对于download only操作要使用> -DiskCacheStrategy.SOURCE。
+priority(Priority priority). 指定加载的优先级，优先级越高越优先加载，但不保证所有图片都按序加载。枚举Priority.IMMEDIATE，Priority.HIGH，Priority.NORMAL，Priority.LOW。默认为Priority.NORMAL。
+dontAnimate() . 移除所有的动画。
+animate(int animationId). 在异步加载资源完成时会执行该动画。
+animate(ViewPropertyAnimation.Animator animator). 在异步加载资源完成时> 会执行该动画。
+placeholder(int resourceId). 设置资源加载过程中的占位Drawable。
+placeholder(Drawable drawable). 设置资源加载过程中的占位Drawable。
+fallback(int resourceId). 设置model为空时要显示的Drawable。如果没设置fallback，model为空时将显示error的Drawable，如果error的Drawable也没设置，就显示placeholder的Drawable。
+fallback(Drawable drawable).设置model为空时显示的Drawable。
+**error(int resourceId).**设置load失败时显示的Drawable。
+**error(Drawable drawable).**设置load失败时显示的Drawable。 -listener(RequestListener《? super ModelType, TranscodeType》> -requestListener). 监听资源加载的请求状态，可以使用两个回调：onResourceReady(R resource, T model, Target target, boolean isFromMemoryCache, boolean isFirstResource)和onException(Exception e, T model, Target<R> target, boolean isFirstResource)，但不要每次请求都使用新的监听器，要避免不必要的内存申请，可以使用单例进行统一的异常监听和处理。
+skipMemoryCache(boolean skip). 设置是否跳过内存缓存，但不保证一定不被缓存（比如请求已经在加载资源且没设置跳过内存缓存，这个资源就会被缓存在内存中）。
+override(int width, int height). 重新设置Target的宽高值（单位为pixel）。
+into(Y target).设置资源将被加载到的Target。
+into(ImageView view). 设置资源将被加载到的ImageView。取消该ImageView之前所有的加载并释放资源。
+into(int width, int height). 后台线程加载时要加载资源的宽高值（单位为pixel）。
+preload(int width, int height). 预加载resource到缓存中（单位为pixel）。
+asBitmap(). 无论资源是不是gif动画，都作为Bitmap对待。如果是gif动画会停在第一帧。
+**asGif().**把资源作为GifDrawable对待。如果资源不是gif动画将会失败，会回调.error()。
+```
+
+
+
+
+# 如何获取图片加载后的时间点
+
+```java
+        RequestBuilder requestBuilder = GlideApp.with(context).load(url);
+        //添加加载的监听
+        requestBuilder.listener(new RequestListener() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean
+                    isFirstResource) {
+                listener.loadFail();
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                listener.loadSuccess();
+                return false;
+            }
+        });
+        //缩略图
+//        requestBuilder.thumbnail(0.5f);
+        requestBuilder.load(url);
+        requestBuilder.into(iv);
+```
+
+
+# 裁剪方式 centerCrop, fitCrop
+
+- centerCrop: 缩放图像让图像都测量出来等于或小于 ImageView 的边界范围。该图像将会完全显示，但可能不会填满整个 ImageView
+- fitCrop: 缩放图像让它填充到 ImageView 界限内并且裁剪额外的部分。ImageView 会被完全填充，但图像可能不会完整显示
+
+在不设置裁剪类型的时候，裁剪方式由 ImageView 的 scaleType 决定：
+
+- centerCrop: center_crop
+- fitCrop: FIT_CENTER，FIT_START，FIT_END, CENTER，CENTER_INSIDE，MATRIX
+
+同时设置 裁剪方式 和 scaleType 的时候，glide 先使用裁剪方式处理图片然后按照 ImageView 的 scaleType 确定图片位置。
+
+
+
+
+
+
 
 
 
 
 # old-----
-
-# load
-    .load(参数)
-
-参数可以是：
-
-1. String，文件路径，uri，url
-2. Uri
-3. File
-4. Integer，资源id，drawable或者mipmap
-5. byte[],model
-6. T,model,自定义类型
 
 ## 加载到本地
 
@@ -225,25 +292,6 @@ private static RequestOptions getRequestOptions() {
         .override(50,50)// Example
         .videoDecoder(fileDescriptorBitmapDecoder)
         .into(yourImageView);
-
-# load gif
-
-# 站位图
-
-
-## 正在加载占位图
-
-placeHolder
-
-    .placeholder(R.mipmap.ic_launcher) // can also be a drawable
-
-不能将一个网络图片设置成站位图
-
-## 出错占位图
-
-error
-
-    .error(R.mipmap.future_studio_launcher) // will be displayed if the image cannot
 
 如果图片加载失败就会加载出错占位图
 
@@ -333,14 +381,3 @@ crossFade
 
 **一个问题：**如果使用 9patch 作为 动画 drawable 的 `android:drawable="@drawable/9-patch"` 时 ImageView 设置的 `scralType=fitXY` 不会立即生效，效果很不好。
 
-# 如何获取图片加载后的时间点
-
-    .into(new GlideDrawableImageViewTarget(photoImg) {
-        @Override
-        protected void setResource(GlideDrawable resource) {
-            // this.getView().setImageDrawable(resource); is about to be called
-            super.setResource(resource);
-            // here you can be sure it's already set
-            // 这里代表图片加载完成
-        }
-    });

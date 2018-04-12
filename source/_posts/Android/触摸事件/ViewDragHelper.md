@@ -6,7 +6,7 @@ category: android
 
 ---
 
-用于分析手势处理的类,一般用在一个自定义ViewGroup的内部
+用于分析手势处理的类,一般用在一个自定义 ViewGroup 的内部
 
 ViewDragHelper.Callback 是连接 ViewDragHelper 与 view 之间的桥梁（这个 view 一般是指拥子 view 的容器即 parentView）；
 
