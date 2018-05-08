@@ -636,6 +636,7 @@ Activity `onDestory` 方法中执行下面代码
 	webView.setWebViewClient(mWebViewClient);
 
 ## WebChromeClient
+
 >WebChromeClient是辅助WebView处理Javascript的对话框，网站图标，网站title，加载进度等 :
 方法中的代码都是由Android端自己处理。
 

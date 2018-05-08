@@ -103,7 +103,7 @@ float textHeight = -ascent + descent;
 # 文本绘制水平居中
 
 ```java
-        float x = (getWidth() - paint.measureText(text))/2
+        s
         # x
 ```
 

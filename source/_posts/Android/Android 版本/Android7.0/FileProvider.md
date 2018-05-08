@@ -45,7 +45,7 @@ FileProvider 只会生成指向预先指定的目录的 content URI.
 	    ...
 	</paths>
 
-`paths` 必须包含一个以上的下列子标签：
+`paths` 包含一个以上的下列子标签：
 
 - `file-path`:可以通过 `Context.getFileDir()` 获取地址
 - `cache-path`:可以通过 `Context.getCacheDir()` 获取地址
@@ -69,7 +69,7 @@ FileProvider 只会生成指向预先指定的目录的 content URI.
 
 	File imagePath = new File(Context.getFilesDir(), "images");
 	File newFile = new File(imagePath, "default_image.jpg");
-	Uri contentUri = getUriForFile(getContext(), "com.mydomain.fileprovider", newFile);
+	Uri contentUri = FileProvider.getUriForFile(getContext(), "com.mydomain.fileprovider", newFile);
 	//content://com.mydomain.fileprovider/my_images/default_image.jpg.
 
 # 调用系统相机方法

@@ -7,9 +7,16 @@ category: Android
 ---
 
 
+# 方法一 推荐
+
+输出依赖到文件
+
+```
+./gradlew -q app:dependencies > log
+```
 
 
-# 方法一
+# 方法二
 
 通过引入第三方插件来实现
 

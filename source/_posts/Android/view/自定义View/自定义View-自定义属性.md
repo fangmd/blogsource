@@ -16,7 +16,7 @@ categories: Android
 ```xml
     <declare-styleable name="MyView">
         <attr name="mv_center_color" format="color"/>
-        <attr name="mv_text_size" format="integer"/>
+
     </declare-styleable>
 ```
 

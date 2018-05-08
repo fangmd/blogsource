@@ -6,6 +6,16 @@ categories: program
 
 ---
 
+# 从远程分支拉分支到本地
+
+
+
+# git 修改最近一次提交的 msg 信息
+
+```
+git commit --amend
+```
+
 # git 版本回退和前进
 
 前进： 
