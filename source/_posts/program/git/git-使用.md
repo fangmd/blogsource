@@ -6,8 +6,35 @@ categories: program
 
 ---
 
+# git 撤销中间的某次提交
+
+```
+git revert [head code]
+
+# 冲突
+git add .
+git revert --continue
+```
+
+# 清理远程已经删除的分支
+
+```
+git fetch --prune origin 
+
+// or
+
+git fetch -p
+
+// or
+
+git pull -p
+```
+
 # 从远程分支拉分支到本地
 
+```
+git checkout [远程分支名称]
+```
 
 
 # git 修改最近一次提交的 msg 信息
@@ -26,6 +53,9 @@ git reflog
 
 # 定位 head
 # git reset --hard [hash]
+
+# 软回退，代码不会删除
+# git reset --soft
 ```
 
 # Please commit your changes or stash them before you merge.

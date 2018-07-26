@@ -295,6 +295,12 @@ vertical-align: 垂直对齐 sub, super, top, middle, bottom, 长度值
 
 # 5 页面布局
 
+多栏布局三种基本的实现方案：固定宽度，流动，弹性。
+
+# 6 界面组件
+
+# 8 响应式设计
+
 
 
 

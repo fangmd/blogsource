@@ -6,6 +6,24 @@ category: android
 
 ---
 
+# Android 中不要自己创建线程，应该使用线程池
+
+工具类
+
+```
+int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();
+int KEEP_ALIVE_TIME = 1;
+TimeUnit KEEP_ALIVE_TIME_UNIT = TimeUnit.SECONDS;
+BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<Runnable>();
+ExecutorService executorService = new ThreadPoolExecutor(NUMBER_OF_CORES,
+NUMBER_OF_CORES*2, KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT, taskQueue,
+new BackgroundThreadFactory(), new DefaultRejectedExecutionHandler());
+//执行任务
+executorService.execute(new Runnnable() {
+ ...
+});
+```
+
 # 实现异步的方式
 
 ## Java Thread
