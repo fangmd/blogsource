@@ -851,6 +851,47 @@ public class Html5Activity extends AppCompatActivity {
 
 # WebViewFragment
 
+# webview 没有虚拟键盘
+
+构造方法写法有问题
+
+错误写法：
+
+```java
+    public Web3View(@NonNull Context context) {
+        this(context, null);
+        init();
+    }
+
+    public Web3View(@NonNull Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+        init();
+    }
+
+    public Web3View(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+```
+
+正确写法：
+
+```java
+    public Web3View(@NonNull Context context) {
+        super(context);
+        init();
+    }
+
+    public Web3View(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public Web3View(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+```
 
 
 参考：

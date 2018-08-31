@@ -1,6 +1,6 @@
 ---
 title: nginx 使用记录
-date: 201=8-07-12 13:18:12
+date: 2018-07-12 13:18:12
 tags: [nginx]
 category: Server
 
