@@ -25,6 +25,44 @@ category: java基础
 <!--more-->
 
 xml:外号“数据存储之王”
+
+## 文档声名
+
+```
+<?xml version="1.0" encode="utf-8" >
+```
+
+## 特殊字符
+
+1. 使用转义字符
+2. 使用 `CDATA` 区域
+
+
+## DTD 约束
+
+Document Type Definition
+
+规定 xml 文档中，元素名称， 子元素名称，子元素顺序，子元素属性,
+
+```
+<?xml version="1.0" encode="utf-8" >
+<!DOCTYPE web-app[
+		//...约束内容
+]>
+
+<web-app>
+</web-app>
+```
+
+## scheme 约束
+是 DTD 替代者
+
+Schema 文档格式：xsd.
+
+支持名称空间
+
+## 解析
+
 ### xml解析技术
 1. dom：基于类，将xml文件装载到内存进行分析，需要把所有xml都解析到内存中-->对内存容量要求高
 2. dom4j：基于接口，（xml文件分批装载）便于扩展，解析xml文件速度快-->适合java ee 开发
@@ -33,6 +71,22 @@ xml:外号“数据存储之王”
 ## SAX解析
 
 SAX解析技术：用于解析xml文件读取其中的数据进行分析。
+
+### dom4j
+
+hibernate 底层使用的解析方式
+
+DOM 解析：
+
+```
+Document
+Element
+Attribute
+Test
+```
+
+
+
 
 ### SAX解析xml步骤
 1. 获得解析器工厂（工厂设计模式）

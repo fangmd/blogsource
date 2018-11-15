@@ -5,6 +5,36 @@ tags: [adb]
 category: android
 
 ---
+# ADB shell 记录
+
+## dumpsys power
+
+查看当前电源使用，
+Wake Locks: size=0：查看当前持有 wake locak的应用
+
+## /system/framework/ 中的文件修改权限
+
+设置为读写
+
+    # mount -o rw,remount /system
+
+设置为读（默认）
+
+    # mount -o ro,remount /system
+
+## 查看当前 Activity
+
+```
+adb shell dumpsys window windows | grep -E 'mCurrentFocus|mFocusedApp'
+```
+
+## 通过 adb 测试 Schema
+
+```
+adb shell am start -a [action] -d [uri] [packagename]
+
+adb shell am start -a android.intent.action.VIEW -d "custom-scheme://custom-host?itemId=17331" com.juanbingteam.heheda
+```
 
 # Android Debug Bridge (adb)
 官网地址:[https://developer.android.com/studio/command-line/adb.html#forwardports](https://developer.android.com/studio/command-line/adb.html#forwardports)

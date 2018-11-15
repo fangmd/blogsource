@@ -7,8 +7,135 @@ category: android
 ---
 
 
->2017/10/25 添加 http://hencoder.com/ui-1-6/ 内容
+# Get Animated (Android Dev Summit '18)
 
+## Animator
+
+属性动画
+
+```
+ObjectAnimator ->isA ValueAnimator ->isA Animator
+                    AnimatorSet ->isA Animator
+
+ViewPropertyAnimator -Backed by -> ValueAnimator
+PropertyValuesHolder -Userd by -> ValueAniamtor
+```
+
+使用属性动画的时候不要使用字符串指定属性 `alpha` -> `View.ALPHA`
+
+### PropertyValuesHolder 使用
+
+```
+    private void startProAnimation() {
+        PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f, 1f);
+        PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.5f, 1f);
+        PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0.2f, 1f);
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(mTvTitle, scaleX, scaleY, alpha);
+        ObjectAnimator objectAnimator2 = ObjectAnimator.ofPropertyValuesHolder(mTvSubTitle, scaleX, scaleY, alpha);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(objectAnimator, objectAnimator2);
+        animatorSet.setDuration(1000);
+        animatorSet.setInterpolator(new OvershootInterpolator());
+        animatorSet.start();
+    }
+```
+
+### 使用 AnimatorSet 协调多个 Animator
+
+```
+animatorSet.play(objectAnimator)
+            .with(objectAnimator)
+            .before(objectAnimator)
+            .after(objectAnimator2);
+```
+
+```
+    private void startProAnimation() {
+        PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f, 1f);
+        PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.5f, 1f);
+        PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0.2f, 1f);
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(mTvTitle, scaleX, scaleY, alpha);
+        ObjectAnimator objectAnimator2 = ObjectAnimator.ofPropertyValuesHolder(mTvSubTitle, scaleX, scaleY, alpha);
+        objectAnimator.setDuration(1000);
+        objectAnimator2.setDuration(1000);
+        objectAnimator.setInterpolator(new OvershootInterpolator());
+        objectAnimator.setInterpolator(new OvershootInterpolator());
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(objectAnimator)
+                .after(objectAnimator2);
+        animatorSet.start();
+    }
+```
+
+### ViewPropertyAnimator
+
+ex:
+
+```
+view.animate()
+    .scaleX(1f).scaleY(1f).alpha(1f)
+    .setInterpolator(new OvershootInterpolator())
+    .start();
+```
+
+### ValueAnimator
+
+>更加自由的动画
+
+例子：TextView 显示省略号动画
+
+```
+    private void startValueAnimator() {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 4);
+        valueAnimator.setDuration(1000);
+        valueAnimator.setRepeatCount(-1);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < value; i++) {
+                    stringBuilder.append(".");
+                }
+                mTvSubTitle.setText("I am stupid" + stringBuilder.toString());
+            }
+        });
+        valueAnimator.start();
+    }
+```
+
+>最好封装到自定义 TextView 中
+
+### 使用哪个 Animator
+
+1. ObjectAnimator: 已有属性修改的动画
+2. ValueAnimator: 自定义动画
+3. ViewPropertyAniamtor: 多个属性动画作用于一个 View
+4. PropertyValuesHolder: 多个属性作用与一个 对象
+5. AnimatorSet: 处理多个 Animator
+
+## Pyysics-based Animation
+
+SpringAnimation
+
+## MotionLayout
+
+
+
+
+
+
+
+
+
+
+# 基本内容
+
+>2017/10/25 添加 http://hencoder.com/ui-1-6/ 内容
 
 ## 动画分类
 - 补间动画

@@ -31,6 +31,20 @@ Android 单元测试分为两种：
 - `app/src/test/java`: 基于 jvm 的测试代码
 - `app/src/androidTest/java`: 需要运行在 Android 环境的测试代码
 
+## gradle 配置
+
+```
+
+defaultConfit{
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+}
+
+dependence:
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+```
 
 # 基于 jvm 的单元测试
 
@@ -297,7 +311,6 @@ onData(allOf(is(instanceOf(Map.class)),
         android:layout_below="@+id/editText"
         android:onClick="sayHello"
         android:text="Say hello!"/>
->>>>>>> 0a5d471eb8c7f6626d6b220551e96d4c0ccdd0a6
 ```
 
 创建 UI 测试类
@@ -364,10 +377,41 @@ public class MainActivityTest {
 
 在类名上点击右键运行测试
 
+# 异步单元测试
+
+```
+   private String temp = null;
+
+    public void testAsyncTask() throws Throwable {
+        final CountDownLatch signal = new CountDownLatch(1);
+
+        // 在UI线程中执行异步操作
+        runTestOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                // 执行异步任务，这个只是例子，没有实际的可以运行的代码，大家知道就好
+                new MyAsyncTask() {
+                    @Override
+                    protected void onPostExecute(String result) {
+                        super.onPostExecute(result);
+                        temp = result;
+                        signal.countDown();
+
+                    }
+                }.execute();
+            }
+        });
+        signal.await();
+        assertEquals("kale", temp);
+    }
+```
+
+
 
 参考：
 
 - [https://developer.android.com/training/testing/start/index.html](https://developer.android.com/training/testing/start/index.html)
 - [http://www.vogella.com/tutorials/AndroidTesting/article.html](http://www.vogella.com/tutorials/AndroidTesting/article.html)
-
+- [https://blog.csdn.net/CZT_saisam/article/details/46637007](https://blog.csdn.net/CZT_saisam/article/details/46637007)
 

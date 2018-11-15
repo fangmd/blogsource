@@ -6,6 +6,88 @@ category: Android
 
 ---
 
+# 依赖相关
+
+## Transitive
+
+Transitive用于自动处理子依赖项。默认为true，gradle自动添加子依赖项，形成一个多层树形结构；设置为false，则需要手动添加每个依赖项。
+
+全部不获取子依赖
+```
+configurations.all {
+   transitive = false
+}
+```
+
+单独设置 transitive:
+
+```
+androidTestCompile('com.android.support.test.espresso:espresso-core:2.1') {
+       transitive = false
+   }
+}
+```
+
+## Force
+
+强制设置某个模块的版本
+
+```
+configurations.all {
+   resolutionStrategy {
+       force 'org.hamcrest:hamcrest-core:1.3'
+   }
+}
+```
+
+单独设置
+
+```
+compile ('org.greenrobot:eventbus:3.0.0'){
+        force = true
+}
+```
+
+## Exclude
+
+不编译指定子依赖
+
+```
+configurations {
+   all*.exclude group: 'org.hamcrest', module: 'hamcrest-core'
+}
+```
+
+```
+androidTestCompile('com.android.support.test.espresso:espresso-core:2.1') {
+       exclude group: 'org.hamcrest'
+   }
+}
+```
+
+## 查看依赖
+
+### 方法一 推荐
+
+输出依赖到文件
+
+```
+./gradlew -q app:dependencies > log
+```
+
+### 方法二
+
+通过引入第三方插件来实现
+
+- 首先在应用app的下的build.gradle 文件上加上apply plugin: 'project-report'
+- 然后在项目的根目录下执行gradle命令./gradlew htmlDependencyReport 之后会在Build目录下面生成report文件夹，里面生成的有html，里面会有compile的标签，打开即可看到相关的依赖包情况。
+
+此命令有助于查看依赖的版本，因为有的用的低版本，有的高版本，以及查看重复依赖的情况等等，里面还有其他很多的信息可以参考。
+
+参考：
+
+1. [http://www.wxtlife.com/2017/04/16/check-gradle-dependency/](http://www.wxtlife.com/2017/04/16/check-gradle-dependency/)
+
 # gradle 3.0 新内容
 
 ## implementation api

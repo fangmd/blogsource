@@ -66,17 +66,29 @@ URL在设计的时候默认只接受ASCLL码
 ### HTTP请求报文
 
 #### 请求行 Request Line
-
-    GET /entry/57bbdeb4df0eea005c630f45/view HTTP/1.1
+```
+GET /entry/57bbdeb4df0eea005c630f45/view HTTP/1.1
+```
 
 - Method
 - url
 - version
 
-
 #### 请求头
 
+key: value
+
+```
+Cookie
+User-Agent
+Content-Type
+```
+
 #### 请求体
+
+在 Post 请求的时候才有
+
+>请求体和请求行之前用空行分割
 
 ### 发起一个请求
 
@@ -86,9 +98,29 @@ http工具推荐：chrome插件：postman，
 
 ## 处理响应
 
-### 状态码
+### 响应行
+
+Http版本 状态码
+
+```
+HTTP/1.1 200OK
+```
+
 ### 头部
+
+```
+Location: 指定响应的路径，与状态码302配合使用
+Server
+Last-Modified: 最后修改时间
+Set-Cookie
+Content-Disposition: 游览器以下载方式解析正文，attachment,filename=xx.zip
+```
+
 ### 消息正文
+
+>消息正文和头部用空行分割
+
+如果是网页请求：返回的就是 html 文本
 
 ## 有状态的WEB应用
 

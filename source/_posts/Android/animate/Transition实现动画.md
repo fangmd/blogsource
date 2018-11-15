@@ -6,8 +6,6 @@ categories: android
 
 ---
 
-
-
 # 关于 transition 
 
 google 关于 transition 的文档地址 [https://developer.android.com/training/transitions/index.html](https://developer.android.com/training/transitions/index.html)

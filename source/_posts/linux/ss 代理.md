@@ -29,6 +29,7 @@ CentOS:
 yum install python-setuptools && easy_install pip
 pip install shadowsocks
 ```
+sudo pip install shadowsocks
 
 ```
 ssserver -p 8000 -k password -m rc4-md5 -d start

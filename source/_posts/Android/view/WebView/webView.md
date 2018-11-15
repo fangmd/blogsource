@@ -6,6 +6,77 @@ categories: android
 
 ---
 
+# Modern WebView Best Practices
+
+>Android Dev Summit 2018 关于 WebView 部分
+
+## A breif WebView history
+
+1. WebView 在 API 1 就加入了
+2. 在 Andreoid Lollipop 版本的时候，重新实现了 Api: 修复 bug 和一些安全问题
+3. 添加了 40+ 个新的 APIs
+
+WebView 的 API 在 Lollipop 版本后有了比较大的更新，但是很多应用并没有去使用新的特性，包括 Stachoverflow 上的一些回答都是过时的，接口文档也是过时的。
+
+## 关于版本兼容问题
+
+WebView 在 Lollipop 上实现的新 Api 无法在低版本设备中运行。
+
+**AndroidX**
+
+- AndroidX brings new Apis to old devices
+    + Leverages WebView`s update cycle on L+
+- AndroidX APIs are simple to use
+    + easy to swap out Framework APIs
+
+## 如何使用 AndroidX
+
+```
+        mWebView.setWebViewClient(new WebViewClientCompat(){
+
+            // 支持 Lollipop+ 设备（低版本设备中也能运行）
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (!request.hasGesture()) {
+                        return false;
+                    }
+                }
+
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            // @Deprecated 支持 Lollipop 之前的设备
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
+```
+
+## Loading in-app content
+
+app 加载离线的 html。
+
+通常我们会使用 `WebView#loadData()` 但是这会导致一些问题。
+
+避免编码问题：
+
+```
+loadData(encodedHtml, mimeType, "base64")
+
+encodedHtml = Base64.encodeToString(unencodedHtml.getBytes(), Base64.No_PADDING);
+```
+
+避免 same-origin restrictions 使用 `loadDataWithBaseURL`
+
+
+
+
+[Modern WebView Best Practices (Android Dev Summit '18)](https://www.youtube.com/watch?v=HGZYtDZhOEQ&list=PLWz5rJ2EKKc8WFYCR9esqGGY0vOZm2l6e&index=29)
+
+
 # WebView 属性的设置
 
 ## 通过 `WebSettings` 设置
@@ -68,26 +139,6 @@ mWebView.setHorizontalScrollBarEnabled(true);
 mWebView.requestFocus();
 ```
 
-## 设置 WebChromeClient 子类
-
->WebChromeClient 会在一些影响浏览器ui交互动作发生时被调用，比如WebView关闭和隐藏、页面加载进展、js确认框和警告框、js加载前、js操作超时、webView获得焦点等等
-
-```java
-mWebView.setWebChromeClient(new MyWebChromeClient());
-```
-
-### 显示页面加载进度
-
-```java
-    @Override
-    public void onProgressChanged(WebView webView, int progress) {
-        MainActivity.this.setTitle("Loading...");
-        MainActivity.this.setProgress(progress * 100);
-        if(progress == 100)
-            MainActivity.this.setTitle("My title");
-    }
-```
-
 ## 设置WebViewClient子类
 
 >WebViewClient 会在一些影响内容渲染的动作发生时被调用，比如表单的错误提交需要重新提交、页面开始加载及加载完成、资源加载中、接收到https认证需要处理、页面键盘响应、页面中的url打开处理等等
@@ -95,7 +146,6 @@ mWebView.setWebChromeClient(new MyWebChromeClient());
 ```java
 mWebView.setWebViewClient(new MyWebViewClient());
 ```
-
 
 ### 设置当前网页的链接仍在 WebView 中跳转，而不是跳到手机浏览器里显示
 

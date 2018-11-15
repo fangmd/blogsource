@@ -1,14 +1,9 @@
 ---
-title: primitive 主数据类型和引用
+title: sqlite
 date: 2016-03-25 21:18:12
 tags: java基础
 category: java基础
 ---
-
-1. 写MyServlet
-	1. 还不行
-	
-
 
 ## 客户端
 

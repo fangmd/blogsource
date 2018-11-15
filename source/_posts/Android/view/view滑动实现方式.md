@@ -129,13 +129,14 @@ mScrollY: 表示view的上边缘 - view的内容的上边缘
 	private void smoothScrollTo(int dstX, int dstY) {
 		int scrollX = getScrollX;
 		int delta = dstX - scrollX;
+        // scroller.startScroll(scrollX, 0, delta, 0); //default : 250ms
 		scroller.startScroll(scrollX, 0, delta, 0, 1000);
 		invalidate();
 	}
-	 
+
 	@Override
 	public void computeScroll {
-		if (scroller.computeScrollOffset) {
+		if (scroller.computeScrollOffset()) {
 			scrollTo(scroller.getCurrX, scroller.getCurY);
 			postInvalidate();
 		}

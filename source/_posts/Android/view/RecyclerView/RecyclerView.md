@@ -12,6 +12,12 @@ categories: android
 
 <!--more-->
 
+# 2018-04-07 优化
+
+点击事件优化
+
+[https://www.jianshu.com/p/4809e1872f50](https://www.jianshu.com/p/4809e1872f50)
+
 # 2018-04-07 去掉滚动条和滑动到边界阴影
 
 ```
