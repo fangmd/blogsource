@@ -6,6 +6,48 @@ category: Android
 
 ---
 
+# gradle 编译加速
+
+`gradle.properties`:
+
+```
+ org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemory    Error -Dfile.encoding=UTF-8
+
+# 开启并行编译
+org.gradle.parallel=true
+# 开启孵化模式
+org.gradle.configureondemand=true
+# 开启守护进程
+org.gradle.daemon=true
+# 开启缓存
+android.enableBuildCache=true
+```
+
+`app/build.gradle`
+
+```
+android{
+    dexOptions {
+        //是否支持大工程模式 
+        jumboMode = true
+        // dex 大小
+        javaMaxHeapSize "1g"
+        //预编译 
+        preDexLibraries = true
+        //线程数 
+        threadCount = 8
+    }
+}
+```
+
+>Gradle memory >= Dex memory + 1Gb ！
+
+编译时间获取：
+
+```
+./gradlew --profile --recompile-scripts --offline --rerun-tasks assembleDebug
+```
+
 # 依赖相关
 
 ## Transitive

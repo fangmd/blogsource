@@ -195,7 +195,7 @@ $(user==null?true?false)
 
 JSP Standard Tag library, JSP 标准标签库
 
-1. 导包 `<%@ taglib uri="http://java.sun.com/jsp/jst/core" prefix="c" %>`
+1. 导包 `<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>`
 2. 引入标签库(1.1)
 3. 常用标签
 

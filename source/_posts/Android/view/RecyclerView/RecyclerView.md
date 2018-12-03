@@ -12,6 +12,11 @@ categories: android
 
 <!--more-->
 
+# 2018-11-25 动画
+
+
+[https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213](https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213)
+
 # 2018-04-07 优化
 
 点击事件优化
@@ -285,4 +290,13 @@ p/4955957.html)
 
 去除默认动画
 
-	mRvControlRecord.setAnimation(null);
+```
+mRvControlRecord.setAnimation(null);
+
+//or
+((SimpleItemAnimator)mRv.getItemAnimator()).setSupportsChangeAnimations(false);
+```
+
+
+
+

@@ -30,7 +30,7 @@ adb shell monkey -p com.nerc.communityedupro -v 2000
 
 ```
 -s <seed>: Seed value for pseudo-random number generator. If you re-run the Monkey with the same seed value, it will generate the same sequence of events.
-```	
+```
 
 使用 `-s` 命令给本次测试命名，相同的 seed 名称对应相同的测试过程。
 

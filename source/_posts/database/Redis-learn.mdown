@@ -53,6 +53,9 @@ INCR user:<id>
 
 ### 缓存
 
+>常用
+
+### 分布式中 session 分离
 
 # 安装
 
@@ -90,6 +93,7 @@ CONGIF GET *
 
 CONFIG GET [config name]
 ```
+
 
 # 连接 Redis
 
@@ -172,9 +176,6 @@ persist
 PERSIST [key]
 ```
 
-
-
-
 # 数据存储操作
 
 ## key 的操作
@@ -185,11 +186,13 @@ keys *
 ```
 
 随机获取一个 key
+
 ```
 randomkey
 ```
 
 判断 key 是否存在
+
 ```
 exists key [keyname]
 (integer) 1 表示存在
@@ -197,11 +200,13 @@ exists key [keyname]
 ```
 
 删除 key
+
 ```
 DEL [key1] [key2...]
 ```
 
 改变 key name:
+
 ```
 RENAME [old-key-name] [new-key-name]
 
@@ -210,6 +215,7 @@ new key 已经存在：会覆盖原来的 key 和 value
 ```
 
 安全替换 key：
+
 ```
 RENAMENX [old-key-name] [new-keyname]
 
@@ -236,12 +242,16 @@ APPEND 追加内容
 APPEND [key] [append-value]
 ```
 
-
 DEL 删除键值对：
 ```
 DEL [key1 key2 ....]
 ```
 
+查：
+
+```
+GET [key]
+```
 
 ### 数值增减
 
@@ -257,16 +267,12 @@ DECR [key]
 
 > INCR 出现的原因：避免多个用户同时操作数据库的时候，如果 先查询值，做增加操作，最后插入值 容易造成并发问题
 
-
 增减指定的数：
 ```
 INCRBY [key] [number]
 
 INCRBYFLOAT [key] [float]
 ```
-
-
-
 
 ## 集合数据的操作 list 链表
 
@@ -360,6 +366,7 @@ key 中存储 key-value
 save, 可以同时设置多个
 ```
 HSET [key] [field-key] [field-value]
+HMSET [key] [field-key] [field-value]
 ```
 
 get all
@@ -370,6 +377,7 @@ HGETALL [key]
 get field
 ```
 HGET [key] [field-key]
+HMGET [key] [field-key]
 ```
 
 数字类型数据的增删改：
@@ -422,13 +430,39 @@ PUBLISH redisChat "one message"
 
 事务的命令：
 
-- DISCARD
-- EXEC
-- MULTI
+- DISCARD: 事务回滚
+- EXEC: 提交事务
+- MULTI: 标记开始事务
 - UNWATCH
 - WATCH key [key ...]
 
 
+```
+MULTI
+....
+exec
+```
+
+# 数据持久化
+
+1. RDB 持久化 (默认支持，无需配置)
+
+将内存中的数据集快照写入磁盘
+
+优势：简单，大量数据下相比AOF效率更高
+劣势：会数据丢失(数据丢失亮取决于快照生成时间间隔和数据插入速度)
+
+2. AOF 持久化
+
+以日志形式记录服务器所处理的每一个操作，在 Redis 服务器启动的时候会读取这个文件重新构建数据库，保证数据完整性。
+
+>AOF 和 RDB 可以同时使用
+
+劣势：操作数量多的时候效率慢
+
+存储时机设置：`always | everysec | no`
+
+3. 无持久化
 
 # 使用 Python 处理 Redis
 
@@ -440,7 +474,73 @@ sudo pip3 install redis
 
 ## redis 模块使用 
 
+# Java 操作 Redis
 
+使用工具 jar: `jedis`
+
+>远程连接的时候可能需要修改防火墙设置
+>/sbin/iptables -I INPUT -p tcp --dport 6369 -j ACCEPT
+>/etc/rc.d/init.d/iptables save
+
+## 基本操作
+
+```java
+Jedis jedis = new Jedis("localhost", 6379);
+
+// get
+String username = jedis.get("username");
+System.out.println(username);
+
+// set
+jedis.set("address", "北京");
+System.out.println(jedis.get("address"));
+```
+
+user pool:
+
+```java
+JedisPoolConfig config = new JedisPoolConfig();
+// 最大闲置时间
+config.setMaxIdle(30);
+config.setMinIdle(10);
+// 最大连接数
+config.setMaxTotal(50);
+
+JedisPool pool = new JedisPool(config, "localhost", 6379);
+Jedis jedis = pool.getResource();
+
+//...
+
+jedis.close();
+```
+
+## Utils
+
+```java
+public class JedisUtils {
+
+    private static JedisPool pool = null;
+
+    static {
+        JedisPoolConfig config = new JedisPoolConfig();
+        // 最大闲置时间
+        config.setMaxIdle(30);
+        config.setMinIdle(10);
+        // 最大连接数
+        config.setMaxTotal(50);
+
+        pool = new JedisPool(config, "localhost", 6379);
+    }
+
+    public static Jedis getRedis() {
+        return pool.getResource();
+    }
+
+    public static void close() {
+        pool.close();
+    }
+}
+```
 
 
 
