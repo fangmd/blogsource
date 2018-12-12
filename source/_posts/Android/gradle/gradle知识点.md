@@ -8,6 +8,38 @@ category: Android
 
 # gradle 编译加速
 
+分析编译时间消耗：
+
+```
+./gradlew --profile --recompile-scripts --offline --rerun-tasks assembleDebug
+```
+
+获取编译时间：
+
+```
+./gradlew clean --recompile-scripts --offline --rerun-tasks assembleDebug
+```
+
+## 屏蔽 Debug 模式下的 lint
+
+`app/build.gradle`
+
+```
+android{
+    ...
+    buildTypes{
+        ...
+        debug{
+            ...
+            project.gradle.startParameter.excludedTaskNames.add('lint')  // 屏蔽lint耗时检查
+        }
+    }
+    ...
+}
+```
+
+## 提高编译速度
+
 `gradle.properties`:
 
 ```
