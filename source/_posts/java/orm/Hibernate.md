@@ -378,6 +378,14 @@ query.setFirstResult(); // 从第几条数据开始
 query.setMaxResults(); // 数据数量
 ```
 
+统计查询：count sum agv max min
+
+```java
+String hql1 = "select count(*) from com.passon.hibernate.domain.Customer"
+Query query = session.cureateQuery(hql1);
+Number num = (Number)query.uniqueResult();
+```
+
 ## Criteria
 >Hibernate 自创, 无语句查询
 
@@ -507,9 +515,112 @@ inverse 优化 sql: 提升性能，优化关系维护
 //c.getLinkMans().add(lm2);
 ```
 
-
-
 ## 多对多
+
+需要中间表存储两个表之间的关系。中间表至少有两列，都设置外键分别引用两个表。
+
+User - Role
+
+`user.hbm.xml`
+
+```xml
+<!-- name: 集合属性名，
+    table: 配置中间表名
+    key-column: 配置表中的 对应列名
+    class：另一方的类，column: 中间表中另一个外键列名
+ -->
+<Set name="roles" table="sys_user_role">
+    <key column="user_id"></key>
+    <many-to-many class="Role" column="role_id"></many-to-many>
+</set>
+```
+
+### 操作
+
+1. `inverse`
+
+true: 表示放弃维护外键关系。
+
+在开发中一定要选择一方放弃维护关系。（根据业务选择一方放弃维护外键关系）
+
+2. `cascade`
+
+# 离线查询对象
+
+离线的 Criteria. 脱离 session。
+
+在 Web 层创建离线查询对象，传递给 dao 层，配合 session 实现查询。
+
+```java
+// web
+DetachedCriteria dc = DetachedCriteria.forClass(Customer.class);
+
+//dao:
+Criteria c =  dc.getExecutableCriteria(session);
+```
+
+# 加载策略
+
+## 类级别加载策略
+
+```java
+Customer c = session.get(Customer.class, 2l);
+
+// load 方法 类加载策略，
+// 加载策略在 类的配置文件里面：lazy 属性控制
+//  默认 true 延迟加载
+//       false: 不延迟加载 与 get 一样
+// 在执行的时候，不执行任何 sql 语句，使用 c 对象的时候才执行查询
+Customer c = session.load(Customer.class, 2l);
+//lazy 模式返回的对象，实际上是 代理对象
+```
+
+## 关联级别加载策略
+
+策略配置，在类配置中：(正常开发过程中使用默认值即可)
+
+```xml
+<!-- 
+ lazy: true: 延迟加载， false: 立即加载，extra: 及其懒惰
+ fetch: 决定加载策略，使用什么类型的 sql 语句加载集合数据
+    select(默认值): 单表查询加载
+    join: 使用多表查询加载集合
+    subselect: 使用子查询加载集合
+ -->
+<set name="linkMens" lazy="true" fetch="">
+    <key column="lkm_cust_id"></key>
+    <one-to-many class="LinkMan"></one-to-many>
+</set>
+```
+
+```java
+Customer c = session.get(Customer.class, 2l);
+Set<LinkMan> linkMans = c.getLinkMens(); // 集合关联
+```
+
+# 批量抓取
+
+```java
+String hql = "from Customer";
+Query query = session.cureateQuery(hql);
+List<Customer> list = query.list();
+
+for(Customer c: list){
+    //..
+}
+// for 循环每执行一次，都会执行一个 sql 语句，表示 list 中的数据并不是一次查询出来的。
+```
+
+实现 list 数据是真实数据：`batch-size` 表示实际从数据库中读取的数量。
+
+```xml
+<!-- batch-size 表示一次抓取集合的数量 -->
+<set name="linkMens" batch-size="3">
+    <!-- ... -->
+</set>
+```
+
+
 
 
 
