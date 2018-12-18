@@ -16,7 +16,6 @@ class Article:
     def __str__(self):
         return 'asd'
 
-
 class Category:
     """
     id, name, create_time, last_modified_time

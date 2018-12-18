@@ -7,6 +7,39 @@ category: android
 ---
 # ADB shell 记录
 
+官方文档：[https://developer.android.com/studio/command-line/adb#am](https://developer.android.com/studio/command-line/adb#am)
+
+## 查看设备信息
+
+`adb devices -l`
+
+```
+List of devices attached
+ZX1G425DJL             device usb:336723968X product:nitrogen_shamu model:Nexus_6 device:shamu transport_id:15
+```
+
+获取设备系统版本号：
+
+```
+adb shell getprop ro.build.version.sdk
+
+27
+```
+
+
+## 查看包信息
+
+```
+adb shell dumpsys package
+
+# check version name
+adb shell dumpsys package com.yitoudai.wcg | grep versionName
+# check version code
+adb shell dumpsys package com.yitoudai.wcg | grep versionCode
+# checkout version
+adb shell dumpsys package com.yitoudai.wcg | grep version
+```
+
 ## dumpsys power
 
 查看当前电源使用，
