@@ -438,12 +438,407 @@ public class UserAction extends ActionSupport {
 姓名：<input type="text" name="user.username" />
 ```
 
-## 模型驱动
+>适合多个 Model 的时候使用
 
+## 模型驱动 (最常用)
 
+```html
+姓名：<input type="text" name="username" />
+```
 
+```java
+public class UserAction extends ActionSupport implements ModelDriven<User> {
+
+    private User user = new User();
+
+    @Override
+    public User getModel() {
+        return user;
+    }
+
+    @Override
+    public String execute() throws Exception {
+        return NONE;
+    }
+}
+```
+
+>适合一个 Model 
+
+## INPUT 逻辑视图配置
+
+对应拦截器:
+
+```
+params: 接收参数
+conversionError： 类型转换
+validation: 数据校验
+workflow: 判断是否有错误，没有到 Action, 有跳转到 INPUT 逻辑
+```
+
+配置错误回调
+
+```xml
+<package name="hello" extends="struts-default" namespace="/">
+    <global-results>
+        <result name="input">/jsp/error.jsp</result>
+    </global-results>
+</package>
+```
+
+显示错误信息：
+
+```
+<%@ taglib uri="/struts-tags" prefix="s" %>
+
+<s:fielderror />
+```
 
 # 复杂类型的数据封装
+
+## 封装数据到 List
+
+```java
+public class UserAction extends ActionSupport{
+
+    private List<User> users;
+
+    public void setUsers(List<User> user) {
+        this.users = user;
+    }
+
+    @Override
+    public String execute() throws Exception {
+        return NONE;
+    }
+}
+```
+
+
+```html
+    用户名称：<input type="text" name="users[0].name"> <br/>
+    用户名称2：<input type="text" name="users[1].name"> <br />
+```
+
+## 封装数据到 Map
+
+```java
+public class UserAction extends ActionSupport{
+
+    private Map<String, User> map;
+
+    public void setMap(Map<String, User> map) {
+        this.map = map;
+    }
+
+    @Override
+    public String execute() throws Exception {
+        return NONE;
+    }
+}
+```
+
+```html
+    用户名称：<input type="text" name="map['one'].name"> <br/>
+    用户名称2：<input type="text" name="map['two'].name"> <br />
+```
+
+# OGNL
+
+OGNL：对象图导航语言 Object-Graph Navigation Language
+
+主要使用点：访问 OGNL 上下文 和 ActionContext.
+
+使用要素：
+
+1. 表达式
+2. 根对象
+3. Context 对象
+
+## Java 中使用 OGNL
+
+例子：
+
+```java
+    @Test
+    public void demo01() throws OgnlException {
+        // 获取 Context
+        OgnlContext ognlContext = new OgnlContext();
+        // 获取根对象
+        Object root = ognlContext.getRoot();
+
+        // 访问对象的方法
+        Object value = Ognl.getValue("'helloWorld'.length()", ognlContext, root);
+        // 访问对象的静态方法
+        Object valueStatic = Ognl.getValue("@java.lang.Math@random()", ognlContext, root);
+
+        // root 存值
+        User user = new User("fangmingdong"); // user.name
+        ognlContext.setRoot(user);
+        root = ognlContext.getRoot(); // **需要重新获取 root
+        // 获取 root 中的值
+        Object rootValue = Ognl.getValue("name", ognlContext, root);
+
+        // get value from context
+        ognlContext.put("userid", "userid-asdasdas");
+        Object contextValue = Ognl.getValue("#userid", ognlContext, root);
+
+        System.out.println(value);
+    }
+```
+
+## Struts2 中使用 OGNL
+
+引入标签库：
+
+```
+<%@ taglib prefix="s" uri="/struts-tags" %>
+```
+
+开启静态方法访问：
+
+```
+<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+```
+
+jsp 中使用：
+
+```html
+<h2>访问对象方法</h2>
+<s:property value="'struts'.length()"/> <br/>
+
+<h2>访问静态方法</h2>
+<s:property value="@java.lang.Math@random()"/> <br/>
+```
+
+### ValueStack 值栈
+
+Struts 将 XWrok 对 Ognl 的扩展这一套机制封装起来，这个对象叫 ValueStack。
+
+ValueStack 是 Struts 的一个接口，OgnlValueStack 是 ValueStack 的一个实现
+
+ValueStack 类似一个数据中转站,ValueStack 贯穿整个 Action 的生命周期.
+
+#### ValueStack 结构解析
+
+一次请求创建 Action 后，也会创建一个 ValueStack
+
+ValueStack(OgnlValueStack) 关键成员变量：
+
+- root (CompoundRoot, 是一个集合类型): 存放 Object
+- context (OgnlContext, 实现了 Map 接口)：存放 Web 开发对象的引用
+    + request
+    + session
+    + application
+    + parameters
+    + attr
+
+>获取 root 中的数据不需要加 #
+>获取 context 中的数据需要加 #
+
+jsp 中查看 ValueStack 结构：
+
+```
+<s:debug/>
+```
+
+#### ValueStack 与 ActionContext 的关系
+
+ValueStack 创建位置：
+
+`PrepareOperations.class`
+
+```java
+    public ActionContext createActionContext(HttpServletRequest request, HttpServletResponse response) {
+        Integer counter = 1;
+        Integer oldCounter = (Integer)request.getAttribute("__cleanup_recursion_counter");
+        if (oldCounter != null) {
+            counter = oldCounter + 1;
+        }
+
+        ActionContext oldContext = ActionContext.getContext();
+        ActionContext ctx;
+        if (oldContext != null) {
+            ctx = new ActionContext(new HashMap(oldContext.getContextMap()));
+        } else {
+            ValueStack stack = ((ValueStackFactory)this.dispatcher.getContainer().getInstance(ValueStackFactory.class)).createValueStack();
+            stack.getContext().putAll(this.dispatcher.createContextMap(request, response, (ActionMapping)null));
+            ctx = new ActionContext(stack.getContext());
+        }
+
+        request.setAttribute("__cleanup_recursion_counter", counter);
+        ActionContext.setContext(ctx);
+        return ctx;
+    }
+```
+
+`StrutsPrepareAndExecuteFilter.class` -> `PrepareOperations.java`
+
+```
+ValueStack stack = dispatcher.getContainer(),getInstance(ValueStackFactory.class).createValueStack();
+```
+
+ActionContext 创建：
+
+```
+ctx = new ActionContext(stack.getContext());
+```
+
+ActionContext 内部有 值栈的引用(值栈中的 Map)
+
+#### 获取 ValueStack
+
+1. 通过 ActionContext 获取
+
+```
+ValueStack valueStack = ActionContext.getContext().getValueStack();
+```
+
+2. 通过 Request 获取
+
+```
+ValueStack stack = (ValueStack) ServletActionContext.getRequest().getAttribute(ServletActionContext.STRUTS_VALUESTACK_KEY);
+```
+
+>一个 Action 实例 对应一个 ValueStack 实例
+
+
+#### 操作值栈 root 值
+
+1. 在 Action 中提供属性的 get 方法的方式(Action 中的属性会压入到值栈)
+2. 获取 ValueStack 操作值
+
+```java
+// 设置对象
+User user = new User("name---");
+valueStack.push(user);
+
+// 设置值
+// valueStack.set("key", "asdsa"); // 创建一个 HashMap，压入栈
+```
+
+```html
+<!-- 获取对象中的值 -->
+<s:property value="name"/>
+
+<!-- 获取集合中的数据 -->
+<s:property value="list[0].name"/>
+<s:property value="list[1].name"/>
+```
+
+>如果有两个 User，取栈顶
+>这里的存储数据都是向 ValueStack 中的 root 中存数据
+
+页面中获取值栈中的对象的数据：直接访问对象的属性就可以了(需要 getter)
+页面中获取集合数据：`<s:property value="list[1].name"/>`
+
+
+#### 操作值栈 context 值
+
+存值：
+
+```java
+ServletActionContext.getRequest().setAttribute("name", "lisi");
+ServletActionContext.getRequest().getSession().setAttribute("name", "slisi");
+ServletActionContext.getServletContext().setAttribute("name", "clisi");
+```
+
+取值：
+
+```html
+<s:property value="#request.name"/>
+<s:property value="#session.name"/>
+<s:property value="#application.name"/>
+<s:property value="#attr.name"/>
+<s:property value="#parameters.name"/>
+```
+
+#### EL 操作 ValueStack 中的值
+
+```html
+${name}
+```
+
+原因：struts2 的框架底层对 `request.getAttribute(String name)` 进行了增强
+
+### % 用法
+
+强制使用 ognl 解析
+
+```html
+<input type="text" name="name" value="%{#request.name})">
+```
+
+### $
+
+在配置文件中使用 OGNL
+
+# Struts 拦截器
+
+Intercepter 拦截器，拦截 Action, 可以拦截 Action 中具体的方法
+
+Filter: 过滤器，过滤请求
+
+## Struts 执行流程
+
+## 自定义拦截器
+
+实现 interceptor 接口，或者继承 AbstractInterceptor, MethodInterceptor
+
+```java
+public class IntercepterOne extends AbstractInterceptor {
+```
+
+配置 interceptor:
+
+方式一在配置中注册：
+
+```xml
+<package>
+    <interceptors>
+        <interceptor name="one" class="com.passon.struts.intercepter.IntercepterOne"/>
+        <interceptor name="two" class="com.passon.struts.intercepter.IntercepterTwo"/>
+    </interceptors>
+
+    <!-- 在 Action 中指定 Interceptor -->
+
+        <action name="ognl" class="com.passon.struts.action.OgnlAction" method="ognlUI">
+            <result name="success">/ognldemo.jsp</result>
+
+            <!--引入自定义拦截器后，默认栈的拦截器就不执行了，需要手动引入-->
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="one"/>
+            <interceptor-ref name="two"/>
+
+        </action>
+</package>
+```
+
+方式二自定义拦截器栈：
+
+```xml
+<package>
+
+        <interceptors>
+            <interceptor name="one" class="com.passon.struts.intercepter.IntercepterOne"/>
+            <interceptor name="two" class="com.passon.struts.intercepter.IntercepterTwo"/>
+            
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="one"/>
+                <interceptor-ref name="two"/>
+            </interceptor-stack>
+        </interceptors>
+
+</package>
+```
+
+# 通用标签库&UI标签库
+
+
+
+
+
 
 
 

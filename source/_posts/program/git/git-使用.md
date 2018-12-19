@@ -6,6 +6,14 @@ categories: program
 
 ---
 
+# git 查看所有历史提交
+
+>通常用于版本前进
+
+```
+git reflog
+```
+
 # git 撤销中间的某次提交
 
 ```
