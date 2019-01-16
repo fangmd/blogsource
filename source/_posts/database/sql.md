@@ -6,6 +6,19 @@ category: Database
 
 ---
 
+
+# 实用记录
+
+## insert 中内嵌 select
+
+```sql
+insert into sys_roles_permissions(role_id, permission_id) values(1, (select id from sys_permissions where permission like 'all'));
+```
+
+
+
+# 简介
+
 sql: Structure Query Language 结构化查询语言
 
 ddl: 数据定义语言，create drop alter

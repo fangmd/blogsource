@@ -9,8 +9,16 @@ category: Server
 
 # 配置文件地址
 
+installed by brew in mac:
+
 ```
 /usr/local/etc/nginx/nginx.conf
+```
+
+ubuntu:
+
+```
+/etc/nginx
 ```
 
 # 基本命令

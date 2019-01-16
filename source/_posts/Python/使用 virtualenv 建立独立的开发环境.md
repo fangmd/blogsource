@@ -2,7 +2,7 @@
 title: 使用 virtualenv 建立独立的开发环境
 date: 2017-01-05 11:38:14
 tags: [virtualenv]
-categories: Linux
+categories: python
 
 ---
 
