@@ -6,6 +6,14 @@ category: 前端
 
 ---
 
+# 查看 npm global packages
+
+```
+npm list -g --depth 0
+
+npm uninstall -g [package-name]
+```
+
 
 # npm init
 

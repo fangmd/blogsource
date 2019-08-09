@@ -6,6 +6,32 @@ category: Flutter
 
 ---
 
+# Dart2.0
+
+```
+// Before Dart 2
+Widget build(BuildContext context) {
+  return new Container(
+    height: 56.0,
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    decoration: new BoxDecoration(color: Colors.blue[500]),
+    child: new Row(
+      ...
+    ),
+  );
+}
+
+// After Dart 2
+Widget build(BuildContext context) =>
+  Container(
+    height: 56.0,
+    padding: EdgeInsets.symmetric(horizontal: 8.0),
+    decoration: BoxDecoration(color: Colors.blue[500]),
+    child: Row(
+      ...
+    ),
+  );
+```
 
 # alt + enter / option + enter
 
@@ -19,6 +45,8 @@ category: Flutter
 ```
 flutter packages get
 ```
+
+
 
 # 延时操作
 
@@ -78,6 +106,8 @@ class MyApp extends StatelessWidget {
 runApp(MyApp(userInfo));
 ```
 
+>也可以通过 Navigator 删除历史栈
+
 # RefreshIndicator
 
 ```
@@ -123,7 +153,17 @@ SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
 
 `SystemUiOverlayStyle.light`: 表示文字白色
 
-通过 AppBar 设置状态栏颜色的时候不需要管状态栏字体，他会自动变更，当是直接修改状态栏样式的时候需要自己确定文字颜色。
+通过 AppBar 设置状态栏颜色的时候不需要管状态栏字体，他会自动变更，但是直接修改状态栏样式的时候需要自己确定文字颜色。
 
+
+# 引入资源文件
+
+下面设置可以引入，assets 文件夹下所有文件。
+
+```
+flutter:
+  assets:
+    - assets/
+```
 
 

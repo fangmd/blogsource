@@ -148,3 +148,14 @@ Service可以被其他应用启动如果它是公开的。
 >默认实现的onBind()返回null
 
 >默认实现的onStartCommand()的目的是将intent插入到工作队列中
+
+# 其他
+
+## bindService 如何实现生命周期绑定
+
+[https://juejin.im/post/5c13cd99e51d4522ad6e74ec](https://juejin.im/post/5c13cd99e51d4522ad6e74ec)
+
+1. bindService 方法执行时，LoadedApk 会记录 ServiceConnection 信息
+2. Activity 执行 finish 方法时，会通过 LoadedApk 检查 Activity 是否存在未注销/解绑的 BroadcastReceiver 和 ServiceConnection，如果有，那么会通知 AMS 注销/解绑对应的 BroadcastReceiver 和 Service，并打印异常信息，告诉用户应该主动执行注销/解绑的操作
+
+

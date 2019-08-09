@@ -6,6 +6,13 @@ categories: program
 
 ---
 
+# git pull 
+
+```
+git pull -rebase 
+git pull -r
+```
+
 # git 查看所有历史提交
 
 >通常用于版本前进

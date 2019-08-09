@@ -6,6 +6,46 @@ category: Android
 
 ---
 
+# 生命周期
+
+添加 Gradle 构建过程监听:
+
+```
+gradle.addBuildListener(new BuildListener() {
+  void buildStarted(Gradle var1) {
+    println '开始构建'
+  }
+  void settingsEvaluated(Settings var1) {
+    println 'settings评估完成（settins.gradle中代码执行完毕）'
+    // var1.gradle.rootProject 这里访问Project对象时会报错，还未完成Project的初始化
+  }
+  void projectsLoaded(Gradle var1) {
+    println '项目结构加载完成（初始化阶段结束）'
+    println '初始化结束，可访问根项目：' + var1.gradle.rootProject
+  }
+  void projectsEvaluated(Gradle var1) {
+    println '所有项目评估完成（配置阶段结束）'
+  }
+  void buildFinished(BuildResult var1) {
+    println '构建结束 '
+  }
+})
+```
+
+1. 初始化阶段
+
+执行 settings.gradle 构建一个 `Settings` 对象
+
+2. 配置阶段
+
+执行 `build.gradle` 脚本，完成 Project 的配置
+
+3. 执行阶段
+
+执行 task
+
+
+
 # gradle 编译加速
 
 分析编译时间消耗：

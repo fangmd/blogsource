@@ -484,3 +484,15 @@ java.lang.NoSuchFieldException: No field mShowing in class Landroid/support/v7/a
 alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 ```
 
+## DialogFragment 设置圆角的时候去除白色背景
+
+```
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.loading_layout, container, false);
+        return view;
+    }
+```
+

@@ -15,6 +15,7 @@ http://tech.meituan.com/android-apk-v2-signature-scheme.html
 
 
 目前该方案不是强制性的，在 build.gradle 添加 v2SigningEnabled false ，就能使用传统签名方案来签署我们的应用：
+
 ```
   android {
     ...

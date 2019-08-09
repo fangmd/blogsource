@@ -6,7 +6,22 @@ categories: android
 
 ---
 
+# gradle 编译报告生成
 
+```
+./gradlew assembleDebug --scan
+```
+
+## 关键的点
+
+- `Performance`: 查看各个编译环节花费的时间
+- `Performance -> Settings and suggestions`: 优化建议
+
+# 优化
+
+## 更新 gradle
+
+## 优化 gralde 配置
 
 gradld 配置:
 
@@ -23,7 +38,6 @@ org.gradle.daemon=true
 
 # 开启缓存
 android.enableBuildCache=true
-
 ```
 
 不检查png的合法性:
@@ -35,3 +49,7 @@ android {
     }
 }
 ```
+
+参考：
+
+- [How to improve the build speed of your Android projects](https://medium.freecodecamp.org/how-to-improve-the-build-speed-of-your-android-projects-bd49029d8602)

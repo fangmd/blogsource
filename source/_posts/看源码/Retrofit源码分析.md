@@ -34,6 +34,7 @@ List<Repo> repos = call.execute().body();
 
 - 构建者模式
 - 代理模式（动态代理 依靠 java.lang.reflect.Proxy 类实现）
+- 责任链模式 (addCallAdapterFactory, addConverterFactory)
 
 # retrofit2.http 包中有各种注解
 
@@ -146,6 +147,52 @@ List<Repo> repos = call.execute().body();
 
 ([http://blog.csdn.net/rokii/article/details/4046098](http://blog.csdn.net/rokii/article/details/4046098))
 
+## 动态代理具体实现方式
+
+```java
+  public <T> T create(final Class<T> service) {
+    Utils.validateServiceInterface(service);
+    if (validateEagerly) {
+      eagerlyValidateMethods(service);
+    }
+    return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[] { service },
+        new InvocationHandler() {
+          private final Platform platform = Platform.get();
+
+          @Override public Object invoke(Object proxy, Method method, @Nullable Object[] args)
+              throws Throwable {
+            // If the method is a method from Object then defer to normal invocation.
+            if (method.getDeclaringClass() == Object.class) {
+              return method.invoke(this, args);
+            }
+            if (platform.isDefaultMethod(method)) {
+              return platform.invokeDefaultMethod(method, service, proxy, args);
+            }
+            ServiceMethod<Object, Object> serviceMethod =
+                (ServiceMethod<Object, Object>) loadServiceMethod(method);
+            OkHttpCall<Object> okHttpCall = new OkHttpCall<>(serviceMethod, args);
+            return serviceMethod.callAdapter.adapt(okHttpCall);
+          }
+        });
+  }
+```
+
+1. 上面的代码作用：生成动态代理对象并返回
+2. 调用 Object.class 中定义的方法的时候，直接执行不处理
+3. `platform.isDefaultMethod(method)` 从源码看是一直返回 `false` ，所以 `if` 内代码不执行
+4. `loadServiceMethod`：构建并获取 `ServiceMethod`
+
+`Retrofit.serviceMethodCache`: 用于缓存解析过的 `ServiceMethod`
+将 `Method` 封装到 `ServiceMethod` 中，`ServiceMethod` 类用于解析 `Method`, 构建 http 请求内容(不包含动态参数)
+
+5. 使用 `ServieMethod` 和 方法参数(http请求时候的动态参数) 构建 `OkHttpCall`
+6. `serviceMethod.callAdapter.adapt(okHttpCall);`: 把 `Call` 传递给 `callAdapter`，
+
+# ExecutorCallAdapterFactory
+
+调用了 `Call` 对象的发起请求的函数
+
+# callbackExecutor
 
 # ServiceMethod.class
 
@@ -156,7 +203,7 @@ List<Repo> repos = call.execute().body();
 
 # OkHttpCall.class 实现了 interface Call.class
 
-发起请求的实际类
+发起请求的实际实现位置
 
 ```
 - @Override public void enqueue(final Callback<T> callback)
