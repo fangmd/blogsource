@@ -25,6 +25,8 @@ categories: python
 virtualenv [File Name]
 ```
 
+>文件夹名称中不要使用 下划线
+
 生成一个文件夹，名称自己制定比如 ENV: 内部文件目录结构：
 
 - `ENV/lib/`

@@ -22,6 +22,7 @@ brew install mysql
 ```
 // have launchd start mysql now and restart at login
 brew services start mysql
+brew services restart mysql
 
 // if you don't want/need a background service you can just run
 mysql.server start
@@ -52,6 +53,8 @@ mysqladmin -u root password 'xxxxxx'
 ```
 /etc/my.cnf
 ```
+
+
 
 #  mysql 连接方式
 

@@ -14,6 +14,7 @@ categories: android
 ### 两个内部类
 
 ## Build.VERSION
+
 保存了各个版本的值`String`形式
 
 - `BASE_OS`
