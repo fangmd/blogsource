@@ -236,5 +236,22 @@ Handler 提供了线程之间通信的方法。
 ### 内部类 Values
  
 
+# Handler 如何实现 postDelay 延时事件
+
+1. 向 MessageQueue 中插入 message
+
+插入 message, 的过程中是有排序的
+
+2. `loop` 循环，通过调用 `queue.next()` 读取下个事件
+
+读取下个事件的时候，发现是延时事件，则阻塞在 `queue.next()` 当前循环
+
+记录延时时间，到时间后激活代码 `nativeWake(mPtr)（唤起线程）` ，返回 Message
+
+3. 当有新的非延迟的 message 加入到 `MessageQueue` 的时候，会自动取消阻塞，自动获取最新的 message
+
+
+
+
 
 

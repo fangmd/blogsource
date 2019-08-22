@@ -25,7 +25,7 @@ npm install mockjs
 }
 ```
 
-创建文件 `src/mock/mock.js`
+创建文件 `mock/mock.js`
 
 ```js
 import Mock from 'mockjs'

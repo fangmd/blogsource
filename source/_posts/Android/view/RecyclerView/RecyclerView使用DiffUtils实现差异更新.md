@@ -80,3 +80,51 @@ public class AdapterDiffCallback extends DiffUtil.Callback {
 DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new AdapterDiffCallback(mNewData, mOldData));
 diffResult.dispatchUpdatesTo(mAdapter);
 ```
+
+封装:
+
+```java
+    public void setData(List<T> newData) {
+        if (mDatas != null) {
+            ObjDiffCallback objDiffCallback = new ObjDiffCallback(mDatas, newData);
+            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(objDiffCallback);
+
+            mDatas.clear();
+            mDatas.addAll(newData);
+            diffResult.dispatchUpdatesTo(this);
+        } else {
+            // first initialization
+            mDatas = newData;
+        }
+    }
+
+    public List<T> getDatas() {
+        return mDatas;
+    }
+```
+
+如何实现在插入项是第一个的时候，自动滑动到第一个：
+
+[https://stackoverflow.com/questions/43458146/diffutil-in-recycleview-making-it-autoscroll-if-a-new-item-is-added](https://stackoverflow.com/questions/43458146/diffutil-in-recycleview-making-it-autoscroll-if-a-new-item-is-added)
+
+```java
+
+// 解决方案一: 保留用户滑动到的位置 index
+import android.os.Parcelable;
+
+Parcelable recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+// apply diff result here (dispatch updates to the adapter)
+recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);              
+
+
+
+// 方案二：滚动到top
+adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+    @Override
+    public void onItemRangeInserted(int positionStart, int itemCount) {
+        super.onItemRangeInserted(positionStart, itemCount);
+        recycleView.smoothScrollToPosition(0);
+    }
+});
+
+```
