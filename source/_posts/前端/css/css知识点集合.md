@@ -66,8 +66,8 @@ CSS 结构称为：规则集(规则)
 - 属性选择器: `img[src]`, 支持3种情况: 包含某个属性，包含属性并属性是指定值，只包含某个属性并是指定值
 - 伪类选择器: `a:hover`: 常用伪类: `active, only-child, checked, hover, first, focus, visited, enabled, read-only, disabled, invalid, valid`
 - 伪元素: 给元素添加元素, 常用: `::after, before`
-- 组合器
-- 多重选择器
+- 组合器: 后代选择器(空格分割)，子选择器(`>`)，相邻兄弟选择器(`+`)，通用兄弟选择器(`~`)
+- 多重选择器(选择器组): 使用 `,` 分割选择器
 - 通用选择器: `*`
 
 多元素选择器: 使用逗号分割 `p,li`
@@ -102,3 +102,142 @@ padding
 border
 margin
 ```
+# 单位
+
+长度和尺寸
+
+px:
+
+em: 相对于当前元素字号(`font-size`)大小
+
+rem: (root em),相对于根元素字号
+
+vw,vh: 视口宽高的1/100,
+
+# 函数
+
+- `rgba`
+- `rotate`
+- `calc`
+- `url`
+
+# 样式优先级
+
+1. 重要性 `!important`
+
+优先级最高
+
+2. 专用性 `Specificity`
+
+```
+元素选择器: 1
+类选择器，伪类，属性: 10
+id 选择器: 100
+内联样式: 1000
+```
+
+3. 源代码次序 `Source order`
+
+后面的 css 覆盖前面的 css (css 解析顺序)
+
+## css 继承
+
+//TODO:
+
+# 盒模型
+
+display: block | inline | inline-block | table | flex | grid
+
+box-sizing: content-box | border-box
+
+```
+content-box: width 只包括内容区域
+border-box: width 包括 border + padding
+```
+
+# Base CSS 通常要初始化哪些内容
+
+[normalize.css](https://necolas.github.io/normalize.css/8.0.1/normalize.css)
+
+1. 清空控件的 外边距
+2. 游览器适配处理(IE 一些表现与主流不一致的，添加与主流一致的样式: display)
+
+
+# 布局
+
+## 定位 position + left|top|bottom|right
+
+position: static(默认) | relative | fixed | absolute
+
+- static：元素框正常生成。块级元素生成一个矩形框，作为文档流的一部分，行内元素则会创建一个或多个行框，置于其父元素中。
+- relative：元素框偏移某个距离。元素仍保持其未定位前的形状，它原本所占的空间仍保留。
+- absolute： 元素框从文档流完全删除，并相对于其包含块定位。包含块可能是文档中的另一个元素或者是初始包含块。元素原先在正常文档流中所占的空间会关闭，就好像元素原来不存在一样。元素定位后生成一个块级框，而不论原来它在正常流中生成何种类型的框。
+- fixed：元素框的表现类似于将 position 设置为 absolute，不过其包含块是视窗本身。
+
+
+## 浮动 float
+
+float: left | right | none | inherit
+
+### 清除浮动
+
+需要清除浮动的原因: float 使元素脱离文档流，不能撑开父元素.
+
+方法一: clear 属性
+
+```css
+.clearfix{
+  clear: both;
+}
+```
+
+方法二: 伪元素 + clear
+
+```css
+.clearfix:after{
+  content: '';
+  display: 'block';
+  clear:both;
+}
+```
+
+方法三: overflow
+
+```css
+.clearfix{
+  overflow: hidden;
+}
+```
+
+
+## flex
+
+display: flex
+
+基本概念：
+
+1. 主轴 main axis
+2. 交叉轴 cross axis
+
+```
+flex-direction: 指定主轴, column | row | row-reverse | column-reverse
+flex-wrap: 换行
+
+尺寸：
+flex: 1; 比例 (flex-grow)
+flex: 1 200px; 设置最小值 (flex-grow flex-shrink)
+
+缩写
+flex-flow: flex-direction flex-wrap
+flex: flex-grow flex-shrink flex-basis
+
+控制轴上元素排列方式
+align-items: 交叉轴 stretch(default) | center | flex-start | flex-end
+justify-content: 主轴 flex-start(default) | flex-end | center | space-around | space-between
+```
+
+## 适配
+
+不适配:
+
+IE: <=9

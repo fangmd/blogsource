@@ -53,6 +53,7 @@ categories: android
 
 ## 方法三：
 
+```java
     Handler mHandler = new Handler() {  
         @Override  
         public void handleMessage(Message msg) {  
@@ -77,3 +78,5 @@ categories: android
         }  
         return false;  
     } 
+```
+

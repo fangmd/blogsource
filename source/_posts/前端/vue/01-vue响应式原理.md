@@ -31,6 +31,14 @@ Object.defineProperty(Book,'name',{    set:function(value) {
 
 发布者-订阅者(Observer-Watcher)：两个步骤：初始化发布者，订阅者；订阅者注册法到发布者，发布者发消息的时候依次向订阅者发布消息。
 
+# Vue3.0
+
+Vue 3.0 开始使用 Proxy 类实现代理。达到响应式的效果
+
+
+
+
+
 
 
 

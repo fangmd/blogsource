@@ -226,7 +226,29 @@ BaseActivity.class
     }
 ```
 
-# 使用 Android Android Architecture Components 实现
+# 使用 Android Architecture Components 实现
+
+```java
+class ArchLifecycleApp : Application(), LifecycleObserver {
+
+    override fun onCreate() {
+        super.onCreate()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onAppBackgrounded() {
+        Log.d("Awww", "App in background")
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun onAppForegrounded() {
+        Log.d("Yeeey", "App in foreground")
+    }
+
+}
+```
+
 
 。。。
 
