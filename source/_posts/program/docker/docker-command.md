@@ -6,7 +6,28 @@ category: Docker
 
 ---
 
-# 重新整理
+# 从容器中取出文件
+
+```
+docker cp <containerId>:/file/path/within/container /host/path/target
+```
+
+# 删除容器/image
+
+```
+清理容器
+docker container prune
+
+删除镜像
+docker image rm [image name]
+```
+
+可以处理下面错误：
+
+```
+Error response from daemon: conflict: unable to remove repository reference "training/webapp" (must force) - container 0bd2b54678c7 is using its referenced image 54bb4e8718e8
+```
+
 
 # 基本
 
@@ -22,10 +43,6 @@ docker info
 docker system df
 ```
 
-
-
-
-
 # 镜像相关
 
 下载镜像：
@@ -40,31 +57,6 @@ docker pull [OPTIONS] NAME[:TAG|@DIGEST]
 
 ```
 docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
-```
-
-
-
-```
-docker image COMMAND
-
-Manage images
-
-Options:
-      --help   Print usage
-
-Commands:
-  build       Build an image from a Dockerfile
-  history     Show the history of an image
-  import      Import the contents from a tarball to create a filesystem image
-  inspect     Display detailed information on one or more images
-  load        Load an image from a tar archive or STDIN
-  ls          List images
-  prune       Remove unused images
-  pull        Pull an image or a repository from a registry
-  push        Push an image or a repository to a registry
-  rm          Remove one or more images
-  save        Save one or more images to a tar archive (streamed to STDOUT by default)
-  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
 ```
 
 ```
