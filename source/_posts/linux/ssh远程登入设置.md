@@ -48,6 +48,15 @@ ssh test1
 
 scp
 
+```
+scp cool_stuff.txt sanjeev@example.com:.
+
+scp 2765930_www.dreamua.com.key root@39.98.39.42:.
+
+scp 2765930_www.dreamua.com.pem root@39.98.39.42:.
+
+```
+
 参考：
 
 - [https://www.zhihu.com/question/30640159](https://www.zhihu.com/question/30640159)

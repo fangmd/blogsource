@@ -34,6 +34,8 @@ categories: program
 ### 生成密钥
 	ssh-keygen -t rsa -C "fang@yeah.net"
 
+	ssh-keygen -t rsa -C "fangmingdong0224@gmail.com"
+
 连续3个回车。如果不需要密码的话。
 
 最后得到了两个文件：id_rsa和id_rsa.pub。
