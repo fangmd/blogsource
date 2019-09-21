@@ -384,6 +384,8 @@ or
     }
 ```
 
+>如果高度不能占满屏幕，试试把跟控件改成 RelativeLayout
+
 
 ## DialogFragment里面EditText调出键盘
 

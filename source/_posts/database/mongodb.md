@@ -11,7 +11,7 @@ category: Database
 Install
 
 ```
-sudo brew install mongodb
+brew install mongodb
 ```
 
 配置文件地址：
@@ -24,7 +24,7 @@ mongod --config /usr/local/etc/mongod.conf
 
 ```
 # 创建默认的数据库路径
-sudo mkdir -p /data/db
+mkdir -p /data/db
 
 # 启动
 sudo mongod
