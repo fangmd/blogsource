@@ -242,4 +242,83 @@ justify-content: 主轴 flex-start(default) | flex-end | center | space-around |
 
 IE: <=9
 
+# BFC Bloack Format Context
+
+普通文档流包括：块级盒子的块级格式化上下文，内联级盒子的格式化上下文，块级和内联级盒子的相对定位。
+
+常见格式化上下文：
+
+1. Black formatting context, BFC
+2. Inline formatting context, IFC
+3. Grid formatting context GFC
+4. Flex formatting context, FFC
+
+什么情况会创建BFC:
+
+1. 根元素 html, 或其他包含它的元素
+2. 浮动元素(float)
+3. 绝对定位元素(position:absolute, fixed)
+4. 非块级盒子的块级容器(display: inline-blocks, table-cells, table-captions 等)
+5. overflow 不为 visiable 的块级盒子(oveflow: hidden, auto, scroll)
+
+>一个元素不能同时存在两个BFC中
+
+BFC 特性:
+
+1. 盒子占一行，盒子从顶部开始垂直排列
+2. 两个相邻的盒子之间垂直距离，由margin决定
+3. 块级格式化上下文中: 相邻的盒子之间的垂直距离边距折叠(相邻的margin重叠)
+4. FBC 高度计算，浮动子元素也参数计算
+
+
+## 应用场景
+
+### 关与margin，重叠
+
+```html
+例子:
+
+<body>
+  <div class="one">
+  <div>
+  <div class="two">
+  <div>
+</body>
+
+one, two maring 会重叠，因为在同一个 BFC 下(html 下)
+
+处理方式: 将 one，two 放在不通的 BFC 环境下
+
+<body>
+  <div class="container">
+    <div class="two">
+    <div>
+  <div>
+  <div class="container">
+    <div class="one">
+    <div>
+  <div>
+</body>
+
+需要给 container 创建 BFC, (overflow: hidden;)
+```
+
+### BFC 可以包含浮动元素
+
+清除浮动的时候使用 BFC (overflow: hidden)
+
+
+### BFC 阻止元素被浮动元素覆盖
+
+实现两列自适应布局。左边固定宽度，右边内容自适应
+
+```
+<div>左浮动元素</div>
+<div>没有设置浮动，但是触发 BFC(overflow:hidden) 避免被左浮动元素文字环绕</div>
+```
+
+
+
+
+
 

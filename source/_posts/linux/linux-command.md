@@ -6,6 +6,16 @@ category: Linux
 
 ---
 
+# 内存查看
+
+## free
+
+```
+free 
+free -m
+free -h
+```
+
 # 文件权限修改
 
 ```
