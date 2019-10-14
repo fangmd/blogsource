@@ -6,6 +6,51 @@ category: 前端
 
 ---
 
+# 页面之间传值
+
+1. `params`
+
+```js
+路由配置:
+{
+    path: '/two/:id',
+    name: 'two',
+    component: () => import('@/components/two.vue'),
+    meta: {
+        title: 'two'
+    }
+}
+
+> path 中也可以不定义 id，但是这样 params 在刷新后就会丢失
+
+跳转:
+
+this.$router.push({ path: `/two/${item}` })
+this.$router.push(`/two/${item}`)
+this.$router.push({ name: 'two', params: { id: `${item}` }})
+```
+
+2. `query`
+
+```js
+// 不需要在 vue-router 配置中设置。
+
+this.$router.push({
+    path: `/two`,
+    query: {
+        id:item
+    }
+})
+// 参数会体现在地址栏中
+```
+
+# this.$router & this.$route
+
+1. `this.$router` 是 VueRouter 实例，用于导航跳转
+2. `this.$roue` 是当前 router 跳转对象，里面包含了 `name, path. query. params`
+
+
+
 
 # 父子组间交互方式
 

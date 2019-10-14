@@ -20,13 +20,13 @@ JS 中只有一个结构: 对象。
 ### new ， 构造器
 
 ```js
-function Man(){
+function Man() {
   this.name = 'fang';
 }
 
 Man.prototype = {
-  color: 'white'
-}
+  color: 'white',
+};
 
 var m = new Man();
 ```
@@ -43,7 +43,7 @@ var p = Object.create(o); // 表示 p extends o
 Object.create = function(proto, propertiesObject) {
   // 省略前置 参数 判断...
 
-  function F(){}
+  function F() {}
 
   F.prototype = proto;
   return new F();
@@ -78,8 +78,8 @@ ES5 开始引入 严格模式
 function strict() {
   // 函数级别严格模式语法
   'use strict';
-  function nested() { 
-    return "And so am I!"; 
+  function nested() {
+    return 'And so am I!';
   }
   return "Hi!  I'm a strict mode function!  " + nested();
 }
@@ -128,7 +128,7 @@ JS 运行时：Stack(栈), 堆(Heap)，队列(Queue)
 
 函数执行过程中的局部变量存储在帧中。
 
-## 堆
+## 堆 Heap
 
 对象被分配在一个堆中
 
@@ -145,7 +145,6 @@ while (queue.waitForMessage()) {
 ```
 
 > `queue.waitForMessage` 阻塞
-
 
 1. 执行至完成
 
@@ -173,9 +172,9 @@ js 事件循环模型，在处理 I/O 通过事件和回调实现。
 
 也就是说在网络请求过程中，可以处理其他事件。
 
-# JS 相等性判断  ==, ===, Object.is
+# JS 相等性判断 ==, ===, Object.is
 
-1. 严格相等  `===`
+1. 严格相等 `===`
 2. 宽松相等 `==`
 3. `Object.is` ES6 与严格相等表现一样，增加:`NaN与NaN相等， -0与+0不等`
 
@@ -187,22 +186,22 @@ js 事件循环模型，在处理 I/O 通过事件和回调实现。
 
 ```js
 function makeFunc() {
-    var name = "Mozilla";
-    function displayName() {
-        alert(name);
-    }
-    return displayName;
+  var name = 'Mozilla';
+  function displayName() {
+    alert(name);
+  }
+  return displayName;
 }
 
 var myFunc = makeFunc();
 myFunc();
 ```
 
-JavaScript中函数会形成闭包。闭包由函数和创建改函数的词法环境组合而成。
+JavaScript 中函数会形成闭包。闭包由函数和创建改函数的词法环境组合而成。
 
 什么是闭包？
 
->JavaScript 函数内部嵌套函数就会形成闭包，闭包由内部函数和创建函数的词法环境组成。
+> JavaScript 函数内部嵌套函数就会形成闭包，闭包由内部函数和创建函数的词法环境组成。
 
 ## 作用
 
@@ -212,23 +211,105 @@ JavaScript中函数会形成闭包。闭包由函数和创建改函数的词法�
 ## JQuery 闭包
 
 ```js
-(function(){
+(function() {
   // jquery code
 })();
 ```
 
->匿名函数自执行
+> 匿名函数自执行
 
 ```js
 //以下截取自jquery源码片段
-(function( window, undefined ) {
-   /*    源码内容    */
+(function(window, undefined) {
+  /*    源码内容    */
 
-   window.jQuery = window.$ = jQuery;
-
-})( window );
+  window.jQuery = window.$ = jQuery;
+})(window);
 ```
 
+# 原生 DOM 操作几种方式
+
+`Element` 对象的几个方法
+
+1. 替换 `replaceChild`
+2. 删除 `removeChild`
+3. 插入 `insertBefore, appendChild`
+
+# 深拷贝和浅拷贝
+
+js 数据类型
+
+1. 基本数据类型: undefined, boolean, number, string, null
+2. 引用数据类型:
+
+> 深/浅拷贝都是对于引用对象来说的
+
+**浅拷贝: ** 拷贝后的对象，成员变量指向和原来的对象成员变量指向同一个内存地址。
+
+> 浅拷贝，对象的属性只能拷贝基本数据类型
+
+```js
+function shallowCopy(target) {
+  var obj = {};
+  for (let key in target) {
+    obj[key] = target[key];
+  }
+  return obj;
+}
+```
+
+**深拷贝: **生成的对象完全独立与原来的对象。
+
+```js
+function deepCopy(target){
+  let obj = {};
+  for(let key in target){
+    if( typeof target[key] === 'object'{
+      obj[key] = deepCopy(target[key]);
+    }else{
+      obj[key] = target[key];
+    }
+  }
+  return obj;
+}
+
+方式二: JSON
+
+let obj2 = JSON.parse(JSON.stringify(obj));
+```
+
+## obj.keys vs obj[keys]
+
+两个的作用是一样的。
+
+但是 `obj.keys` 只能用于 obj 中已经定义好的 key(需要是在代码未运行就定义好的key, 不能是动态添加的key)).
+
+# Event Loop
+
+Event Loop: JS 引擎线程会循环从任务队列中读取事件并执行
+
+没有游览器环境只有一个 Event Loop;
+
+一个 Event Loop 有1个或多个 task queue
+
+```
+代码执行顺序:
+
+同步代码
+消息队列中异步代码
+回调函数
+下个事件中执行 setTimeout
+全局上下文进入函数调用栈
+micro-task 微任务
+macro-task 宏任务
+```
+
+>setTimeout 最短执行时间是 4ms
+
+**micro-task 微任务队列** `Promise MutationObserver`
+
+**macro-task 宏任务队列** `setTimeout setInmediate MessageChannel`
 
 
+# Promise
 
