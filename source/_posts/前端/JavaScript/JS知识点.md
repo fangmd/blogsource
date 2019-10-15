@@ -282,7 +282,7 @@ let obj2 = JSON.parse(JSON.stringify(obj));
 
 两个的作用是一样的。
 
-但是 `obj.keys` 只能用于 obj 中已经定义好的 key(需要是在代码未运行就定义好的key, 不能是动态添加的key)).
+但是 `obj.keys` 只能用于 obj 中已经定义好的 key(需要是在代码未运行就定义好的 key, 不能是动态添加的 key)).
 
 # Event Loop
 
@@ -290,7 +290,7 @@ Event Loop: JS 引擎线程会循环从任务队列中读取事件并执行
 
 没有游览器环境只有一个 Event Loop;
 
-一个 Event Loop 有1个或多个 task queue
+一个 Event Loop 有 1 个或多个 task queue
 
 ```
 代码执行顺序:
@@ -304,12 +304,208 @@ micro-task 微任务
 macro-task 宏任务
 ```
 
->setTimeout 最短执行时间是 4ms
+> setTimeout 最短执行时间是 4ms
 
 **micro-task 微任务队列** `Promise MutationObserver`
 
 **macro-task 宏任务队列** `setTimeout setInmediate MessageChannel`
 
+一次 Tick 表示一个循环
 
-# Promise
+## 例子
+
+```
+setTimeout(()=>{
+  console.log('setTimeout1')
+},0)
+let p = new Promise((resolve,reject)=>{
+  console.log('Promise1')
+  resolve()
+})
+p.then(()=>{
+  console.log('Promise2')
+})
+
+输出结果是Promise1，Promise2，setTimeout1
+
+Promise 同步执行，Promise then 在 micro-task, setTimeout 在 macro-task.
+
+同步任务 -> 清空micro-task -> 清空macro-task
+```
+
+```
+Promise.resolve().then(()=>{
+  console.log('Promise1')
+  setTimeout(()=>{
+    console.log('setTimeout2')
+  },0)
+})
+
+setTimeout(()=>{
+  console.log('setTimeout1')
+  Promise.resolve().then(()=>{
+    console.log('Promise2')
+  })
+},0)
+
+结果: Promise1, setTimeout1, Promise2, setTimeout2
+```
+
+> 一个 Tick: 同步任务 -> micro-task -> macro-task
+
+## Node event looper 和 游览器 event looper
+
+> Node11 后，node 的 EventLooper 与 游览器的 EventLooper 统一了
+
+差异原因：底层 Event Lopper 实现机制不一样, node: libuv
+
+# Promise 原理
+
+自己实现一个 Promise
+
+```js
+function isFunction(value) {
+  return typeof value === 'function';
+}
+// 定义Promise的三种状态常量
+const PENDING = 'PENDING';
+const FULFILLED = 'FULFILLED';
+const REJECTED = 'REJECTED';
+
+class MyPromise {
+  constructor(handle) {
+    if (!isFunction(handle)) {
+      throw new Error('MyPromise must accept a function as a parameter');
+    }
+
+    this._status = PENDING;
+    this._value = undefied;
+
+    try {
+      handle(this._resolve.bind(this), this._reject.bind(this));
+    } catch (err) {
+      this._reject(err);
+    }
+
+    // 外部调用 then 的时候，先存储下函数, 等 Promise 执行完成后调用 then
+    this._fullfilledQueues = [];
+    this._rejectedQueues = [];
+  }
+
+  _resolve(val) {
+    if (this._status !== PENDING) return;
+    // 依次执行成功队列中的函数，并清空队列
+    const run = () => {
+      this._status = FULFILLED;
+      this._value = val;
+      let cb;
+      while ((cb = this._fulfilledQueues.shift())) {
+        cb(val);
+      }
+    };
+    // 为了支持同步的Promise，这里采用异步调用
+    setTimeout(() => run(), 0);
+  }
+
+  _reject(val) {
+    if (this.status !== PENDING) return;
+    this._status = REJECTED;
+    // 依次执行成功队列中的函数，并清空队列
+    const run = () => {
+      this._status = REJECTED;
+      this._value = val;
+      let cb;
+      while ((cb = this._rejectedQueues.shift())) {
+        cb(val);
+      }
+    };
+    // 为了支持同步的Promise，这里采用异步调用
+    setTimeout(() => run(), 0);
+  }
+
+  then(onFulfilled, onRejected) {
+    const { _value, _status } = this;
+    switch (_status) {
+      case PENDING:
+        this._fullfilledQueues.push(onFulfilled);
+        this._rejectedQueues.push(onRejected);
+        break;
+      case FULFILLED:
+        onFulfilled(_value);
+        break;
+      case REJECTED:
+        onRejected(_value);
+        break;
+    }
+    // 返回一个新的Promise对象，形成链接式调用
+    return new MyPromise((onFulfilledNext, onRejectedNext) => {});
+  }
+}
+```
+
+# 函数节流 throttles
+
+规定单位时间内只执行第一次
+
+时间内多次执行，第一次点击马上执行，时间到后执行第二次点击，其他事件丢失。(lodash 验证结果)
+
+```js
+function throthle(call, time) {
+  if (!time) {
+    time = 300;
+  }
+
+  let timer = null;
+  const retFun = function() {
+    if (timer == null) {
+      call();
+      return;
+    }
+    timer = setTimeout(() => {
+      call();
+      timer = null;
+    }, time);
+  };
+  return retFun;
+}
+```
+
+# 函数防抖 debounce
+
+一段时间内只执行最后一次
+
+1. 频繁点击会不断刷新时间，所以一直点击，就一直不会触发事件
+2. 点击后，会在时间结束的时候执行
+
+应用场景：
+
+1. 搜索功能
+2. window resize
+
+```js
+function debounce(call, wait) {
+  let timer = null;
+  return function() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      call();
+    }, wait);
+  };
+}
+```
+
+# bind, call, apply
+
+
+
+
+## 作用
+
+1. 利用 call, apply 求数组中的最大值或最小值
+
+
+
+2. 利用 call, apply 来做继承
+
+
 

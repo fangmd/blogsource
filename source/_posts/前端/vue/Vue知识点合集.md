@@ -112,4 +112,32 @@ this.$emit('update:show', false);
 Proxy 实现代理
 ```
 
+# Virtual DOM
+
+使用 JS 对象模拟 DOM，vue 页面修改的时候先修改 vdom, 然后通过 diff 算法生成新 vdom, 最后渲染。
+
+优点：
+
+1. 性能好，效率高
+2. 容易实现跨平台
+
+# 异步更新 DOM, 以及 nextTick
+
+vue 采用异步执行 DOM 更新。
+
+一个数据修改，Watcher 生成一个事件插入队列，会在下一个事件循环中处理事件，更新界面。
+
+nextTick: 实现将函数存入 microTask 或 macroTask。
+
+**为什么使用异步更新DOM:** 优化性能，避免短时间内某个值一直改变导致渲染频繁。
+
+在一些需要在数据变更后马上执行的代码需要使用 `nextTick`;
+
+
+
+
+
+
+
+
 
