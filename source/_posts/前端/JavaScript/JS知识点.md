@@ -494,18 +494,67 @@ function debounce(call, wait) {
 }
 ```
 
+```js
+function debounce(call, wait immediate){
+  let timeout;
+  return function(...args){
+    clearTimeout(timeout);
+    timeout = setTimeout(()=>{
+      timeout = null;
+      if(!immediate){
+        call.apply(this, args);
+      });
+    }, wait);
+    if(immediate && !timeout){
+      call.apply(this, [...args]);
+    }
+  }
+}
+```
+
 # bind, call, apply
 
+bind, call, apply 存在的意义：修改函数执行时的上下文，具体说就是改变函数 this 指向。
 
+区别：
 
+1. bind 返回函数，不会马上执行；call, apply 都是马上执行的
+2. call, apply 区别时参数不同, call 从第二个参数开始以参数列表的形式展现，apply 则是把除了改变上下文对象的参数放在一个数组里面作为它的第二个参数。
+
+普通模式和严格模式导致的差异:
+
+1. 在不指定 this 对象的时候，普通模式下 this 是 window, 严格模式下是 undefined
+2. 在指定 null 对象的时候，普通模式下 this 是 window, 严格模式下是 null
+3. 在指定 undefined 对象的时候，普通模式下 this 是 window, 严格模式下是 undefined
 
 ## 作用
 
 1. 利用 call, apply 求数组中的最大值或最小值
 
+```js
+let arr1 = [1, 2, 19, 6];
+Math.max.call(null, 1, 2, 19, 6); // 19
+Math.max.call(null, arr1); // NaN call 不能接收数组参数
 
+Math.max.apply(null, arr1); // 19
+```
 
-2. 利用 call, apply 来做继承
+2. 利用 call, apply 来做继承, 多继承
 
+```js
+function Animal(name) {
+  this._name = name;
+  this.showName = function() {
+    console.log(this._name);
+  };
+}
 
+function Cat(name) {
+  Animal.call(this, name);
+}
 
+// Animal.call(this, name); 给 Cat 添加 _name, showName.
+
+var cat = new Cat('TONY');
+cat.showName();
+```

@@ -6,6 +6,12 @@ category: 前端
 
 ---
 
+# npm 查看当前项目依赖情况
+
+```
+npm ls
+```
+
 # 查看 npm global packages
 
 ```
@@ -41,11 +47,15 @@ npm uninstall -g [package-name]
 
 # npm install [package-name]
 
+>执行 npm install xxxx 在不带版本好的时候，会自动下载最新版本(如果本地存在这个 pacakge, 会自动更新这个包)
+
 `npm install` 安装 `package,json` 文件描述的依赖包，依赖包下载后放在 `node_modules` 文件夹中，同时会生成 `package-lock.json` 文件。
 
 `npm install [package-name]` 安装某个依赖包，并添加到 `package,json` 中。
 
 ## npm install -g [pacakge-name]
+
+>执行 npm install -g xxxx 在不带版本好的时候，会自动下载最新版本(如果本地存在这个 pacakge, 会自动更新这个包)
 
 全局安装，通常安装依赖都是对于某个工程而言的。
 

@@ -317,7 +317,18 @@ one, two maring 会重叠，因为在同一个 BFC 下(html 下)
 <div>没有设置浮动，但是触发 BFC(overflow:hidden) 避免被左浮动元素文字环绕</div>
 ```
 
+# CSS3 & CSS 需要知道的点
 
+1. CSS3 完全兼容 CSS
+2. CSS3 添加了圆角属性 `roundBorder`
+3. CSS3 对添加了更多的文字属性: 换行 `word-break`; 超出省略号 `text-overflow: ellipsis`; 文字阴影 `text-shadow`;
+4. CSS3 更好的动画实现: 过渡 `transition`, 动画 `animation`, 形状转换 `transform`, 
+5. CSS3 添加更多的选择器，常用: `:nth-child(n); nth-last-child(); :last-child; :enabled; :disabled; :checked; ::selection`
+6. CSS3 添加了阴影属性 `box-shadow`, 边框属性 `border-image`, 背景裁切 `background-clip`, 背景大小 `background-size`
+7. CSS3 颜色 `rgba`
+7. CSS3 添加了媒体查询
+8. CSS3 添加了弹性布局 Flex，栅格布局 Grid，多列布局 
+9. CSS3 盒模型 `box-sizing: border-box | content-box`
 
 
 

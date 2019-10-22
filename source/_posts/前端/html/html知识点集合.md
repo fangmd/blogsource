@@ -326,3 +326,6 @@ maxlength, minlength
 2. 目标阶段: 在目标节点，目标接受事件
 3. 冒泡阶段: 从节点(自下向上)传会到 window 对象
 
+# 异步加载 js, async, defer
+
+1. async: 
