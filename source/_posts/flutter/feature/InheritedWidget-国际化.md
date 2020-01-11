@@ -289,7 +289,7 @@ void main() => runApp(AppLocalizationContainer(
 
 参考
 
-- [官方文档](https://flutter.io/tutorials/internationalization/)
+- [官方文档](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
 - [https://github.com/CarGuo/GSYGithubAppFlutter](https://github.com/CarGuo/GSYGithubAppFlutter)
 - [https://flutterbyexample.com/state-management-the-flutter-way](https://flutterbyexample.com/state-management-the-flutter-way)
 - [https://stackoverflow.com/questions/52077970/flutter-how-to-create-a-singleton-from-an-http-request](https://stackoverflow.com/questions/52077970/flutter-how-to-create-a-singleton-from-an-http-request)

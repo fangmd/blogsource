@@ -199,7 +199,7 @@ TransitionManager 中的 beginDelayedTransition 方法：
 ### Scale 构造方法
 
     public Scale() {
-     }
+    }
 
     /**
      * @param disappearedScale Value of scale on start of appearing or in finish of disappearing.

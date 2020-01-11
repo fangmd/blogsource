@@ -81,7 +81,7 @@ COPY ./nginx/www /usr/share/nginx/html
 根据 Dockerfile 创建镜像:
 
 ```
-docker build - t one-nginx .
+docker build -t one-nginx .
 ```
 
 运行:

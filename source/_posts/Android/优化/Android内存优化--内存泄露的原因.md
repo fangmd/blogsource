@@ -21,3 +21,5 @@ categories: android
 
 1. 在需要使用 Context 的时候，能使用 Application 的 Context 就使用 Application 的 Context
 2. 尽量不要使用非静态内部类。在内部类中引用 Activity 或 View 会造成内存泄漏。处理方法是使用 static 内部类，并 WeakReference 来引用 Activity 或 View。
+
+

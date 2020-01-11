@@ -50,8 +50,8 @@ AIDL (Android Interface Definition Language):用于进程间通讯.
 	public class RemoteService extends Service {
 	    @Override 
 	    public void onCreate() { 
-		super.onCreate(); 
-	    } 
+				super.onCreate(); 
+	    }
 	 
 	    @Override 
 	    public IBinder onBind(Intent intent) {

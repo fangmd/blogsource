@@ -23,6 +23,7 @@ categories: android
 		Intent intent = new Intent();
 		intent.setClassName("com.doublefang.aidldemo", "com.doublefang.aidldemo.MyService");
 		bindService(intent, this, BIND_AUTO_CREATE);
+
 2. 获得`IMyAidlInterface.Stub`实例
 
     	@Override
@@ -33,6 +34,7 @@ categories: android
 			// instance里面的方法都是实现`IMyAidlInterface`里面的方法
 			// 所以在写需要的方法的时候，要先在接口`IMyAidlInterface`中创建相应的抽象方法
     	}
+			
 3. 客户端注意在activity销毁的时候解除绑定
 
 		@Override

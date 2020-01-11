@@ -255,3 +255,10 @@ docker-compose rm -all
 docker export dockerblog_web_1 > contents.tar
 ```
 
+# 进入容器
+
+```
+docker exec -it [container-name] sh
+
+docker exec -it api-redoc sh
+```

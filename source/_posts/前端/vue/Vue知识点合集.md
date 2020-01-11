@@ -47,7 +47,7 @@ this.$router.push({
 # this.$router & this.$route
 
 1. `this.$router` 是 VueRouter 实例，用于导航跳转
-2. `this.$roue` 是当前 router 跳转对象，里面包含了 `name, path. query. params`
+2. `this.$route` 是当前 router 跳转对象，里面包含了 `name, path. query. params`
 
 
 
@@ -162,7 +162,76 @@ nextTick: 实现将函数存入 microTask 或 macroTask。
 weex 环境下会强制使用这种模式。
 
 
+# 跨域方案
+
+## JSONP
+
+最早出现的跨域方案
+
+缺点:
+
+1. 由于 jsonp 是使用 script, img, iframe 没有同源限制的标签，所以它只支持 get 请求。
+2. 错误处理机制不完善
+
+优点:
+
+1. jsonp 可以兼容低版本游览器
+
+例子:
+
+```
+// test.html
+<script>
+  function test(data) {
+    console.log(data);
+    return data;
+  }
+</script>
+<script
+  type="text/javascript"
+  src="http://127.0.0.1:8090/v1/system/user/getTotal?callback=test"
+></script>
+```
+
+> 请求结果通过 get 请求参数 callback 设置
+
+Vue 中第三方库: `jsonp`
+
+## CORS 跨域资源共享
+
+原理: 使用 XMLHttpRequest 发送请求，增加一些字段告诉服务器允许跨域，需要服务端支持。
+
+优点:
+
+1. 支持多种请求
+2. 处理机制完善
+3. 符合 http 规范，对于复杂请求，多一次验证，安全性更好
+
+缺点:
+
+1. 不支持 IE10 一下游览器
 
 
+```
+客户端:
 
+// 创建一个实例
+const server = axios.create({
+    // 将我们访问的地址设为baseURL
+    baseURL: "http://127.0.0.1:8090",
+    // 设置超时时间
+    timeout: 5000，
+    headers:{
+        "Content-Type":"text/plain",
+        "Access-Control-Allow-Credentials": true
+    }
+});
+
+
+"Access-Control-Allow-Origin":"*"
+```
+
+## proxy 服务器代理
+
+代理转发，nginx, webpack devserve
 

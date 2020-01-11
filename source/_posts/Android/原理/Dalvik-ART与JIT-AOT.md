@@ -16,6 +16,7 @@ Android java 虚拟机有两种：Dalvik, ART(Android RunTime)
 将 Dex 翻译成机器码交给系统调用。
 
 Dalvik: 支持 JIT 编译模式
+
 ART: 支持 JIT, AOT 编译模式
 
 ### Dalvik

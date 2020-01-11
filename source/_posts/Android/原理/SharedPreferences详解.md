@@ -68,7 +68,7 @@ SP 文件加载完成后，所有的 getXXX 操作都是从内存中读取的。
 ```java
 val editor = PreferenceManager.getDefaultSharedPreferences(this).edit()
 editor.putInt("key",1)
-editor.commit()/editor.apply()
+editor.commit().editor.apply()
 ```
 
 > 在封装工具类的时候，editor 可以重复使用
