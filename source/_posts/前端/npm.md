@@ -6,6 +6,12 @@ category: 前端
 
 ---
 
+# npm 升级 npm
+
+```
+npm install -g npm
+```
+
 # npm 查看当前项目依赖情况
 
 ```
