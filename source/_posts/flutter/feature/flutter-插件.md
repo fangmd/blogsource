@@ -1,12 +1,13 @@
-埋坑
-
-
-# 如何使用 Xcode 编辑插件的 IOS 代码
+---
+title: Flutter 插件相关
+date: 2020-03-19 13:18:12
+tags: [Flutter]
+category: Flutter
+---# 如何使用 Xcode 编辑插件的 IOS 代码
 
 1. 先将 插件 example 工程在 ios 模拟器上运行一遍
 2. 使用 Android studio 打开 ios 文件夹下的 swift 文件，点击右上角 `Open iOS module in Xcode`
 3. 插件 ios 代码目录在 `Pods/Developmentt Pods/插件名称/../../example/ios/.symlinks/plugins/插件名称/ios/`
-
 
 # Android 获取 Application
 
@@ -48,21 +49,19 @@ public class PInstallPlugin : FlutterPlugin, MethodCallHandler {
 
 ```
 
-
 # 插件发布
 
 1. 去除 `pubspec.yaml` 文件中的 `author:`
 2. 添加 `pubspec.yaml` `homepage: [github 地址]`
 3. 发布:
 
->需要翻墙(命令行设置代理)
+> 需要翻墙(命令行设置代理)
 
 ```
 flutter packages pub publish --server=https://pub.dartlang.org
 ```
 
 上传成功后可以去 `https://pub.dartlang.org` 地址搜索下有没有(可能不会马上出现)
-
 
 # version not match
 
