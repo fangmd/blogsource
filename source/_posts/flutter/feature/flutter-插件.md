@@ -3,7 +3,40 @@ title: Flutter 插件相关
 date: 2020-03-19 13:18:12
 tags: [Flutter]
 category: Flutter
----# 如何使用 Xcode 编辑插件的 IOS 代码
+---
+
+
+# Flutter 插件引入
+
+方式一: 从 pub 引入
+
+```
+date_utils: ^0.1.0+3
+```
+
+方式二: 从本地源文件引入
+
+```
+im_flutter_sdk:
+  path: ../im_flutter_sdk
+```
+
+方式三: 从 git 地址引入
+
+```
+zegoliveroom_plugin:
+  git:
+    url: git://github.com/zegoim/zego-flutter-sdk.git
+```
+
+```
+zegoliveroom_plugin:
+  url: git://github.com/zegoim/zego-flutter-sdk.git
+  ref: branch_name
+```
+
+
+# 如何使用 Xcode 编辑插件的 IOS 代码
 
 1. 先将 插件 example 工程在 ios 模拟器上运行一遍
 2. 使用 Android studio 打开 ios 文件夹下的 swift 文件，点击右上角 `Open iOS module in Xcode`
@@ -63,7 +96,7 @@ flutter packages pub publish --server=https://pub.dartlang.org
 
 上传成功后可以去 `https://pub.dartlang.org` 地址搜索下有没有(可能不会马上出现)
 
-# version not match
+# Version not match
 
 ```
 Because p_project depends on p_umeng ^0.0.3 which doesn't match any versions, version solving failed.
@@ -76,3 +109,4 @@ Because p_project depends on p_umeng ^0.0.3 which doesn't match any versions, ve
 ```
 flutter packages get
 ```
+
