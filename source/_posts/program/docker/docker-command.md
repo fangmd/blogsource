@@ -11,7 +11,7 @@ category: Docker
 查看所有容器(停止运行|正在运行)
 
 ```
-docker container -a
+docker container ls -a
 ```
 
 1. 在使用镜像启动容器的时候，出现容器名称冲突的时候，可以通过查看所有容器找到重复的并删除

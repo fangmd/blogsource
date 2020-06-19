@@ -5,6 +5,7 @@ tags: [Flutter]
 category: Flutter
 ---
 
+>https://flutter.dev/docs/development/packages-and-plugins/developing-packages
 
 # Flutter 插件引入
 
@@ -109,4 +110,13 @@ Because p_project depends on p_umeng ^0.0.3 which doesn't match any versions, ve
 ```
 flutter packages get
 ```
+
+
+## 问题
+
+```
+pub get failed (1; Because chicha_client depends on p_install ^0.0.3 which doesn't match any versions, version
+solving failed.)
+```
+
 
