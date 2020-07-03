@@ -21,6 +21,7 @@ category: android
 	}
 
 ### 1 方案二 去除依赖
+
 如果在：
 
 	dependencies { 。。。 }
@@ -34,6 +35,7 @@ category: android
 	}
 
 ### 2 方案二 设置依赖为已提供还
+
 适合导入model的时候使用：
 
 右键module选择open module setting,选择要修改的module名，切换到dependencies页面，将要修改的jar的scope修改provided模式。
