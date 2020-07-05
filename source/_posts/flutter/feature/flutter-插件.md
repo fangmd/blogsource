@@ -119,4 +119,21 @@ pub get failed (1; Because chicha_client depends on p_install ^0.0.3 which doesn
 solving failed.)
 ```
 
+1. 如何更新从 github 直接引入的第三方库
+
+直接修改 `pubspec.lock` 中的值, 比如: 修改 resolved-ref 设置代码位置
+
+```
+  im_flutter_sdk:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: dev
+      resolved-ref: c2d65dc94a8f5b42e7a13a67596f0009aae87db2
+      url: "https://github.com/easemob/im_flutter_sdk.git"
+    source: git
+    version: "1.0.0"
+```
+
+
 
