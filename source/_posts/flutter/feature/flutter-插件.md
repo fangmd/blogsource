@@ -97,20 +97,6 @@ flutter packages pub publish --server=https://pub.dartlang.org
 
 上传成功后可以去 `https://pub.dartlang.org` 地址搜索下有没有(可能不会马上出现)
 
-# Version not match
-
-```
-Because p_project depends on p_umeng ^0.0.3 which doesn't match any versions, version solving failed.
-```
-
-确认 `https://pub.dev/` 和 `https://pub.flutter-io.cn` 上有这个版本。
-
-命令行开代理，手动执行:
-
-```
-flutter packages get
-```
-
 
 ## 问题
 
@@ -137,3 +123,16 @@ solving failed.)
 
 
 
+2. Version not match
+
+```
+Because p_project depends on p_umeng ^0.0.3 which doesn't match any versions, version solving failed.
+```
+
+确认 `https://pub.dev/` 和 `https://pub.flutter-io.cn` 上有这个版本。
+
+命令行开代理，手动执行:
+
+```
+flutter packages get
+```

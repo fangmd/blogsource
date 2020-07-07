@@ -1,6 +1,6 @@
 ---
 title: Jenkins 使用记录
-date: 2017-12-15 12:18:12
+date: 2020-07-07 12:18:12
 tags: [Jenkins]
 category: Jenkins
 
@@ -10,14 +10,23 @@ category: Jenkins
 
 # 安装 
 
+[https://www.jenkins.io/download/lts/macos/](https://www.jenkins.io/download/lts/macos/)
 
 ## brew 安装(推荐)
 
 ```
 // 使用brew安装
-brew install jenkins
+brew install jenkins-lts
+
 // 启动，直接运行jenkins即可启动服务
-jenkins
+Start the Jenkins service: 
+brew services start jenkins-lts
+
+Restart the Jenkins service: 
+brew services restart jenkins-lts
+
+Update the Jenkins version:
+brew upgrade jenkins-lts
 ```
 
 ## 下载安装包安装（不推荐）
@@ -77,5 +86,50 @@ https://jenkins.io/download/
 启动 ： sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist
 
 停止： sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist
+```
+
+
+
+# Docker 启动 Jenkins 后设置本机作为 Slave Node
+
+1. macos 开启远程登录
+
+设置 -> 共享 -> 开启远程登录
+
+关闭防火墙： 设置 -> 安全与隐私 -> 关闭防火墙
+
+测试：ssh fangmingdong@172.16.23.140 是否能够登录
+
+2. docker 进入 jenkins 容器 连接 macos
+
+```
+docker exec -it d17ac05b48ef39c60be5afabf29eec2d389d0606c3b1c82471014dfa076b3313 /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
+
+测试：ssh fangmingdong@172.16.23.140
+```
+
+
+# 遇到 `command not found`
+
+脚本第一行添加:
+
+```
+#!/bin/bash -l
+```
+
+# 限制 freeproject 在指定 slave 中 build
+
+在 free_project Configure 中设置:
+
+```
+设置: Restrict where this project can be run
+```
+
+# 修改 jenkins 端口
+
+```
+/usr/local/Cellar/jenkins/2.x.x/homebrew.mxcl.jenkins.plist
+
+修改： —-httpPort=xxxx 值后，重启
 ```
 
