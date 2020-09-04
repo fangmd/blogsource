@@ -53,10 +53,13 @@ http://localhost:8080/
 
 
 
+keychains 和 provision 在系统中的路径。
+
+```
+keychain: /Users/zcating/Library/Keychains
+provision: /Users/zcating/Library/MobileDevice/Provisioning Profiles
+```
 
 
 
 
-
-
-description setter plugin（根据构建日志文件的RegEx，设置每个构建的描述。比如fir的上传地址）
