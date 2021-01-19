@@ -1,6 +1,6 @@
 ---
 title: HTML语义化
-date: 2020-01-05 11:20:16
+date: 2020-01-05 11:20:17
 tags: [HTML]
 categories: 前端
 ---
@@ -25,18 +25,12 @@ categories: 前端
 
 语义化标签有助于搜索引擎对页面的解析。
 
-
-
-
-
-
 # 常用语义化标签
 
 布局语义化(HTML5):
 
-![HTML语义化](https://raw.githubusercontent.com/fangmd/blogsource/master/img/HTML语义化.png)
+![HTML语义化](https://raw.githubusercontent.com/fangmd/blogsource/master/img/HTML语义化.png)![HTML语义化简易版](https://raw.githubusercontent.com/fangmd/blogsource/master/img/HTML语义化简易版.png)
 
-![HTML语义化简易版](https://raw.githubusercontent.com/fangmd/blogsource/master/img/HTML语义化简易版.png)
 
 - `header`: 页眉
 - `nav`: 定义导航
