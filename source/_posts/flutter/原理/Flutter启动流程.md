@@ -44,7 +44,7 @@ void runApp(Widget app) {
 
 ## Flutter 框架层 和 引擎层如何交互 (framework interact with the engine)
 
-- 框架层和引擎层通过 `Widnow` 累交互。
+- 框架层和引擎层通过 `Window` 累交互。
 - 框架层通过注册各种 callback，从引擎层获取数据
 - 每个 binding 服务在框架层中都是一个单例。
 

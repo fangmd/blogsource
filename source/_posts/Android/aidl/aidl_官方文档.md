@@ -15,6 +15,7 @@ AIDL (Android Interface Definition Language):用于进程间通讯.
 3. Expose the interface to client:向客户端提供接口, 创建一个`Service` 重写`onBind()`方法返回`Stub`类对象.
 
 ## Create the .aidl 文件
+
 这个文件中定义一些方法,通过这些方法的返回值,获得数据, 默认支持的数据类型可以为:
 
 1. 基本数据类型
@@ -47,6 +48,7 @@ AIDL (Android Interface Definition Language):用于进程间通讯.
 ## Expose the interface to clients
 通过服务来实现: 服务端
 
+```
 	public class RemoteService extends Service {
 	    @Override 
 	    public void onCreate() { 
@@ -68,11 +70,12 @@ AIDL (Android Interface Definition Language):用于进程间通讯.
 		    // Does nothing 
 		} 
 	    }; 
-	} 
-
+	}
+```
 
 客户端: 
 
+```
 	IRemoteService mIRemoteService;
 	private ServiceConnection mConnection = new ServiceConnection() {
 	    // Called when the connection with the service is established 
@@ -88,6 +91,7 @@ AIDL (Android Interface Definition Language):用于进程间通讯.
 		mIRemoteService = null;
 	    } 
 	}; 
+```
 
 # Passing Objects over IPC
 在进程间传递自己定义的对象, 需要对象的类实现序列化接口`Parcelable`

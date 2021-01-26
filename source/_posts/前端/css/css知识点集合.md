@@ -10,6 +10,12 @@ category: 前端
 
 CSS 层叠样式表，用于描述 HTML 文档的呈现。
 
+# CSS 三大特性
+
+1. 继承
+2. 叠层
+3. 优先级
+
 # CSS 如何工作的 
 
 ![https://mdn.mozillademos.org/files/11781/rendering.svg](https://mdn.mozillademos.org/files/11781/rendering.svg)
@@ -242,13 +248,13 @@ justify-content: 主轴 flex-start(default) | flex-end | center | space-around |
 
 IE: <=9
 
-# BFC Bloack Format Context
+# BFC Block Format Context
 
 普通文档流包括：块级盒子的块级格式化上下文，内联级盒子的格式化上下文，块级和内联级盒子的相对定位。
 
 常见格式化上下文：
 
-1. Black formatting context, BFC
+1. Block formatting context, BFC
 2. Inline formatting context, IFC
 3. Grid formatting context GFC
 4. Flex formatting context, FFC
@@ -259,7 +265,7 @@ IE: <=9
 2. 浮动元素(float)
 3. 绝对定位元素(position:absolute, fixed)
 4. 非块级盒子的块级容器(display: inline-blocks, table-cells, table-captions 等)
-5. overflow 不为 visiable 的块级盒子(oveflow: hidden, auto, scroll)
+5. overflow 不为 visible 的块级盒子(overflow: hidden, auto, scroll)
 
 >一个元素不能同时存在两个BFC中
 
@@ -329,7 +335,4 @@ one, two maring 会重叠，因为在同一个 BFC 下(html 下)
 7. CSS3 添加了媒体查询
 8. CSS3 添加了弹性布局 Flex，栅格布局 Grid，多列布局 
 9. CSS3 盒模型 `box-sizing: border-box | content-box`
-
-
-
 

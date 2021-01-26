@@ -61,7 +61,7 @@ components: {}
 created:(){}
 mounted:(){}
 updated:(){}
-destoryed:(){}
+destroyed:(){}
 data(){
     return {
 
@@ -442,7 +442,7 @@ this.$refs.popover
 
 ## 状态过渡
 
-对于数据本身的东效果：
+对于数据本身的效果：
 
 - 数字和运算
 - 颜色的显示

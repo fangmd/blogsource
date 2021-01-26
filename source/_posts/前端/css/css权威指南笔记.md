@@ -27,6 +27,7 @@ category: 前端
 <abbr>: 简写
 <cite>: 引证
 <q>: 文本内引用
+<span>
 ```
 
 ### HTML模版
@@ -211,7 +212,7 @@ css 布局的核心 `position` 属性：static, relative, absolute, fixed. 默�
 
 ## 显示属性
 
-display: block, inline
+display: block, inline, none
 
 ## 背景
 
@@ -286,7 +287,7 @@ p{
 text-indent: 文本缩进
 letter-spacing: 字符间距
 word-spacing: 单词间距
-text-decoratioin: 文本装饰 underline, overline, line-through, blink, none
+text-decoration: 文本装饰 underline, overline, line-through, blink, none
 text-align: 文本对齐 left right center justify
 line-height: 行高
 text-transform: 文本转换 none, uppercase, lowercase, capitalize

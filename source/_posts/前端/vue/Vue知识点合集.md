@@ -1,7 +1,7 @@
 ---
-title: Vue-响应式原理
+title: Vue知识点合集
 date: 2019-02-27 13:18:12
-tags: [vue]
+tags: [Vue]
 category: 前端
 
 ---
@@ -85,33 +85,6 @@ this.$emit('update:show', false);
 
 缺点：多级访问麻烦
 
-# MVVM 实现原理，双向绑定原理
-
-## Vue2.0
-
-通过数据劫持结合发布者-订阅者模式的方式实现。
-
-1. 实现一个监听器 Observer, 用来劫持并监听所有属性，有变动就通知订阅者 Watcher
-
-```
-通过 Object.defineProperty() 实现对属性 set 方法的拦截
-```
-
-2. 实现一个订阅者 Watcher, Watcher 绑定一个更新函数，收到属性变化后更新视图
-
-```
-直接修改 VDOM
-```
-
-3. 实现一个解析器，扫描和解析每个节点的相关指令. 初始化节点上的模版数据，创建对应的 Watcher
-
-
-## Vue3.0
-
-```
-Proxy 实现代理
-```
-
 # Virtual DOM
 
 使用 JS 对象模拟 DOM，vue 页面修改的时候先修改 vdom, 然后通过 diff 算法生成新 vdom, 最后渲染。
@@ -160,78 +133,4 @@ nextTick: 实现将函数存入 microTask 或 macroTask。
 这种模式不依赖于游览器的历史记录管理页面栈。
 
 weex 环境下会强制使用这种模式。
-
-
-# 跨域方案
-
-## JSONP
-
-最早出现的跨域方案
-
-缺点:
-
-1. 由于 jsonp 是使用 script, img, iframe 没有同源限制的标签，所以它只支持 get 请求。
-2. 错误处理机制不完善
-
-优点:
-
-1. jsonp 可以兼容低版本游览器
-
-例子:
-
-```
-// test.html
-<script>
-  function test(data) {
-    console.log(data);
-    return data;
-  }
-</script>
-<script
-  type="text/javascript"
-  src="http://127.0.0.1:8090/v1/system/user/getTotal?callback=test"
-></script>
-```
-
-> 请求结果通过 get 请求参数 callback 设置
-
-Vue 中第三方库: `jsonp`
-
-## CORS 跨域资源共享
-
-原理: 使用 XMLHttpRequest 发送请求，增加一些字段告诉服务器允许跨域，需要服务端支持。
-
-优点:
-
-1. 支持多种请求
-2. 处理机制完善
-3. 符合 http 规范，对于复杂请求，多一次验证，安全性更好
-
-缺点:
-
-1. 不支持 IE10 一下游览器
-
-
-```
-客户端:
-
-// 创建一个实例
-const server = axios.create({
-    // 将我们访问的地址设为baseURL
-    baseURL: "http://127.0.0.1:8090",
-    // 设置超时时间
-    timeout: 5000，
-    headers:{
-        "Content-Type":"text/plain",
-        "Access-Control-Allow-Credentials": true
-    }
-});
-
-
-"Access-Control-Allow-Origin":"*"
-```
-
-## proxy 服务器代理
-
-代理转发，nginx, webpack devserve
 

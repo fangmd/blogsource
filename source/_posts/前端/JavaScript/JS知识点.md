@@ -264,7 +264,7 @@ function shallowCopy(target) {
 function deepCopy(target){
   let obj = {};
   for(let key in target){
-    if( typeof target[key] === 'object'{
+    if( typeof target[key] === 'object'){
       obj[key] = deepCopy(target[key]);
     }else{
       obj[key] = target[key];

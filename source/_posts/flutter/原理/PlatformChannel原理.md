@@ -1,5 +1,5 @@
 ---
-title: PlatformChannel原理
+title: PlatformChannel原理(github)
 date: 2020-03-21 13:18:12
 tags: [Flutter]
 category: Flutter
@@ -139,14 +139,6 @@ Dart 侧将二进制数据传递给 Native 层，Native 层将数据通过 `Flut
 ```
 
 `io.flutter.embedding.engine.dart.DartMessenger.java` `handleMessageFromDart` 函数中根据 Channel Name 查找对应的 `BinaryMessageHandler` 执行 `handler.onMessage(...)`， 最终我们自己写的 `MethodCallHandler` 实现类就会执行。
-
-
-
-
-
-
-
-
 
 
 
