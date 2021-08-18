@@ -1,0 +1,31 @@
+---
+title: Typescript 最佳实践
+date: 2021-08-18 09:38:14
+tags: [Typescript, 最佳实践]
+categories: Typescript
+
+---
+
+# 如何处理第三方库类型相关的问题
+
+在 TS 项目中使用一些第三方库的时候，经常遇到第三方库是使用 JS 实现的，并且库内部并没有类型声明文件。
+
+![https://raw.githubusercontent.com/fangmd/markdownphoto/master/src/Typescript/typescript-0.png](https://raw.githubusercontent.com/fangmd/markdownphoto/master/src/Typescript/typescript-0.png)
+
+解决方案：
+
+1. 如果有 @type 相关库，可以直接引入使用
+2. 自己声明一下
+
+```ts
+// libs.d.ts
+
+declare module "qrcode"
+``
+
+
+
+
+# 问题
+
+1. tsc 没有打包 node_module 文件夹里面的内容
