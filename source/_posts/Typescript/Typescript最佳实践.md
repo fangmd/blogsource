@@ -21,7 +21,46 @@ categories: Typescript
 // libs.d.ts
 
 declare module "qrcode"
-``
+```
+
+# 联合类型数据问题解决
+
+![https://raw.githubusercontent.com/fangmd/markdownphoto/master/src/Typescript/typescript-1.png](https://raw.githubusercontent.com/fangmd/markdownphoto/master/src/Typescript/typescript-1.png)
+
+>报错信息：Object is possibly 'undefined'.ts(2532)
+
+
+解决方案1：类型强转
+
+```ts
+// 类型强转
+function add(one: number, two: number | undefined): number {
+  return one + (two as number)
+}
+```
+
+解决方案2：使用 typeof, in, instanceof 做类型判断
+
+```ts
+// 类型判断
+function add3(one: number, two: number | undefined): number | undefined {
+  if (typeof two === "number") {
+    return one + two
+  }
+}
+```
+
+解决方案3: !断言，人为判断数据不会是 null|undefined
+
+```ts
+function add3(one: number, two: number | undefined): number | undefined {
+  return one + two!
+}
+```
+
+
+
+
 
 
 
