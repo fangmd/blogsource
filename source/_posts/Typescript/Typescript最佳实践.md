@@ -58,13 +58,29 @@ function add3(one: number, two: number | undefined): number | undefined {
 }
 ```
 
+# 声明文件编写解决全局变量问题
 
+```ts
+// global.d.ts
 
+// 全局变量
+console.log(WBAPP)
+declare const WBAPP: any
 
+// 全局函数
+console.log(sum(1, 2))
+declare function sum(a: number, b: number): number
 
+// 全局对象
+console.log(mylib.WBAPP)
+declare namespace mylib {
+  const WBAPP: any
+}
 
+// window
+console.log(window.WBAPP)
+declare interface Window {
+  WBAPP: any
+}
+```
 
-
-# 问题
-
-1. tsc 没有打包 node_module 文件夹里面的内容
