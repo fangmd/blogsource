@@ -115,6 +115,8 @@ docker exec -it d17ac05b48ef39c60be5afabf29eec2d389d0606c3b1c82471014dfa076b3313
 
 ```
 #!/bin/bash -l
+
+source ~/.zshrc
 ```
 
 # 限制 freeproject 在指定 slave 中 build

@@ -8,43 +8,6 @@ category: Jenkins
 
 准备一台 mac
 
-# 1. 安装 jenkins
-
-[https://www.jenkins.io/download/lts/macos/](https://www.jenkins.io/download/lts/macos/)
-
-```
-// 使用brew安装
-brew install jenkins-lts
-
-// 命令后后台启动
-brew services start jenkins-lts
-
-// 重启 Jenkins
-Restart the Jenkins service: 
-brew services restart jenkins-lts
-
-// 升级 Jenkins
-Update the Jenkins version: 
-brew upgrade jenkins-lts
-
-// 停止 jenkins
-brew services stop jenkins
-```
-
-
-打开：`http://localhost:8080/`
-
-登入后保存密码:
-
-```
-http://localhost:8080/
-```
-
-## 其他
-
-1. 初始化密码存储位置: `/Users/double/.jenkins/secrets/initialAdminPassword`
-
-
 # 2. 安装需要的插件
 
 1. Keychains and Provisioning Profiles Management（iOS证书管理）
@@ -61,5 +24,74 @@ provision: /Users/zcating/Library/MobileDevice/Provisioning Profiles
 ```
 
 
+## Android 打包
 
+1. 在项目中创建打包 sh:
 
+`buildAndroid.sh`
+
+```
+#!/bin/bash
+
+source ~/.zshrc
+
+flutter build apk --release
+```
+
+2. 添加 sh 执行权限: 
+
+```
+chmod +x buildAndroid.sh
+```
+
+3. jenkins pipeline 脚本:
+
+使用 macos 打包机打包，flutter 相关环境在打包机上提前配置好。
+
+```
+pipeline {
+    agent { label 'mac16' }
+    tools {nodejs "yarn-node16"}
+    
+    stages {
+        stage('Pre(git)') {
+            steps{
+                script{
+                    echo "git pull"
+                    if(fileExists("sh_travel")) {
+                        sh "cd sh_travel && git pull"
+                    }else{
+                        sh "git clone git@codeup.aliyun.com:6170ccd210204867ecfd4f8e/app/sh_travel.git"
+                    }
+                    
+                    if(fileExists("flutter_lib")) {
+                        sh "cd sh_travel && git pull"
+                    }else{
+                        sh "git clone git@codeup.aliyun.com:6170ccd210204867ecfd4f8e/app/flutter_lib.git"
+                    }
+                }                
+            }
+        }
+
+        
+        stage('build') {
+            steps{
+                script{
+                    echo "start build"
+                    sh """
+                    cd sh_travel && ./buildAndroid.sh
+                    """
+                }
+            }
+        }
+        
+        stage('Archive') {
+            steps{
+                archiveArtifacts artifacts: 'sh_travel/build/app/outputs/apk/release/*.apk'
+            }
+        }
+
+    }
+ 
+}
+```
